@@ -7,7 +7,7 @@ decisionStatus: final
 lastUpdatedBy: loris
 lastUpdatedAt: 2026-05-08
 ---
-<!-- AUTO-GENERATED — rules-hash:5d1ea147f238cc15 —
+<!-- AUTO-GENERATED — rules-hash:b01659f9db62a6b2 —
      Quelle: rules/60_workflow.md. Nicht direkt bearbeiten. Änderungen → `make sync-rules`. -->
 
 ## Workflow
@@ -36,7 +36,7 @@ Nach **jeder** inhaltlichen oder Layout-Änderung sofort den sauberen Build-Comm
 |---|---|
 | `main.tex`, `preamble.tex`, `Makefile` | Kerndateien |
 | `.gitignore`, `.pre-commit-config.yaml` | Config |
-| `CLAUDE.md`, `AGENTS.md`, `MODULAR_SYSTEM.md`, `README.md` | Doku (KI-Adapter sind auto-generiert) |
+| `CLAUDE.md`, `AGENTS.md`, `MODULAR_SYSTEM.md`, `README.md`, `ZSF_DIDAKTIK_PRINZIP.md`, `ZSF_IDEEN.md` | Doku (KI-Adapter sind auto-generiert) |
 | `info2_fs2026_hliddal.pdf` (+ `.synctex.gz`) | Output |
 
 Alles andere gehört in:

@@ -46,6 +46,7 @@ lastUpdatedAt: 2026-05-08
 | `\hl{text}` | Inline-Hervorhebung (underline + bold) |
 | `\eqbox{formel}` | Inline-Formelbox mit farbigem Hintergrund |
 | `\ZSFTitleTag{text}` | Rechts-ausgerichtetes Meta-Tag im Titelbalken |
+| `\ZSFref{label}` | Querverweis `(→ 6.6)` in Zielkapitel-Farbe; nur für Konzepte aus **anderen** Kapiteln, Label via `\label{sec:...}` nach `\section`/`\subsection` |
 
 ## Keyword-Hervorhebung
 

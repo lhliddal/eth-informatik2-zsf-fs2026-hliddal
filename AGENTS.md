@@ -1,6 +1,6 @@
 # ZSF Informatik II — AGENTS.md
 
-> AUTO-GENERATED — rules-hash:5d1ea147f238cc15
+> AUTO-GENERATED — rules-hash:b01659f9db62a6b2
 >
 > Quelle: `rules/*.md` (mit YAML-Frontmatter).
 > Nicht direkt bearbeiten. Änderungen: `rules/*.md` editieren → `make sync-rules`.
@@ -47,7 +47,7 @@ Bei Konflikt zwischen dieser Datei und `rules/*.md` gewinnen die Quelldateien.
 - `50_chapters.md` — Scoped; gilt bei Änderungen an `chapters/**/*.tex`, `main.tex` — Kapitel-Mapping (00_titelbox bis 14_credits), Bilder (Images/, figures/, graphicspath), Antworten mit Kapitel-Referenzen
 - `60_workflow.md` — Project-wide — Build-Targets (make build, check, sync-rules), Agent-Build-Pflicht nach jeder Änderung, Datei-Platzierung, Pre-commit
 - `70_github.md` — Scoped; gilt bei Änderungen an `.github/**`, `Makefile`, `tests/**`, `styles/75_pdf_identity.tex`, `README.md` — Naming-Konventionen (Repo, PDF, Tags), GitHub Actions (CI Build, Release), PDF-Identity, Schwester-Projekt-Verhältnis
-- `80_didaktik.md` — Project-wide; besonders relevant für `chapters/**/*.tex` — Didaktisches Prinzip für Inhalt/Erklärungen: nützlicher + intuitiver statt korrekter, Rezept-Charakter, Stolperfallen — keine eigenmächtigen Präzisierungen
+- `80_didaktik.md` — Project-wide; besonders relevant für `chapters/**/*.tex` — Didaktisches Prinzip für Inhalt/Erklärungen: nützlicher + intuitiver statt korrekter, Rezept-Charakter, Stolperfallen, scannbares Design + Übersichtlichkeit — keine eigenmächtigen Präzisierungen
 
 ## Compiled Rules
 
@@ -164,6 +164,7 @@ LaTeX-Zusammenfassung Informatik II (D-MAVT FS2026). Inhalt: Python, Algorithmen
 | `\hl{text}` | Inline-Hervorhebung (underline + bold) |
 | `\eqbox{formel}` | Inline-Formelbox mit farbigem Hintergrund |
 | `\ZSFTitleTag{text}` | Rechts-ausgerichtetes Meta-Tag im Titelbalken |
+| `\ZSFref{label}` | Querverweis `(→ 6.6)` in Zielkapitel-Farbe; nur für Konzepte aus **anderen** Kapiteln, Label via `\label{sec:...}` nach `\section`/`\subsection` |
 
 ##### Keyword-Hervorhebung
 
@@ -526,7 +527,7 @@ Nach **jeder** inhaltlichen oder Layout-Änderung sofort den sauberen Build-Comm
 |---|---|
 | `main.tex`, `preamble.tex`, `Makefile` | Kerndateien |
 | `.gitignore`, `.pre-commit-config.yaml` | Config |
-| `CLAUDE.md`, `AGENTS.md`, `MODULAR_SYSTEM.md`, `README.md` | Doku (KI-Adapter sind auto-generiert) |
+| `CLAUDE.md`, `AGENTS.md`, `MODULAR_SYSTEM.md`, `README.md`, `ZSF_DIDAKTIK_PRINZIP.md`, `ZSF_IDEEN.md` | Doku (KI-Adapter sind auto-generiert) |
 | `info2_fs2026_hliddal.pdf` (+ `.synctex.gz`) | Output |
 
 Alles andere gehört in:
@@ -595,7 +596,7 @@ Release-Flow nie auf manuelle Uploads zurückbauen.
 
 - Quelle: `rules/80_didaktik.md`
 - Scope: Project-wide; besonders relevant für `chapters/**/*.tex`
-- Beschreibung: Didaktisches Prinzip für Inhalt/Erklärungen: nützlicher + intuitiver statt korrekter, Rezept-Charakter, Stolperfallen — keine eigenmächtigen Präzisierungen
+- Beschreibung: Didaktisches Prinzip für Inhalt/Erklärungen: nützlicher + intuitiver statt korrekter, Rezept-Charakter, Stolperfallen, scannbares Design + Übersichtlichkeit — keine eigenmächtigen Präzisierungen
 - Zuletzt aktualisiert: 2026-06-10 (loris)
 
 Diese Regel betrifft **was** drinsteht und **wie** erklärt wird (nicht das Layout). Vollständige Leitlinie: `ZSF_DIDAKTIK_PRINZIP.md`.
@@ -613,6 +614,12 @@ Nicht der Maßstab ist Vollständigkeit, Allgemeinheit oder lückenlose Strenge.
 - **Ungenauigkeiten auf Kursniveau sind toleriert**, solange sie intuitiv tragfähig sind.
 - **Sonderfälle/Präzisierungen hinzuzufügen ist ein Fehler**, wenn sie die Aussage nur „wasserdicht", aber schwerer lesbar machen. Regel: nicht „korrekter" machen — sondern **nützlicher und intuitiver**.
 - Gute Erklärung: Rezept-Charakter (`procedure` + `\ProcStep`), konkretes Beispiel, Intuition in einem Satz, Stolperfallen via `\ZSFdanger`, Querchecks zur Selbstkontrolle. Bei Code: lauffähige, knappe Snippets mit aussagekräftigen Kommentaren.
+
+##### Scannbarkeit & Übersichtlichkeit
+
+- **Scannbares Design ist Pflicht:** In der Prüfung wird nicht gelesen, sondern gesucht. Jede Information muss in Sekunden auffindbar sein — über Boxen, Titel, Marker und visuelle Struktur statt Fließtext.
+- **Übersichtlichkeit schlägt Dichte:** Lieber klar gegliederte Blöcke (Box pro Aussage, Tabelle statt Aufzählung im Text) als kompakte, aber unstrukturierte Absätze.
+- Lange Fließtext-Passagen sind ein Warnsignal — Inhalt in `procedure`, `factlist`, Tabellen oder einzelne Boxen umstrukturieren, sodass das Auge beim Überfliegen hängen bleibt.
 
 ##### Konsequenz für KI-Assistenten
 

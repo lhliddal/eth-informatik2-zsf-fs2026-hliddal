@@ -34,7 +34,7 @@ Nach **jeder** inhaltlichen oder Layout-Änderung sofort den sauberen Build-Comm
 |---|---|
 | `main.tex`, `preamble.tex`, `Makefile` | Kerndateien |
 | `.gitignore`, `.pre-commit-config.yaml` | Config |
-| `CLAUDE.md`, `AGENTS.md`, `MODULAR_SYSTEM.md`, `README.md` | Doku (KI-Adapter sind auto-generiert) |
+| `CLAUDE.md`, `AGENTS.md`, `MODULAR_SYSTEM.md`, `README.md`, `ZSF_DIDAKTIK_PRINZIP.md`, `ZSF_IDEEN.md` | Doku (KI-Adapter sind auto-generiert) |
 | `info2_fs2026_hliddal.pdf` (+ `.synctex.gz`) | Output |
 
 Alles andere gehört in:

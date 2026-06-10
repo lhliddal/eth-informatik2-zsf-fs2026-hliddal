@@ -8,7 +8,7 @@ allowed_files=(
   "preamble.tex" "Makefile"
   ".gitignore" ".pre-commit-config.yaml"
   "CLAUDE.md" "AGENTS.md" "MODULAR_SYSTEM.md" "README.md"
-  "ZSF_DIDAKTIK_PRINZIP.md"
+  "ZSF_DIDAKTIK_PRINZIP.md" "ZSF_IDEEN.md"
 )
 allowed_dirs=(
   "chapters" "styles" "tests" "scripts" "tools" "rules"

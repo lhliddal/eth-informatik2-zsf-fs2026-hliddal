@@ -7,7 +7,7 @@ decisionStatus: final
 lastUpdatedBy: loris
 lastUpdatedAt: 2026-05-08
 ---
-<!-- AUTO-GENERATED — rules-hash:5d1ea147f238cc15 —
+<!-- AUTO-GENERATED — rules-hash:b01659f9db62a6b2 —
      Quelle: rules/20_boxes.md. Nicht direkt bearbeiten. Änderungen → `make sync-rules`. -->
 
 ## Box-Typen
@@ -44,6 +44,7 @@ lastUpdatedAt: 2026-05-08
 | `\hl{text}` | Inline-Hervorhebung (underline + bold) |
 | `\eqbox{formel}` | Inline-Formelbox mit farbigem Hintergrund |
 | `\ZSFTitleTag{text}` | Rechts-ausgerichtetes Meta-Tag im Titelbalken |
+| `\ZSFref{label}` | Querverweis `(→ 6.6)` in Zielkapitel-Farbe; nur für Konzepte aus **anderen** Kapiteln, Label via `\label{sec:...}` nach `\section`/`\subsection` |
 
 ## Keyword-Hervorhebung
 

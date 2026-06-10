@@ -1,0 +1,185 @@
+% ============================================================
+% COLORS, CHAPTER PALETTE AND CHAPTER STRUCTURE
+% ============================================================
+
+% Palette sortiert nach max. 3-Fenster-Kontrast (CIEDE2000)
+% ChapterColor0 bleibt ETH-Rot fuer den Frontchapter
+\definecolor{ChapterColor0}{HTML}{A50D0D}
+\definecolor{ChapterColor0Light}{HTML}{EED2D2}
+\definecolor{ChapterColor1}{HTML}{5B8C00}
+\definecolor{ChapterColor1Light}{HTML}{DDE8B5}
+\definecolor{ChapterColor2}{HTML}{7211D4}
+\definecolor{ChapterColor2Light}{HTML}{E0D2EE}
+\definecolor{ChapterColor3}{HTML}{D44B11}
+\definecolor{ChapterColor3Light}{HTML}{EEDAD2}
+\definecolor{ChapterColor4}{HTML}{00897B}
+\definecolor{ChapterColor4Light}{HTML}{B2DFDB}
+\definecolor{ChapterColor5}{HTML}{2B0DA5}
+\definecolor{ChapterColor5Light}{HTML}{D8D2EE}
+\definecolor{ChapterColor6}{HTML}{A5680D}
+\definecolor{ChapterColor6Light}{HTML}{EEE3D2}
+\definecolor{ChapterColor7}{HTML}{2E7D32}
+\definecolor{ChapterColor7Light}{HTML}{C8E6C9}
+\definecolor{ChapterColor8}{HTML}{D411C0}
+\definecolor{ChapterColor8Light}{HTML}{EED2EB}
+\definecolor{ChapterColor9}{HTML}{1199D4}
+\definecolor{ChapterColor9Light}{HTML}{D2E5EE}
+\definecolor{ChapterColor10}{HTML}{2BA50D}
+\definecolor{ChapterColor10Light}{HTML}{D8EED2}
+\definecolor{ChapterColor11}{HTML}{A50D68}
+\definecolor{ChapterColor11Light}{HTML}{EED2E3}
+\definecolor{ChapterColor12}{HTML}{860DA5}
+\definecolor{ChapterColor12Light}{HTML}{E8D2EE}
+\definecolor{ChapterColor13}{HTML}{0DA5A5}
+\definecolor{ChapterColor13Light}{HTML}{D2EEEE}
+\definecolor{ChapterColor14}{HTML}{0D4AA5}
+\definecolor{ChapterColor14Light}{HTML}{D2DDEE}
+\definecolor{ChapterColor15}{HTML}{D4114B}
+\definecolor{ChapterColor15Light}{HTML}{EED2DA}
+\definecolor{ChapterColor16}{HTML}{0DA54A}
+\definecolor{ChapterColor16Light}{HTML}{D2EEDD}
+\definecolor{ChapterColor17}{HTML}{86A50D}
+\definecolor{ChapterColor17Light}{HTML}{E8EED2}
+\definecolor{ChapterColor18}{HTML}{1124D4}
+\definecolor{ChapterColor18Light}{HTML}{D2D5EE}
+\definecolor{ChapterColor19}{HTML}{D4C011}
+\definecolor{ChapterColor19Light}{HTML}{EEEBD2}
+\definecolor{ETHRot}{HTML}{CC0000}
+
+% Semantische Farben fuer Text-Box-Bindungen
+\definecolor{TextVorBoxColor}{HTML}{0A0A1E}
+\definecolor{TextNachBoxColor}{HTML}{0A1A0A}
+
+\newcommand{\chaptercolor}{ChapterColor0}
+\newcommand{\chaptercolorlight}{ChapterColor0Light}
+\newcommand{\ChapterBarColor}{\chaptercolor}
+\newcommand{\SubsectionBarColor}{\chaptercolor!75}
+\newcommand{\FormulaboxBackColor}{\chaptercolorlight!40}
+
+% Statische Farben fuer Box-Titel und neutrale Sub-Boxen
+\definecolor{StaticBoxTitleBack}{HTML}{E2E8F0}
+\definecolor{StaticBoxTitleText}{HTML}{0F172A}
+\definecolor{StaticSubBoxBack}{HTML}{F8FAFC}
+\definecolor{StaticSubBoxBorder}{HTML}{CBD5E1}
+
+% Dynamische Anpassung an Kapitel
+\newcommand{\BoxTitleColor}{\chaptercolorlight}
+\newcommand{\BoxTitleTextColor}{TextVorBoxColor}
+\newcommand{\BoxBackColor}{\chaptercolorlight!8}
+\newcommand{\BoxFrameColor}{\chaptercolorlight!25}
+
+\newcommand{\StatementBarColor}{\chaptercolor}
+\newcommand{\StatementTitleColor}{\chaptercolor}
+\newcommand{\ZSFBaseBoxBorderColor}{\chaptercolorlight!85!black!10}
+\newcommand{\ZSFTitledBoxBorderColor}{\chaptercolor!45}
+
+% ------------------------------------------------------------
+% Backward-compat: alte v1-Farbnamen
+% ------------------------------------------------------------
+\colorlet{title}{ChapterColor0}
+\colorlet{subtitle}{ChapterColor0!85}
+\colorlet{subsubtitle}{ChapterColor0!70}
+\definecolor{hl}{HTML}{FFFFFF}
+
+% Codeexpert Colors (fuer 65_code_style.tex)
+\definecolor{ce_yellow}{rgb}{0.8,0.6,0.1}
+\definecolor{ce_gray}{rgb}{0.4,0.4,0.4}
+\definecolor{ce_lime}{rgb}{0.2,0.6,0.2}
+\definecolor{ce_pink}{rgb}{0.8,0.1,0.3}
+\definecolor{ce_cyan}{rgb}{0.1,0.4,0.6}
+\definecolor{ce_violet}{rgb}{0.5,0.1,0.5}
+\definecolor{ce_back}{rgb}{1,1,1}
+\definecolor{ce_white}{rgb}{0,0,0}
+\definecolor{ce_blue}{rgb}{0.2,0.2,0.9}
+\definecolor{ce_green}{rgb}{0.0,0.4,0.1}
+
+% Semantische Code-Block-Farben (genutzt in 65_code_style.tex)
+\definecolor{code_bg}{HTML}{F4F4F6}
+\definecolor{code_rule}{HTML}{D8D8DE}
+
+% Statische UI-Farben (aus Box/Typography-Definitionen extrahiert)
+\colorlet{ZSFDangerColor}{red!80!black}
+\colorlet{ZSFScriptRefColor}{white!80}
+\colorlet{ZSFTitleSubheaderColor}{white!88}
+\colorlet{ZSFPageNumberColor}{black!55}
+
+% ------------------------------------------------------------
+% Kapitel-Palette: Auto-Switch nach section-counter
+% ------------------------------------------------------------
+\newcount\ZSFchapterPaletteIndex
+\newcommand{\ZSFchapterPaletteSize}{20}
+\newcommand{\ZSFSetChapterPaletteByIndex}[1]{%
+  \renewcommand{\chaptercolor}{ChapterColor#1}%
+  \renewcommand{\chaptercolorlight}{ChapterColor#1Light}%
+}
+
+\newcommand{\SetChapterPaletteByNumber}{%
+  \ZSFchapterPaletteIndex=\value{section}%
+  \loop
+  \ifnum\ZSFchapterPaletteIndex>\numexpr\ZSFchapterPaletteSize-1\relax
+    \advance\ZSFchapterPaletteIndex by -\ZSFchapterPaletteSize
+  \repeat
+  \ifnum\value{section}>\numexpr\ZSFchapterPaletteSize-1\relax
+    \PackageWarning{ZSF}{Chapter palette wrapped at section \thesection. Increase palette if unique colors are required}%
+  \fi
+  \ZSFSetChapterPaletteByIndex{\the\ZSFchapterPaletteIndex}%
+}
+
+% Bar-Sequencing-Flags (werden von 60_boxes verwendet)
+\newif\ifzsfAfterChapterBar
+\zsfAfterChapterBarfalse
+\newcommand{\ZSFMarkAfterChapterBar}{\global\zsfAfterChapterBartrue}
+
+\newif\ifzsfAfterSubsectionBar
+\zsfAfterSubsectionBarfalse
+\newcommand{\ZSFMarkAfterSubsectionBar}{\global\zsfAfterSubsectionBartrue}
+
+\newcommand{\ZSFBoxBeforeSkip}{%
+  \ifzsfAfterSubsectionBar\ZSFsubsectionAfterGap\else\ZSFspaceS\fi
+}
+\newcommand{\ZSFConsumeAfterSubsectionBar}{\global\zsfAfterSubsectionBarfalse}
+
+\newcommand{\ZSFCollapseAfterChapterBar}{%
+  \ifzsfAfterChapterBar
+    \vspace*{\dimexpr\ZSFsubsectionAfterChapterGap-\ZSFsubsectionBarBeforeSkip\relax}%
+    \global\zsfAfterChapterBarfalse
+  \fi
+}
+
+\makeatletter
+\newcommand{\ZSFPostChapterSpacing}{\vspace*{\ZSFpostChapterNudge}}
+
+\newcommand{\ZSFMaybeColumnBreakBeforeChapter}{%
+  \ifnum\value{zsfFirstChap}=1\setcounter{zsfFirstChap}{0}\else\columnbreak\fi
+}
+
+% ------------------------------------------------------------
+% StartChapter: in Informatik typischerweise via \section{}
+% aufgerufen (siehe 50_typography_semantics.tex).
+% Spaltenumbruch vor jedem neuen Kapitel (außer dem ersten).
+% ------------------------------------------------------------
+\newcommand{\StartChapter}[2][]{%
+  \ZSFMaybeColumnBreakBeforeChapter
+  \refstepcounter{section}%
+  \SetChapterPaletteByNumber
+  \setcounter{subsection}{0}%
+  \if\relax\detokenize{#1}\relax\else\label{#1}\fi
+  \ChapterBar{\thesection. #2}%
+  \ZSFMarkAfterChapterBar
+  \ZSFPostChapterSpacing
+}
+
+\newcommand{\StartChapterOnNewColumn}[2][]{%
+  \StartChapter[#1]{#2}%
+}
+
+\newcommand{\StartFrontChapter}[1]{%
+  \ZSFMaybeColumnBreakBeforeChapter
+  \renewcommand{\chaptercolor}{ChapterColor0}%
+  \renewcommand{\chaptercolorlight}{ChapterColor0Light}%
+  \setcounter{subsection}{0}%
+  \ChapterBar{#1}%
+  \ZSFMarkAfterChapterBar
+  \ZSFPostChapterSpacing
+}
+\makeatother

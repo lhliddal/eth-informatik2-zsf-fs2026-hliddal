@@ -1,0 +1,57 @@
+---
+description: "Build-Targets (make build, check, sync-rules), Agent-Build-Pflicht nach jeder Änderung, Datei-Platzierung, Pre-commit"
+globs: ""
+alwaysApply: true
+decisionOwner: ai
+decisionStatus: final
+lastUpdatedBy: loris
+lastUpdatedAt: 2026-05-08
+---
+<!-- AUTO-GENERATED — rules-hash:59ba7314bfe74777 —
+     Quelle: rules/60_workflow.md. Nicht direkt bearbeiten. Änderungen → `make sync-rules`. -->
+
+## Workflow
+
+```bash
+make build                  # latexmk → build/main.pdf → info2_fs2025_hliddal.pdf
+make check                  # check-main-full + check-chapters + check-root-clean + lint + check-rule-authorship + check-rules
+make sync-rules             # rules/*.md → CLAUDE.md, AGENTS.md, .github/copilot-instructions.md, .cursor/rules/*.mdc
+make check-rules            # Drift-Check (Hash-Stempel) gegen rules/*.md
+make check-rule-authorship  # Pflicht-Frontmatter (description, alwaysApply, lastUpdatedAt) prüfen
+make release-proof          # SHA256 von build/main.pdf → build/main.pdf.sha256
+make clean                  # build/ + aux entfernen
+```
+
+Der Compiler liegt in `tools/sync-agent-rules.mjs` (Node 18+). Quellen sind `rules/*.md` mit YAML-Frontmatter (`description`, `globs`, `alwaysApply`, `lastUpdatedBy`, `lastUpdatedAt`).
+
+### Agent-Build-Pflicht
+
+Nach **jeder** inhaltlichen oder Layout-Änderung sofort den sauberen Build-Command `make build` ausführen, damit `info2_fs2025_hliddal.pdf` aktuell bleibt und Fehler früh sichtbar werden. Der Build-Befehl ist dabei immer genau dieser Command; keine alternativen oder abgekürzten Build-Kommandos verwenden. Agent-Edits triggern LaTeX Workshop Auto-Build nicht — manuell bauen ist Pflicht.
+
+### Datei-Platzierung
+
+**Root ist tabu für neue Dateien.** Erlaubt im Root:
+
+| Erlaubt | Typ |
+|---|---|
+| `main.tex`, `preamble.tex`, `Makefile` | Kerndateien |
+| `.gitignore`, `.pre-commit-config.yaml` | Config |
+| `CLAUDE.md`, `AGENTS.md`, `MODULAR_SYSTEM.md`, `README.md` | Doku (KI-Adapter sind auto-generiert) |
+| `info2_fs2025_hliddal.pdf` (+ `.synctex.gz`) | Output |
+
+Alles andere gehört in:
+- `chapters/` — Inhaltsdateien
+- `styles/` — Style-Module
+- `tests/` — Check-Skripte
+- `scripts/` — Helfer-Skripte (Bash/Python, z.B. Graphics-Optimierung, Cross-Project-Infra-Sync)
+- `tools/` — Node-basierte Tools (Rule-Compiler, Authorship-Check)
+- `rules/` — KI-Regelquellen (Quell-Wahrheit, mit Frontmatter)
+- `Images/`, `figures/` — Bilder
+- `_scratch/` — temporäres (gitignored)
+
+`tests/check_root_clean.sh` blockt Verstösse (läuft auch via pre-commit).
+
+### Pre-commit
+
+`tests/check_root_clean.sh` läuft bei jedem Commit. Whitelist in der Datei pflegen, nie umgehen.
+

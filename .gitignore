@@ -1,0 +1,25 @@
+# Build artifacts
+build/
+tests/build/
+main.pdf
+main.synctex.gz
+
+# Scratch / Experimente und Orphan-Bilder (nie committen)
+_scratch/
+_orphan_images/
+
+# macOS
+.DS_Store
+
+# LaTeX aux files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
+*.bcf
+*.run.xml

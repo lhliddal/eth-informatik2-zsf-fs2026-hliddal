@@ -1,0 +1,392 @@
+\section{Python-Syntax — Übersicht}
+
+
+
+
+% -----------------------------
+\subsection{Datentypen}
+\begin{contentbox}
+\CodeLine{x = 5}[int]\\
+\CodeLine{y = 3.14}[float]\\
+\CodeLine{z = "hello"}[string]\\
+\CodeLine{b = True}[boolean]\\
+\CodeLine{n = None}[null / leer]\\
+\CodeLine{c = 3 + 2j}[komplexe Zahl]\\
+\CodeLine{type(x)}[gibt <class `int'> zurück]
+\end{contentbox}
+
+% -----------------------------
+\subsection{Kontrollstrukturen (if / else / while / for)}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+
+# von 0 bis 10 in 2er-Schritten
+for i in range(0, 10, 2):
+    print(i)
+
+for char in "abc":  # über Zeichen iterieren
+    print(char)
+
+# Index + Wert
+for i, val in enumerate(["a", "b"]):
+    print(i, val)
+
+# Dict iterieren
+for k, v in {"x": 1, "y": 2}.items():
+    print(k, v)
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{Funktionen}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+# Funktionsdefinition
+def add(a, b):
+    return a + b
+
+# Aufruf mit Argumenten
+add(2, 3)
+
+def default_arg(x=1):    # Standardparameter
+    return x + 1
+
+# variable Positionsargumente
+def varargs(*args):
+    return args
+
+# variable Schlüsselwortargumente
+def kwargs(**kw):
+    return kw
+
+double = lambda x: x*2   # anonyme Funktion
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{Python-Container}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+# list: geordnet, veränderbar
+lst = [1, 2, 3]
+# tuple: geordnet, unveränderbar
+tup = (1, 2, 3)
+# set: ungeordnet, einzigartig
+s = {1, 2, 3}
+
+# dict: Schlüssel-Wert-Paare
+d = {"a": 1, "b": 2}
+# string: geordnet, unveränderbar
+s = "abc"
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{Operationen auf Containern}
+\begin{contentbox}
+\CodeLine{len(lst)}[Anzahl Elemente]\\
+\CodeLine{1 in lst}[Enthaltensein prüfen]\\
+\CodeLine{lst[0]}[Indexzugriff]\\
+\CodeLine{lst[1:3]}[Slicing]\\
+\CodeLine{lst[start:stop:step]}[Slicing mit Schrittweite]\\
+\CodeLine{max(lst), min(lst)}[Maximum / Minimum]\\
+\CodeLine{sum(lst)}[Summe aller Elemente]\\
+\CodeLine{list("abc")}[in list umwandeln]\\
+\CodeLine{tuple(lst)}[in tuple umwandeln]\\
+\CodeLine{set(lst)}[in set umwandeln]\\
+\CodeLine{sorted(lst)}[sortierte Kopie]
+\end{contentbox}
+
+% -----------------------------
+\subsection{Sequenzen (geordnete Container)}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+# veränderbare Sequenz
+lst = [10, 20, 30]
+# unveränderbare Sequenz
+tup = (10, 20, 30)
+# unveränderbare Zeichenkette
+s = "abc"
+lst[0], tup[1], s[2]         # Indexzugriff
+lst[1:]                      # Slicing
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{Allgemeine Sequenz-Operationen}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+[1, 2] + [3, 4]          # Verkettung
+[1] * 3                 # Wiederholung
+# Liste fester Länge mit Standardwert
+[0] * M
+# verschachtelte Listen: unabhängige innere Listen erzeugen
+[[] for _ in range(M)]   # empfohlen
+[[]] * M                 # dieselbe innere Liste wiederholt
+x = [1, 2, 3]
+x.index(2)              # Index von 2 suchen
+x.count(1)              # Anzahl der 1en zählen
+# über Sequenz iterieren
+for item in x:
+    print(item)
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{Slicing — Details}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+a = [10,20,30,40,50]        # a[start:stop:step]
+# start inklusive, stop exklusiv, Standardschritt=1
+a[1:4]    # [20,30,40]      a[:3] / a[2:] / a[:]=copy
+a[-1]     # 50              a[-2:]=last 2, a[:-2]=drop 2
+a[::2]    # [10,30,50]      a[::-1]=reversed copy
+a[4:1:-1] # [50,40,30]      step<0 -> right to left
+b = a[:]; b[0]=99           # slice = new list (no alias)
+a[1:3] = [0,0,0]            # slice-assign replaces range
+a[1:3] = []                 # slice-assign [] deletes
+"python"[::-1]              # works on str/tuple (immut.)
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{Häufige Listen-Operationen}
+\begin{contentbox}
+\CodeLine{lst.append(4)}[ans Ende anfügen]\\
+\CodeLine{lst.extend([5, 6])}[mehrere Elemente anfügen]\\
+\CodeLine{lst.insert(1, 99)}[an Index einfügen]\\
+\CodeLine{lst.remove(1)}[erstes Vorkommen entfernen]\\
+\CodeLine{lst.pop()}[letztes Element entfernen]\\
+\CodeLine{del lst[0]}[per Index löschen]\\
+\CodeLine{lst.sort()}[in-place sortieren]\\
+\CodeLine{lst.reverse()}[in-place umkehren]
+\end{contentbox}
+
+% -----------------------------
+\subsection{List Comprehension}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+[x**2 for x in range(5)]            # Quadrate
+[x for x in range(10) if x % 2 == 0]# gerade Zahlen
+# verschachtelte Schleifen
+[(i, j) for i in [1,2] for j in [3,4]]
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{Häufige String-Operationen}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+s = " Hello World "
+
+# --- Leerzeichen und Bereinigung ---
+# führende/abschliessende Leerzeichen entfernen
+s.strip()
+# nur links/rechts Leerzeichen entfernen
+s.lstrip(), s.rstrip()
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{String-Methoden — Referenz}
+\begin{codeboxfirst}
+\begin{lstlisting}[style=CodeExpert]
+# --- Gross-/Kleinschreibung ---
+s.lower()              # alles klein
+s.upper()              # alles gross
+# erster Buchstabe gross, Rest klein
+s.capitalize()
+# jedes Wort gross geschrieben
+s.title()
+# Gross-/Kleinschreibung tauschen: "aA" -> "Aa"
+s.swapcase()
+\end{lstlisting}
+\end{codeboxfirst}
+\begin{codeboxmid}
+\begin{lstlisting}[style=CodeExpert]
+# --- Präfix/Suffix und Suche ---
+# True, wenn String mit "He" beginnt
+s.startswith("He")
+# True, wenn String mit "ld" endet
+s.endswith("ld")
+# Index der ersten Übereinstimmung oder -1
+s.find("lo")
+s.rfind("l")           # Index der letzten Übereinstimmung
+# wie find, aber Exception wenn nicht gefunden
+s.index("lo")
+# Häufigkeit des Teilstrings zählen
+s.count("l")
+\end{lstlisting}
+\end{codeboxmid}
+\begin{codeboxmid}
+\begin{lstlisting}[style=CodeExpert]
+# --- Ersetzen und Ändern ---
+# alle Vorkommen ersetzen
+s.replace("World", "Python")
+# nur erstes Vorkommen ersetzen
+s.replace("l", "*", 1)
+\end{lstlisting}
+\end{codeboxmid}
+\begin{codeboxmid}
+\begin{lstlisting}[style=CodeExpert]
+# --- Aufteilen und Verbinden ---
+s.split()              # nach Leerzeichen aufteilen
+# nach eigenem Trennzeichen aufteilen
+s.split("o")
+# von rechts aufteilen, max. 1 Trennung
+s.rsplit(" ", 1)
+# aufteilen in (vor, Treffer, nach)
+s.partition(" ")
+s.rpartition(" ")      # dasselbe, aber von rechts
+# Liste mit Bindestrich zu String verbinden
+"-".join(["a", "b"])
+# String aus Zeichen zusammenbauen
+"".join(list("abc"))
+\end{lstlisting}
+\end{codeboxmid}
+\begin{codeboxmid}
+\begin{lstlisting}[style=CodeExpert]
+# --- Prüfungen ---
+"abc".isalpha()        # nur Buchstaben?
+"123".isdigit()        # nur Ziffern?
+# nur 0-9? (hier False)
+"12.3".isdecimal()
+# nur Buchstaben und Zahlen?
+"abc123".isalnum()
+"    ".isspace()       # nur Leerzeichen?
+"Title Case".istitle() # Titelschreibung?
+"ABC".isupper()        # alles gross?
+"abc".islower()        # alles klein?
+\end{lstlisting}
+\end{codeboxmid}
+\begin{codeboxmid}
+\begin{lstlisting}[style=CodeExpert]
+# --- Ausrichtung / Auffüllen ---
+# links mit Nullen auffüllen -> "00042"
+"42".zfill(5)
+# mittig ausrichten
+"hi".center(10)
+# links ausrichten mit Zeichen
+"hi".ljust(8, "-")
+# rechts ausrichten mit Zeichen
+"hi".rjust(8, ".")
+\end{lstlisting}
+\end{codeboxmid}
+\begin{codeboxlast}
+\begin{lstlisting}[style=CodeExpert]
+# --- Sonstiges ---
+# in Zeichenliste umwandeln
+list("abc")
+# Ganzzahlen zu String verbinden
+",".join(map(str, [1, 2, 3]))
+s[::-1]                # String umkehren
+\end{lstlisting}
+\end{codeboxlast}
+
+% -----------------------------
+\subsection{Collections (ungeordnete Container)}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+# set: keine Duplikate
+s = {1, 2, 3}
+
+d = {"x": 1, "y": 2}       # dict: Schlüssel-Wert
+
+# sets sind schnell für Enthaltensein-Prüfung, kein Indexzugriff
+2 in s                    # Enthaltensein prüfen
+len(s)                    # Anzahl Elemente
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{Set-Operationen}
+\begin{contentbox}
+\texttt{a = \{1, 2, 3\}},\ \texttt{b = \{3, 4, 5\}}\\
+\CodeLine{a | b}[Vereinigung]\\
+\CodeLine{a & b}[Schnittmenge]\\
+\CodeLine{a - b}[Differenz]\\
+\CodeLine{a ^ b}[symmetrische Differenz]\\
+\CodeLine{a.add(6)}[Element hinzufügen]\\
+\CodeLine{a.remove(1)}[Element entfernen]\\
+\CodeLine{x in a}[True, wenn x in a enthalten]
+\end{contentbox}
+
+% -----------------------------
+\subsection{Dictionary-Operationen}
+\begin{contentbox}
+\texttt{d = \{"a": 1, "b": 2\}}\\
+\CodeLine{d["c"] = 3}[Schlüssel hinzufügen / aktualisieren]\\
+\CodeLine{d.get("a", 0)}[sicherer Zugriff]\\
+\CodeLine{del d["b"]}[Schlüssel löschen]\\
+\CodeLine{"a" in d}[Enthaltensein prüfen]\\
+\CodeLine{list(d.keys())}[Liste der Schlüssel]\\
+\CodeLine{list(d.values())}[Liste der Werte]\\
+\CodeLine{list(d.items())}[Liste der (Schlüssel, Wert)-Paare]
+\end{contentbox}
+
+% -----------------------------
+\subsection{Iteration über ein Dictionary}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+d = {"x": 1, "y": 2}
+
+for k in d:                # Schlüssel
+    print(k)
+
+for v in d.values():       # Werte
+    print(v)
+
+for k, v in d.items():     # Schlüssel und Werte
+    print(k, v)
+
+# mit Index
+for i, (k, v) in enumerate(d.items()):
+    print(i, k, v)
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{Dictionary- / Set-Comprehension}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+# Dict Comprehension
+{x: x**2 for x in range(5)}
+# gefiltertes Dict
+{k: v for k, v in d.items() if v > 1}
+# Set Comprehension
+{x for x in range(10) if x % 2 == 0}
+\end{lstlisting}
+\end{codebox}
+
+\subsection{zip()}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+a = [1, 2, 3]
+b = ['a', 'b', 'c']
+
+# Elemente paaren: (1,'a'), (2,'b'), ...
+zipped = zip(a, b)
+# [(1, 'a'), (2, 'b'), (3, 'c')]
+print(list(zipped))
+
+# auch in for-Schleifen verwendbar
+for x, y in zip(a, b):
+    print(x, y)
+
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{zip() — Entpacken}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+# gezippte Listen entpacken
+a2, b2 = zip(*[(1, 'a'), (2, 'b'), (3, 'c')])
+print(a2)                  # (1, 2, 3)
+print(b2)                  # ('a', 'b', 'c')
+
+# zip endet beim kürzesten Input
+# [(1, 'a'), (2, 'b')]
+print(list(zip([1, 2], ['a', 'b', 'c'])))
+\end{lstlisting}
+\end{codebox}

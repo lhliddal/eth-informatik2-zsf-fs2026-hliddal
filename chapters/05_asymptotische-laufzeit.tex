@@ -1,0 +1,348 @@
+\section{Asymptotische Laufzeit}
+
+%=====================================================================================================================
+
+\subsection{Master-Theorem}
+\begin{contentbox}
+Das Master-Theorem löst Rekurrenzen der Form $\mathbf{T(n) = a \cdot T(n/t) + f(n)}$.\\
+Vergleiche dazu die "`äußere Arbeit"' $f(n)$ mit der Laufzeit der Rekursion $n^{\log_t(a)}$:
+
+\ZSFgapS
+\begin{ZSFtable}{L L L}
+\toprule
+\textbf{Fall ($f(n)$ vs $n^{\log_t(a)}$)} & \textbf{Intuition} & \textbf{Ergebnis $T(n)$} \\
+\midrule
+$f(n)$ ist \textbf{polynomiell} kleiner & Rekursion dominiert & $\Theta(n^{\log_t(a)})$ \\
+beide sind gleich ($f(n) \in \Theta(n^{\log_t(a)})$)& Balance              & $\Theta(n^{\log_t(a)} \cdot \log n)$ \\
+$f(n)$ ist \textbf{polynomiell} größer  & Arbeit außen dominiert & $\Theta(f(n))$ \\
+\bottomrule
+\end{ZSFtable}
+
+\ZSFgapS
+\textit{Hinweis: "`Polynomiell"' bedeutet, dass der Unterschied mindestens ein Faktor $n^{\epsilon}$ (mit $\epsilon > 0$) sein muss, ein bloßer $\log n$-Faktor reicht nicht aus. Im 3. Fall (größer) muss formal zudem die Regularitätsbedingung erfüllt sein.}
+\end{contentbox}
+
+\subsection{Häufige Sumen}
+\begin{contentbox} 
+\begin{ZSFtable}{L L L}
+\toprule
+\textbf{Summe} & \textbf{Vereinfachung} & \textbf{Laufzeit ($\Theta$)} \\
+\midrule
+$\sum_{i=1}^{n} 1$ & $n$ & $\Theta(n)$ \\
+$\sum_{i=1}^{n} i$ & $\frac{n(n+1)}{2}$ & $\Theta(n^2)$ \\
+$\sum_{i=1}^{n} i^2$ & $\frac{n(n+1)(2n+1)}{6}$ & $\Theta(n^3)$ \\
+$\sum_{i=1}^{n} i^3$ & $\left( \frac{n(n+1)}{2} \right)^2$ & $\Theta(n^4)$ \\
+$\sum_{i=0}^{n} 2^i$ & $2^{n+1} - 1$ & $\Theta(2^n)$ \\
+$\sum_{i=0}^{n} a^i \ (a > 1)$ & $\frac{a^{n+1} - 1}{a - 1}$ & $\Theta(a^n)$ \\
+$\sum_{i=1}^{n} \frac{1}{i}$ & $\ln n + \gamma$ (harmonisch) & $\Theta(\log n)$ \\
+$\sum_{i=1}^{\log n} i$ & $\frac{(\log n)(\log n + 1)}{2}$ & $\Theta((\log n)^2)$ \\
+$\sum_{i=1}^{n} \log i$ & $\log n! \approx n \log n$ & $\Theta(n \log n)$ \\
+$\sum_{i=1}^{n} \sqrt{i}$ & $\approx \frac{2}{3} n^{3/2}$ & $\Theta(n^{3/2})$ \\
+$\sum_{i=1}^{n} i \log i$ & keine einfache Formel & $\Theta(n \log n)$ \\
+$\sum_{i=1}^{n} 2^{n-i}$ & $2^n \cdot \sum_{i=1}^{n} 2^{-i} \approx 2^n$ & $\Theta(2^n)$ \\
+\bottomrule
+\end{ZSFtable}
+\end{contentbox}
+
+
+\subsection{Laufzeiten klassischer Schleifenmuster}
+
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+for i in range(n):
+    f()
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $n$ \\
+Laufzeit: $\Theta(n)$
+\end{codebox}
+
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+for i in range(n):
+    for j in range(n):
+        f()
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $n^2$ \quad Laufzeit: $\Theta(n^2)$ \quad \hl{Konstante Grenze: $\Theta(n)$}
+\end{codebox}
+
+\begin{codeboxfirst}
+\begin{lstlisting}[style=CodeExpert]
+for i in range(n):
+    for j in range(i):
+        f()
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$ \quad Laufzeit: $\Theta(n^2)$
+\end{codeboxfirst}
+\begin{codeboxlast}
+\begin{lstlisting}[style=CodeExpert]
+for i in range(n):
+    for j in range(i, n):
+        f()
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $\sum_{i=0}^{n-1} (n - i)$ \quad Laufzeit: $\Theta(n^2)$
+\end{codeboxlast}
+
+\begin{codeboxfirst}
+\begin{lstlisting}[style=CodeExpert]
+for i in range(n):
+    for j in range(n):
+        for k in range(n):
+            f()
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $n^3$ \quad Laufzeit: $\Theta(n^3)$
+\end{codeboxfirst}
+\begin{codeboxmid}
+\begin{lstlisting}[style=CodeExpert]
+for i in range(n):
+    for j in range(i):
+        for k in range(j):
+            f()
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $\sum_{i=0}^{n-1} \sum_{j=0}^{i-1} j$ \quad Laufzeit: $\Theta(n^3)$
+\end{codeboxmid}
+\begin{codeboxlast}
+\begin{lstlisting}[style=CodeExpert]
+for i in range(n):
+    for j in range(n):
+        for k in range(j):
+            f()
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $n \cdot \sum_{j=0}^{n-1} j$ \quad Laufzeit: $\Theta(n^3)$
+\end{codeboxlast}
+
+\begin{statementbox}[Wurzeln]
+$\Rightarrow$ Enthält die Abbruchbedingung eine Potenz der Laufvariable, umformen: $m \cdot m < n \;\Rightarrow\; m < \sqrt{n}$.
+\end{statementbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+m = 0
+while m * m < n:
+    f()
+    m += 1
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $\lceil \sqrt{n} \rceil$ \quad Laufzeit: $\Theta(\sqrt{n})$
+\end{codebox}
+
+\begin{statementbox}[Substitution von Obergrenzen]
+$\Rightarrow$ Ist die äußere Grenze $n^2$ statt $n$: bekanntes Muster anwenden und $n \to n^2$ einsetzen.
+\end{statementbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+# Muster: Grenze n -> Theta(n^2)
+# Hier: Grenze n^2 -> Theta((n^2)^2) = Theta(n^4)
+for i in range(n * n):
+    for j in range(i):
+        f()
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $\sum_{i=0}^{n^2-1} i = \frac{1}{2}n^2(n^2 - 1)$ \quad Laufzeit: $\Theta(n^4)$
+\end{codebox}
+
+\subsection{Logarithmische und gemischte Muster}
+
+\begin{statementbox}[Schlüsselprinzip]
+$\Rightarrow$ Exponentielle Änderung von $i$ oder $n$ $\Rightarrow$ logarithmische Laufzeit.
+\end{statementbox}
+
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+i = n
+while i > 1:
+    f()
+    i //= 2
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $\log n$ \quad Laufzeit: $\Theta(\log n)$
+\end{codebox}
+
+\begin{statementbox}[Vorwärts-Logarithmus]
+$\Rightarrow$ Multiplikation mit konstantem Faktor $>1$ ist äquivalent zur Division (\texttt{i //= 2}) — ebenfalls logarithmisch.
+\end{statementbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+i = 1
+while i < n:
+    f()
+    i = i * 2
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $\lceil \log_2(n) \rceil$ \quad Laufzeit: $\Theta(\log n)$
+\end{codebox}
+
+\begin{codeboxfirst}
+\begin{lstlisting}[style=CodeExpert]
+for i in range(n):
+    j = i
+    while j > 0:
+        f()
+        j //= 2
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $\sum_{i=1}^{n} \log i$ \quad Laufzeit: $\Theta(n \log n)$
+\end{codeboxfirst}
+\begin{codeboxlast}
+\begin{lstlisting}[style=CodeExpert]
+for i in range(n):
+    for j in range(n):
+        k = j
+        while k > 0:
+            f()
+            k //= 2
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $n^2 \log n$ \quad Laufzeit: $\Theta(n^2 \log n)$
+\end{codeboxlast}
+
+\subsection{Besondere Muster}
+
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+for i in range(n):
+    for j in range(i*i):
+        f()
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $\sum_{i=0}^{n-1} i^2$ \quad Laufzeit: $\Theta(n^3)$
+\end{codebox}
+
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+for i in range(n):
+    for j in range(1, i+1):
+        if i % j == 0:
+            f()
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $\sum_{i=1}^{n} \log i$ \quad Laufzeit: $\Theta(n \log n)$
+\end{codebox}
+
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+for i in range(n):
+    for j in range(n):
+        for k in range(i + j):
+            f()
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $\sum_{i=0}^{n-1} \sum_{j=0}^{n-1} (i + j)$ \quad Laufzeit: $\Theta(n^3)$
+\end{codebox}
+
+\subsection{Exponentielle Rekursion}
+
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def f(n):
+    if n <= 1:
+        return
+    f(n-1)
+    f(n-1)
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $2^n$ \quad Laufzeit: $\Theta(2^n)$
+\end{codebox}
+
+\begin{codeboxfirst}
+\begin{lstlisting}[style=CodeExpert]
+def f(n):
+    if n <= 1:
+        return
+    for i in range(n):
+        f(n-1)
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $n \cdot f(n-1)$ \quad Laufzeit: $\Theta(n!)$
+\end{codeboxfirst}
+\begin{codeboxlast}
+\begin{lstlisting}[style=CodeExpert]
+def h(n):
+    if n <= 1:
+        return
+    # rekursiver Aufruf mit Halbierung
+    h(n // 2)
+\end{lstlisting}
+\ZSFgapXS
+Aufrufe: $\lfloor \log_2 n \rfloor + 1$ \quad Laufzeit: $\Theta(\log n)$
+\end{codeboxlast}
+
+
+\subsection{Asymptotische Laufzeit von Rekursionen}
+\begin{contentbox}
+    \textbf{Gegebene Rekurrenz:}
+\[
+T(n) = a \, T\!\left(\frac{n}{b}\right) + f(n), \quad T(1) = c
+\]
+(Annahme: $n$ ist eine Potenz von $b$, für sauberere Algebra.)
+
+\textbf{Rekurrenz auflösen (ausrollen):}
+\[
+\begin{aligned}
+T(n) &= a \, T\!\left(\frac{n}{b}\right) + f(n) \\
+     &= a \left[ a \, T\!\left(\frac{n}{b^2}\right) + f\!\left(\frac{n}{b}\right) \right] + f(n) \\
+     &= a^2 T\!\left(\frac{n}{b^2}\right) + a f\!\left(\frac{n}{b}\right) + f(n) \\
+     &= a^k T\!\left(\frac{n}{b^k}\right) + \sum_{i=0}^{k-1} a^i f\!\left(\frac{n}{b^i}\right).
+\end{aligned}
+\]
+
+\textbf{Abbruchbedingung:}
+Stoppe, wenn $\frac{n}{b^k} = 1 \; \Rightarrow \; k = \log_b n$.
+
+\textbf{Einsetzen:}
+\[
+T(n) = a^{\log_b n} \, T(1) + \sum_{i=0}^{\log_b n - 1} a^i \, f\!\left(\frac{n}{b^i}\right).
+\]
+\end{contentbox}
+
+\begin{contentbox}
+
+
+Beachte, dass $a^{\log_b n} = n^{\log_b a}$, womit die Summe wird zu
+\[
+\sum_{i=0}^{\log_b n - 1} \Theta\!\left(n^d \left(\frac{a}{b^d}\right)^i\right),
+\]
+einer geometrischen Reihe mit Quotient $r = \frac{a}{b^d}$.
+
+
+    
+\end{contentbox}
+
+
+
+
+    
+
+
+ 
+    
+    
+
+
+%=====================================================================================================================
+
+
+%=====================================================================================================================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%=====================================================================================================================
+
+
+%=======================================================================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%=====================================================================================================================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+

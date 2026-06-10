@@ -1,0 +1,189 @@
+---
+description: "Smart Inline/Overflow Code-Kommentare: CodeLine, InlineComment, OverlineComment — automatische Platzierung rechts oder oben"
+globs:
+  - "chapters/**/*.tex"
+  - "styles/67_code_comments.tex"
+alwaysApply: false
+decisionOwner: ai
+decisionStatus: final
+lastUpdatedBy: loris
+lastUpdatedAt: 2026-05-07
+---
+
+# Code-Kommentar-System (Smart Inline/Overflow)
+
+**Zweck:** Intelligente Positionierung von Kommentaren im Code — standardmässig rechts vom Code, automatisch in eigener Zeile davor bei Platzmangel.
+
+**Implementierung:** `styles/67_code_comments.tex` (geladen nach `65_code_style`)
+
+**Verantwortungsteilung:**
+
+| Aspekt | Quelle |
+|---|---|
+| Längen (`\ZSFcodeCommentMaxWidth/Threshold/Gap`, Defaults) | `styles/30_layout_spacing.tex` |
+| Schrift + Farbe (`\ZSFfontCodeComment`) | `styles/50_typography_semantics.tex` |
+| Farb-Definition `ce_green` | `styles/40_colors_structure.tex` |
+| Render-Logik | `styles/67_code_comments.tex` |
+
+## Überblick
+
+| Makro | Verhalten | Nutzung |
+|---|---|---|
+| `\CodeLine{code}[comment]` | Auto: rechts wenn `Code+Kommentar+Gap ≤ Threshold`, sonst oben | Standard für annotierte Code-Zeilen |
+| `\CodeLine{code}` | Nur Code (ohne Kommentar) | Code-Zeile ohne Annotation |
+| `\InlineComment{text}` | Kommentar rechts, kein Auto-Layout | Manuelle Rechts-Positionierung |
+| `\OverlineComment{text}` | Kommentar in eigener Zeile, dann Zeilenumbruch | Manuelle Oben-Positionierung |
+| `\SetCodeCommentThreshold{length}` | Schwelle setzen, persistent bis Reset/Gruppen-Ende | Spezial-Layouts (z.B. enge Boxen) |
+| `\ResetCodeCommentThreshold` | Schwelle und MaxWidth auf Default zurücksetzen | Nach Custom-Anpassung |
+
+## Standard-Verhalten: `\CodeLine`
+
+Misst Code- und Kommentar-Breite und entscheidet:
+
+- **Wenn `\wd{code} + \wd{comment} + \ZSFcodeCommentGap ≤ \ZSFcodeCommentThreshold`:** Kommentar rechts, getrennt durch `\ZSFcodeCommentGap` (= `\ZSFspaceM`, 6pt).
+- **Sonst:** Kommentar in eigener Zeile davor, dann Code in der Folgezeile (`\newline`).
+
+**Default-Schwelle:** `\columnwidth` — wird zur Render-Zeit ausgewertet (nicht beim Laden der Preamble), sodass der korrekte Spaltenbreite-Wert aus der aktiven `multicols`-Umgebung greift. Technisch: `\ZSFcodeCommentThresholdDefault = \maxdimen`; in `67_code_comments.tex` wird zur Render-Zeit `effectiveThreshold = min(\ZSFcodeCommentThreshold, \columnwidth)` berechnet. Kann per `\SetCodeCommentThreshold` auf einen kleineren Wert gesetzt werden (z.B. für enge Boxen).
+
+### Beispiele
+
+```latex
+% Einfacher Kommentar (passt rechts)
+\CodeLine{x = 5}[Initialisierung]
+
+% Langer Kommentar (Overflow → oben)
+\CodeLine{for i in range(n):}[Schleife über alle Elemente iterieren]
+
+% Ohne Kommentar
+\CodeLine{return result}
+```
+
+### Im Kontext (contentbox + ttfamily-Block)
+
+Aufrufer-Konvention: jede Code-Zeile endet mit `\\` (Zeilenumbruch im
+ttfamily-Block); `\CodeLine` selbst fügt **kein** abschliessendes `\\` an,
+damit der Aufruf `\CodeLine{…}[…]\\` symmetrisch zu `\CodeLine{…}\\` bleibt.
+
+```latex
+\begin{contentbox}[Code mit Kommentaren]
+\begin{ttfamily}
+\CodeLine{def quicksort(arr):}[Eingang: unsortiertes Array]\\
+\CodeLine{  if len(arr) <= 1:}[Basis-Fall]\\
+\CodeLine{    return arr}[Bereits sortiert]\\
+\CodeLine{  pivot = arr[0]}[Wähle erstes Element]\\
+\CodeLine{  left = [...]}[Elemente < pivot]\\
+\end{ttfamily}
+\end{contentbox}
+```
+
+## Manuelle Varianten
+
+### `\InlineComment{text}` — immer rechts
+
+Erwartet, dass Code im selben Zeilenkontext bereits ausgegeben wurde; hängt nur den Kommentar mit `\ZSFcodeCommentGap` an.
+
+```latex
+\CodeLine{x = 5}\InlineComment{Initialisierung}
+```
+
+### `\OverlineComment{text}` — immer oben
+
+Gibt den Kommentar in eigener Zeile aus und beendet sie mit `\newline`.
+
+**Nur verwenden wenn:** der Kommentar eine ganze Gruppe von Code-Zeilen beschreibt, oder mehrere `\OverlineComment` für eine Zeile nötig sind. Für einzelne Zeilen immer `\CodeLine{code}[comment]` bevorzugen — das Auto-Layout entscheidet dann selbst ob rechts oder oben.
+
+**Anti-Pattern (falsch):**
+```latex
+\OverlineComment{Gesamtspeicher in Bytes}
+\CodeLine{a.nbytes}\\
+```
+**Korrekt:**
+```latex
+\CodeLine{a.nbytes}[Gesamtspeicher in Bytes]\\
+```
+
+**Legitimer Einsatz** (ein Kommentar für mehrere Zeilen):
+```latex
+\OverlineComment{Basisfälle: F(0) = F(1) = 1}
+\CodeLine{F[0] = 1}\\
+\CodeLine{F[1] = 1}\\
+```
+
+## Anpassung für spezielle Layouts
+
+`\SetCodeCommentThreshold` greift **persistent** bis zum nächsten `\ResetCodeCommentThreshold` oder zum Gruppen-Ende:
+
+```latex
+\begin{contentbox}[Kompakter Code]
+\SetCodeCommentThreshold{1.8cm}  % Kleinere Schwelle in dieser Box
+\CodeLine{x = 5}[Kurzer Kommentar]
+\CodeLine{for i in range(n):}[Längerer Kommentar wird oben]
+\ResetCodeCommentThreshold      % Optional, end-of-group setzt sowieso zurueck
+\end{contentbox}
+```
+
+## Technische Details
+
+- **Schrift + Farbe:** Kommentare werden über `\ZSFfontCodeComment` gerendert (`\ttfamily\color{ce_green}`) — gleiche Schriftgrösse wie der Code, damit Code und Kommentar auf einer Zeile optisch ausgerichtet bleiben. Niemals inline `\textcolor{ce_green}` o.ä. — Style gehört nach `50_typography_semantics.tex`.
+- **`#`-Präfix automatisch:** `\CodeLine`, `\InlineComment`, `\OverlineComment` setzen ein `# ` (Python-Kommentar-Stil) vor den übergebenen Text. Im Quelltext also `\CodeLine{x = 5}[Initialisierung]` schreiben — *nicht* `[# Initialisierung]`.
+- **Verbatim-Rendering:** Code-Argument wird via `\detokenize` cat-12-isiert, sodass `#`, `_`, `%`, `&` literal erscheinen. Optional-Arg-Parsing ist davon nicht betroffen, weil das `[…]` nach dem schliessenden `}` des Code-Arguments steht.
+- **Keine Doppelumbrüche:** `\CodeLine` fügt kein abschliessendes `\\` an. `\OverlineComment` beendet selbst mit `\newline`, daher folgt im Aufrufer keine zusätzliche `\\`.
+- **Inkompatibel mit `lstlisting`:** `\CodeLine` funktioniert nur ausserhalb von `lstlisting`. Für native Listings: native Python-Kommentare (`# …`) verwenden.
+
+## Workflow
+
+1. **Einfache Code-Schnipsel:** Native Python-Kommentare in `lstlisting`
+   ```latex
+   \begin{codebox}[Quicksort][Python]
+   \begin{lstlisting}[style=CodeExpert]
+   def quicksort(arr):
+       # Initialisierung
+       if len(arr) <= 1:
+           return arr
+   \end{lstlisting}
+   \end{codebox}
+   ```
+
+2. **Annotierte Code-Zeilen:** `\CodeLine` in `contentbox`
+   ```latex
+   \begin{contentbox}[Algorithmus mit Erklärung]
+   \begin{ttfamily}
+   \CodeLine{def quicksort(arr):}[Funktion definieren]\\
+   \CodeLine{  if len(arr) <= 1:}[Basis-Fall: 0 oder 1 Elemente]\\
+   \end{ttfamily}
+   \end{contentbox}
+   ```
+
+3. **Gemischte Layouts:** Kombiniere beide
+   ```latex
+   \begin{contentbox}[Hybrid-Darstellung]
+   Native Implementierung:
+   \begin{lstlisting}[style=CodeExpert]
+   def quicksort(arr):
+       return arr  # Vereinfacht
+   \end{lstlisting}
+
+   Mit Erklärung:\\
+   \begin{ttfamily}
+   \CodeLine{def quicksort(arr):}[Funktion definieren]\\
+   \end{ttfamily}
+   \end{contentbox}
+   ```
+
+## Register & Macros (intern → extern)
+
+| Symbol | Definiert in | Zweck |
+|---|---|---|
+| `\ZSFcodeCommentMaxWidth` | `30_layout_spacing.tex` | "Lebende" max. Breite des rechts-stehenden Kommentars |
+| `\ZSFcodeCommentThreshold` | `30_layout_spacing.tex` | "Lebende" Overflow-Schwelle |
+| `\ZSFcodeCommentMaxWidthDefault` | `30_layout_spacing.tex` | Immutabler Default für Reset |
+| `\ZSFcodeCommentThresholdDefault` | `30_layout_spacing.tex` | Immutabler Default für Reset |
+| `\ZSFcodeCommentGap` | `30_layout_spacing.tex` | Mindest-Gap zwischen Code und Kommentar (`= \ZSFspaceM`) |
+| `\ZSFfontCodeComment` | `50_typography_semantics.tex` | Schrift + Farbe für Kommentare |
+
+## Regeln für Autoren
+
+- **Keine hardcodierten `pt`/`em`/`cm`-Werte** in `\CodeLine`-Aufrufen oder in `styles/67_code_comments.tex` selbst. Längen kommen aus `30_layout_spacing.tex`, Stil aus `50_typography_semantics.tex`.
+- **Custom-Schwelle:** `\SetCodeCommentThreshold{…}` statt manuellem `\setlength`.
+- **Comments knapp halten** (1–2 Worte ideal; längere Erklärungen → Prosa neben dem Code).
+- **Standard ist `\CodeLine{code}[comment]`:** Auto-Layout bestimmt selbst ob rechts oder oben. `\OverlineComment` nur für Gruppenheader (ein Kommentar über mehrere Zeilen) oder wenn zwei Kommentare für eine Zeile nötig sind.

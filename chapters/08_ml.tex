@@ -1,0 +1,644 @@
+\section{ML}
+
+\begin{contentbox}
+\textbf{1. Daten einlesen, Modell trainieren und validieren}
+
+Dieser Code zeigt die Grundschritte eines typischen ML-Prozesses: Einlesen der Daten, Aufteilen in Trainings- und Testdaten, Trainieren eines Klassifikationsmodells (z.B. Decision Tree), sowie Validieren mittels Accuracy oder R2-Score.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+import pandas as pd
+import numpy as np  # optional
+
+# Daten einlesen und in X und y aufteilen
+df = pd.read_csv("data.csv")
+X = df.drop(["target"], axis=1)
+y = df["target"]
+
+# in Trainings- und Testdaten aufteilen
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test =
+train_test_split(X, y, test_size=0.2)
+
+# Modell trainieren
+from sklearn.tree import DecisionTreeClassifier
+model = DecisionTreeClassifier()
+model.fit(X_train, y_train)
+
+# Klassifikationsmodell validieren
+from sklearn.metrics import accuracy_score
+y_pred = model.predict(X_test)
+validation_score = accuracy_score(y_test, y_pred)
+
+# oder Regressionsmodell validieren
+from sklearn.metrics import r2_score
+validation_score = r2_score(y_test, y_pred)
+\end{lstlisting}
+\end{codebox}
+
+\begin{contentbox}
+\textbf{2. Vorhersage mit neuen Daten}
+
+Sobald ein Modell trainiert ist, kann es mit neuen Eingabedaten (\texttt{X\_final}) verwendet werden, um Vorhersagen (\texttt{y\_final}) zu erzeugen.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+X_final = pd.read_csv("X_final.csv")
+y_final = model1.predict(X_final)
+return y_final
+\end{lstlisting}
+\end{codebox}
+
+\begin{contentbox}
+\textbf{3. Neuronales Netz mit \texttt{MLPClassifier}}
+
+Ein Beispiel für ein neuronales Netz (Multilayer Perceptron). Die Architektur wird über \texttt{hidden\_layer\_sizes} definiert, z.B. fünf versteckte Schichten mit je 6–8 Neuronen.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+from sklearn.neural_network import MLPClassifier
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.1, random_state=31)
+
+model = MLPClassifier(
+    hidden_layer_sizes=(8, 6, 7, 6, 7, 5),
+    max_iter=5000,
+    random_state=85)
+
+model.fit(X_train, y_train)
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Wichtige Parameter}
+\begin{contentbox}
+\begin{itemize}
+  \item \textbf{max\_iter}: Maximale Anzahl Iterationen, die ein Modell während des Trainings durchläuft, um die Verlustfunktion zu minimieren (z.\,B. Training endet, wenn Loss $< 0.001$).\\
+  \textit{Verwendet von:} \texttt{LogisticRegression}, \texttt{MLPClassifier}, \texttt{MLPRegressor}
+
+  \item \textbf{hidden\_layer\_sizes}: Gibt die Struktur eines neuronalen Netzes an (z.\,B. Anzahl Neuronen pro Schicht).\\
+  \textit{Verwendet von:} \texttt{MLPClassifier}, \texttt{MLPRegressor}
+
+  \item \textbf{random\_state}: Initialisiert den Zufallsprozess (z.\,B. Shuffle bei \texttt{train\_test\_split}, Gewichtung im Netz), um reproduzierbare Ergebnisse zu garantieren.\\
+  \textit{Verwendet von:} allen Modulen mit Zufallskomponenten
+
+  \item \textbf{test\_size}: Prozentualer Anteil der Daten, der für die Testmenge reserviert wird. Üblich ist $0.1$ bis $0.3$.\\
+  \textit{Verwendet von:} \texttt{train\_test\_split}
+ \item \textbf{cv} (Cross-Validation): Gibt bei \texttt{GridSearchCV} oder \texttt{cross\_val\_score} die Anzahl an Folds an, mit denen K-Fold-Cross-Validation durchgeführt wird.\\
+  \textit{Verwendet von:} \texttt{GridSearchCV}, \texttt{cross\_val\_score}, etc.
+
+  \item \textbf{n\_clusters}: Gibt an, wie viele Cluster ein Clustering-Algorithmus bilden soll. Wichtig bei unüberwachtem Lernen.\\
+  \textit{Verwendet von:} \texttt{KMeans}, \texttt{DBSCAN (implizit)}, \texttt{AgglomerativeClustering}
+
+  \item \textbf{Grid Search via Cross-Validation}:
+	\textit{Normales Grid Search:}
+Du probierst verschiedene Modelltiefen und weitere Hyperparameter-Kombinationen aus.
+Für jede Kombination misst du die Fehlerrate des Modells.
+	\textit{k-Fold-Cross-Validation:}
+Die Daten werden in $k$ gleich grosse Teile (Folds) aufgeteilt.
+Das Modell wird $k$-mal trainiert — jedes Mal mit $k-1$ Folds als Trainingsdaten und dem verbleibenden Fold als Validierungsmenge.
+Jeder Fold dient genau einmal als Validierung, sodass eine zuverlässige Schätzung der Modellgüte entsteht.
+\end{itemize}
+\end{contentbox}
+
+\subsection{Modelle}
+
+\subsubsection{ML-Typen: Regression vs. Klassifikation}
+\begin{contentbox}
+\textbf{Regression} wird verwendet, um stetige Werte vorherzusagen (z.\,B. Preis, Wahrscheinlichkeit) in '\%'. \\
+\textbf{Klassifikation} hingegen ordnet Datenpunkte einer festen Klasse zu (z.\,B. Spam/Nicht-Spam), ja oder nein.
+\end{contentbox}
+
+
+
+\subsubsection{Modelle für Regression}
+
+\begin{contentbox}[Linear Regression]
+\begin{itemize}
+  \item Vorhersage basiert auf einer linearen Kombination der Eingabefeatures:
+  \[
+  y = w_1 x_1 + w_2 x_2 + \cdots + w_n x_n + b
+  \]
+  \item \textbf{Import:} \texttt{from sklearn.linear\_model import LinearRegression}
+\end{itemize}
+\end{contentbox}
+
+\begin{contentbox}[Decision Tree Regressor]
+\begin{itemize}
+  \item Modelliert nicht-lineare Beziehungen durch Entscheidungen an Verzweigungsknoten.
+  \item Zerlegt die Eingabemenge in Zonen mit möglichst homogener Zielvariable.
+  \item \textbf{Import:} \texttt{from sklearn.tree import DecisionTreeRegressor}
+\end{itemize}
+\end{contentbox}
+
+\begin{contentbox}[Neural Network Regressor]
+\begin{itemize}
+  \item Ein neuronales Netz mit Regressionsziel: nicht-linear, viele Parameter.
+  \item Flexible Anpassung durch \texttt{hidden\_layer\_sizes}, \texttt{max\_iter}, \texttt{activation}.
+  \item \textbf{Import:} \texttt{from sklearn.neural\_network import MLPRegressor}
+\end{itemize}
+\end{contentbox}
+
+\subsubsection{Bewertung mit dem R2-Score}
+\begin{contentbox}
+Der $R^2$-Score misst die Qualität einer Regressionsvorhersage:
+
+\[
+R^2(D,f) = 1 - \frac{MSE(D,f)}{MSE(D,f_0)}
+\]
+
+\begin{itemize}
+  \item \textbf{MSE hängt von der Skalierung der Daten ab, $R^2$ - Score nicht}
+  \item $f_0$: konstante Durchschnittsvorhersage
+  \item $D$: Datensatz
+  \item $MSE$: Mean Squared Error, misst mittlere quadratische Abweichung (Verlustfunktion):
+  \[
+  MSE(D,f) = \frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2,\quad \hat{y}_i = f(x_i)
+  \]
+\end{itemize}
+\end{contentbox}
+
+
+\subsubsection{LinearRegression}
+\begin{contentbox}
+    \textbf{Wann einsetzen}
+    Für einfache Regressionsprobleme, wenn der Zusammenhang zwischen Features und Zielwert annähernd linear ist.
+
+\textbf{Stärken und Schwächen}
+\textbf{Stärken:} schnell, gut interpretierbar, theoretisch gut verstanden.
+\textbf{Schwächen:} empfindlich gegenüber Ausreissern, setzt Linearität voraus, kann komplexe Muster nicht abbilden.
+
+\textbf{Wichtige Hyperparameter}
+\texttt{fit\_intercept}: ob ein Bias-Term berücksichtigt wird.
+\texttt{n\_jobs}: Anzahl CPU-Kerne, die während des Fits genutzt werden.
+
+\textbf{Beispiel-Use-Case}
+Vorhersage von Hauspreisen anhand von Features wie Wohnfläche, Anzahl Zimmer und Baujahr in einer kleinen Nachbarschaft.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+from sklearn.linear_model import LinearRegression
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+
+
+% -----------------------------
+\subsubsection{Modelle für Klassifikation}
+
+\begin{statementbox}[Voraussetzung]
+Die Daten müssen gelabelt sein.
+\end{statementbox}
+
+\begin{contentbox}[Logistic Regression]
+\begin{itemize}
+  \item Verwendet die \textbf{sigmoid}-Funktion zur Klassenvorhersage:
+  \[
+  y = \sigma(w_0 + w_1 x_1 + \cdots + w_n x_n)
+  \]
+  \item Ausgabe ist die Wahrscheinlichkeit, dass ein Punkt zur positiven Klasse gehört.
+  \item \textbf{Import:} \texttt{from sklearn.linear\_model import LogisticRegression}
+\end{itemize}
+\end{contentbox}
+
+\begin{contentbox}[Decision Tree Classifier]
+\begin{itemize}
+  \item Genau wie der Regressor, aber mit Klassenzuordnung am Ende der Blätter.
+  \item Tiefe entspricht max. Anzahl der Entscheidungen
+  \item Gut interpretierbar, aber anfällig für Overfitting.
+  \item \textbf{Import:} \texttt{from sklearn.tree import DecisionTreeClassifier}
+\end{itemize}
+\end{contentbox}
+
+\begin{contentbox}[Neural Network Classifier]
+\begin{itemize}
+  \item Tieferes neuronales Netz, spezialisiert auf Klassifikationsaufgaben.
+  \item Meist verwendet: \texttt{MLPClassifier} (Multilayer Perceptron)
+  \item \textbf{Import:} \texttt{from sklearn.neural\_network import MLPClassifier}
+\end{itemize}
+\end{contentbox}
+
+
+
+\subsubsection{(Balanced) Accuracy}
+\begin{contentbox}
+
+
+\textbf{Confusion Matrix:}
+
+\begin{center}
+\begin{ZSFtablePlain}{C C C}
+\toprule
+\textbf{real / vorhergesagt} & \textbf{Positiv} & \textbf{Negativ} \\
+\midrule
+\textbf{Positiv} & True Pos. (TP) & False Neg. (FN) \\
+\textbf{Negativ} & False Pos. (FP) & True Neg. (TN) \\
+\bottomrule
+\end{ZSFtablePlain}
+\end{center}
+
+
+
+\textbf{Accuracy:} Anteil der korrekt klassifizierten Beobachtungen:
+
+\begin{equation}
+\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}.
+\end{equation}
+
+\textbf{Balanced Accuracy:} Mittelwert der True Positive Rate (TPR) und der True Negative Rate (TNR): \\
+Aka Zeilen werden Normiert (Summe jeder Zeile ist 1)
+
+\begin{equation}
+\text{Balanced Accuracy} = \frac{1}{2} \big( \text{TPR} + \text{TNR} \big)
+\end{equation}
+
+mit:
+
+\begin{equation}
+\text{TPR} = \frac{TP}{TP + FN}
+\quad \text{und} \quad
+\text{TNR} = \frac{TN}{TN + FP}.
+\end{equation}
+
+\ZSFgapL
+
+\textit{Hinweis:} Die Balanced Accuracy ist nützlich bei unausgeglichenen Klassenverteilungen, da beide Klassen gleich stark berücksichtigt werden.
+\end{contentbox}
+
+
+
+\subsubsection{0-1-Loss:}
+\begin{contentbox}
+
+
+Die \textit{0-1-Loss-Funktion} misst, ob eine Vorhersage korrekt ist:
+
+\begin{equation}
+L(y, \hat{y}) =
+\begin{cases}
+0, & \text{wenn } y = \hat{y} \\
+1, & \text{wenn } y \neq \hat{y}.
+\end{cases}
+\end{equation}
+
+Für einen Datensatz mit $n$ Beispielen:
+
+\begin{equation}
+\text{Empirical Risk} = \frac{1}{n} \sum_{i=1}^{n} L(y_i, \hat{y}_i).
+\end{equation}
+Im Bspl der Confusion Matrix:
+\begin{equation}
+\text{0-1-Loss (Error Rate)} = \frac{FP + FN}{TP + TN + FP + FN}.
+\end{equation}
+Die Accuracy ist das Komlement zum Loss
+\begin{equation}
+    \text{Accuracy} = 1 - \text{Loss} = \frac{TP + TN}{TP + TN + FP + FN}.
+\end{equation}
+\end{contentbox}
+
+\subsubsection{Gini-index Loss:}
+\begin{contentbox}
+
+
+\textbf{Gini-Index (als Loss im Entscheidungsbaum):}
+
+Die „Impurity“ einer Partition $Part_m$ ist:
+\end{contentbox}
+\begin{contentbox}
+    
+
+\begin{equation}
+G(Part_m) = \sum_{k} \hat{p}_{m,k} (1 - \hat{p}_{m,k}),
+\end{equation}
+
+wobei $\hat{p}_{m,k}$ der Anteil der Klasse/Labels $k$ in der Partition ist.
+
+
+
+Ein \textbf{Split} teilt den Knoten $Part_m$ in z.B. zwei Partitionen $Part_1$ und $Part_2$.
+
+Der Gini-Index für den gesamten Split ist:
+
+\begin{equation}
+G_{\text{split}} =
+\frac{|Part_1|}{|Part_m|} G(Part_1)
++ \frac{|Part_2|}{|Part_m|} G(Part_2).
+\end{equation}
+
+wobei $|Part_i|$ die Anzahl der Datenpunkte in der Partition $i$ ist
+
+\ZSFgapL
+
+\textit{Hinweis:} Ein Entscheidungsbaum wählt den Split, der den Gini-Index minimiert.
+
+\end{contentbox}
+\subsubsection{LogisticRegression}
+\begin{contentbox}
+\textbf{Wann einsetzen}
+Für binäre oder multinomiale Klassifikation, wenn die Entscheidungsgrenze annähernd linear ist. Liefert Wahrscheinlichkeitsschätzungen.
+
+\textbf{Stärken und Schwächen}
+\textbf{Stärken:} interpretierbar, schnell, liefert Klassenwahrscheinlichkeiten.
+\textbf{Schwächen:} schwierig bei nicht-linearen Mustern.
+
+\textbf{Wichtige Hyperparameter}
+
+\texttt{max\_iter}: ca. 500--1000, \texttt{class\_weight}: \texttt{"balanced"}, \texttt{None}.
+
+\textbf{Beispiel-Use-Case}
+Vorhersage, ob ein Patient Diabetes hat (ja/nein), basierend auf medizinischen Messwerten — wenn die Features einen linearen Zusammenhang aufweisen.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(max_iter = 1000,
+                        "class_weight" = balanced)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+\end{lstlisting}
+\end{codebox}
+
+\subsubsection{DecisionTreeClassifier}
+\begin{contentbox}
+\textbf{Faustregeln}
+\texttt{max\_depth}: 3--10 für kleine/mittlere Datensätze. Beschränken, um Overfitting zu vermeiden.
+\texttt{min\_samples\_split}: erhöhen (z.\,B. 10+), um zu regularisieren.
+\texttt{min\_samples\_leaf}: 1--5, um Vorhersagen zu glätten.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+from sklearn.tree import DecisionTreeClassifier
+
+model = DecisionTreeClassifier(
+    # aus Vorlesung
+    # für Reproduzierbarkeit
+    random_state=0
+    # Modellkomplexität steuern
+    max_depth=4,
+    # optional
+    # "entropy" als Alternative
+    criterion="gini",
+    splitter="best",          # oder "random"
+    min_samples_split=2,      # Standard
+    min_samples_leaf=1,       # Standard
+    # "sqrt" oder "log2" probieren
+    max_features=None,
+
+)
+model.fit(X_train, y_train)
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+
+\subsubsection{MLPClassifier}
+\begin{contentbox}
+\textbf{Faustregeln}
+\texttt{hidden\_layer\_sizes}: 1--2 Schichten mit je 50--100 Neuronen funktionieren oft gut.
+\texttt{activation}: \texttt{"relu"} verwenden. \texttt{"tanh"} bei kleinen/strukturierten Daten.
+\texttt{alpha}: Default ist 0.0001. Erhöhen, um Overfitting zu reduzieren.
+\texttt{max\_iter}: hoch setzen (z.\,B. 500), falls das Training nicht konvergiert.
+\end{contentbox}
+
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+from sklearn.neural_network import MLPClassifier
+
+model = MLPClassifier(
+    # zwei Schichten
+    hidden_layer_sizes=(50, 50),
+    # erhöhen falls nötig
+    max_iter=5000,
+    random_state=0
+    # optional
+    # oder "tanh", "logistic"
+    activation="relu",
+    # oder "sgd", "lbfgs"
+    solver="adam",
+    # L2-Regularisierung
+    alpha=0.0001,
+    # oder "adaptive"
+    learning_rate="constant",
+)
+model.fit(X_train, y_train)
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+
+\subsubsection{GridSearchCV}
+\begin{contentbox}
+\textbf{Faustregeln}
+\texttt{param\_grid}: 2--4 Werte pro Parameter.
+\texttt{cv}: 5-Fold ist Standard. 3 für Geschwindigkeit, 10 für höhere Genauigkeit.
+\texttt{scoring}: Metrik passend zur Aufgabe wählen.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+from sklearn.model_selection import GridSearchCV
+from sklearn.tree import DecisionTreeClassifier
+
+model = DecisionTreeClassifier(random_state=0)
+
+param_grid = {
+    "max_depth": [2, 4, 6],
+    "class_weight": [None, "balanced"]
+    "min_samples_split": [2, 10],
+    "min_samples_leaf": [1, 5]
+
+} """param_grid kann auch für weitere Parameter
+wie alpha genutzt werden (Prüfung 02.25)"""
+
+
+search = GridSearchCV(
+    estimator=model,
+    param_grid=param_grid,
+    # oder "accuracy", "recall", etc.
+    scoring="balanced_accuracy",
+    cv=5,
+    verbose=1    # nur Terminalausgabe
+)
+search.fit(X_train, y_train)
+\end{lstlisting}
+\end{codebox}
+
+
+
+\subsection{Nicht-numerische Daten: Kategorische Merkmale encodieren}
+\begin{contentbox}
+Maschinelles Lernen erfordert in der Regel numerische Eingabedaten. Nicht-numerische (kategorische) Daten wie z.\,B. \texttt{“Farbe”} oder \texttt{“Beruf”} müssen zuerst in eine numerische Form gebracht werden. Dazu gibt es verschiedene Kodierungsverfahren – je nach Kontext und Modell mit eigenen Vor- und Nachteilen:
+\end{contentbox}
+
+\begin{contentbox}[Ordinal Encoding]
+\textbf{Pro:}
+\begin{itemize}
+  \item Einfach umsetzbar.
+  \item Ermöglicht die Abbildung von geordneter Struktur (z.\,B. 1 = Crew, 2 = First Class).
+\end{itemize}
+\textbf{Con:}
+\begin{itemize}
+  \item Kann eine falsche Nähe zwischen Kategorien suggerieren (z.\,B. 2 ist näher an 1 als 3, obwohl inhaltlich 1 und 3 ähnlicher sind).
+  \item Führt möglicherweise zu verzerrten Modellinterpretationen.
+\end{itemize}
+\end{contentbox}
+
+\begin{contentbox}[Mean Encoding]
+\textbf{Pro:}
+\begin{itemize}
+  \item Nutzt den Mittelwert der Zielvariable pro Kategorie – kann nützliche Informationen übertragen.
+  \item Versucht „scheinbare Nähe” zwischen Kategorien auszugleichen.
+\end{itemize}
+\textbf{Con:}
+\begin{itemize}
+  \item Gefahr von \ZSFkeyword{Data Leakage}: Die Zielvariable „sickert durch” in die Features.
+  \item Erhöhtes Risiko von Overfitting.
+  \item Verlangt Rechenaufwand.
+\end{itemize}
+\end{contentbox}
+
+\begin{contentbox}[One-hot Encoding]
+\textbf{Pro:}
+\begin{itemize}
+  \item Höchste Präzision: Kodiert jede Kategorie in einer separaten Spalte.
+  \item Besonders geeignet für nicht-ordinale Kategorien.
+\end{itemize}
+\textbf{Con:}
+\begin{itemize}
+  \item Jeder neue Wert erzeugt eine neue Spalte (hoher Speicherplatzverbrauch).
+  \item Bei vielen Kategorien kann das Datenmodell sehr breit werden („Fluch der Dimensionalität”).
+\end{itemize}
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+import pandas as pd
+
+pd.get_dummies(a)
+\end{lstlisting}
+\end{codebox}
+
+
+\subsection{Dimensionsreduktion}
+\begin{contentbox}
+\textbf{Faustregeln}
+\texttt{n\_components}: 2--3 für Visualisierung, höher für Preprocessing.
+\texttt{PCA}: linear, schnell, maximiert Varianz.
+\texttt{t-SNE}: nichtlinear, gut für Cluster-Visualisierung, langsamer.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
+from sklearn.preprocessing import StandardScaler
+
+# --- Vorverarbeitung ---
+# Normalisieren (bei Bilddaten üblich)
+images_normalized = images / 255.0
+
+# Oder Standardisieren (bei tabellarischen Daten üblich)
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Bilder "flatten" (z.B. 28x28 -> 784 Dimensionen)
+images_flat = images.reshape(len(images), -1)
+
+# --- Dimensionsreduktion ---
+# PCA (linear)
+model = PCA(n_components=2)
+
+# oder t-SNE (nichtlinear, gleiche API)
+# model = TSNE(n_components=2, random_state=0)
+
+# Fit und Transformation
+images_trans = model.fit_transform(images_flat)
+\end{lstlisting}
+\end{codebox}
+\subsection{Clustering}
+
+\begin{contentbox}
+\textbf{Faustregeln}
+\texttt{StandardScaler}: immer vor PCA anwenden, wenn Features unterschiedliche Skalen haben.
+\texttt{n\_components}: 2--3 für Visualisierung, mehr für Analyse.
+\texttt{K-Means}: \texttt{init="k-means++"} liefert stabilere Ergebnisse.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+import numpy as np
+from sklearn.datasets import load_digits
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+# --- Daten laden ---
+data, labels = load_digits(return_X_y=True)
+(n_samples, n_features), n_digits = data.shape, np.unique(labels).size
+
+# --- Vorverarbeitung ---
+scaled = StandardScaler().fit_transform(data)
+
+# --- PCA-Reduktion auf 2 Dimensionen ---
+reduced_data = PCA(n_components=2).fit_transform(scaled)
+
+# --- K-Means Clustering ---
+kmeans = KMeans(init="k-means++", n_clusters=n_digits, n_init=4)
+kmeans.fit(reduced_data)
+\end{lstlisting}
+\end{codebox}
+
+
+
+\subsection{Was tun, wenn der \texttt{accuracy\_score} zu niedrig ist?}
+
+\begin{contentbox}
+Wenn dein Klassifikationsmodell eine zu geringe Genauigkeit erreicht, kannst du systematisch folgende Maßnahmen ausprobieren:
+
+\begin{enumerate}
+  \item \textbf{Mehr Daten:} 
+  \begin{itemize}
+    \item Größere Trainingsmengen helfen oft, Muster robuster zu erkennen.
+    \item Datenaugmentation oder neue Datenquellen prüfen.
+  \end{itemize}
+
+  \item \textbf{Feature Engineering:}
+  \begin{itemize}
+    \item Relevante Merkmale hinzufügen, irrelevante entfernen.
+    \item Skalierung oder Transformation (z.\,B. \texttt{StandardScaler}).
+    \item Kategorische Variablen korrekt encodieren (\texttt{One-Hot}, \texttt{Ordinal}, \texttt{Mean}).
+  \end{itemize}
+
+  \item \textbf{Modellparameter optimieren:}
+  \begin{itemize}
+    \item \texttt{hidden\_layer\_sizes} beim MLPClassifier vergrößern oder anpassen.
+    \item \texttt{max\_iter} erhöhen (z.\,B. 2000 statt 500), damit das Modell besser konvergiert.
+    \item \texttt{alpha} bei Regularisierung (MLP, Ridge\ldots) anpassen.
+    \item Andere \texttt{activation} Funktionen testen: \texttt{"tanh"}, \texttt{"relu"}\ldots
+  \end{itemize}
+
+  \item \textbf{Randomisierung kontrollieren:}
+  \begin{itemize}
+    \item \texttt{random\_state} anpassen, wenn das Ergebnis stark schwankt.
+    \item Mehrere Splits testen und Mittelwert bilden (z.\,B. mit \texttt{cross\_val\_score}).
+  \end{itemize}
+
+  \item \textbf{Anderes Modell testen:}
+  \begin{itemize}
+    \item Statt Decision Tree → \texttt{RandomForestClassifier} oder \texttt{MLPClassifier}.
+    \item Für lineare Probleme eventuell \texttt{LogisticRegression}.
+  \end{itemize}
+
+  \item \textbf{Overfitting prüfen:}
+  \begin{itemize}
+    \item Wenn Training sehr gut, aber Test schlecht: Modell zu komplex?
+    \item \texttt{max\_depth} bei Trees begrenzen, \texttt{dropout} oder \texttt{alpha} bei MLP verwenden.
+  \end{itemize}
+\end{enumerate}
+\end{contentbox}
+
+
+
+

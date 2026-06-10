@@ -1,0 +1,73 @@
+% ============================================================
+% TYPOGRAPHY AND SEMANTIC HEADINGS
+% ============================================================
+% Informatik authors koennen weiter \section{} und \subsection{}
+% verwenden. Diese werden hier auf das moderne Bar-System
+% (ChapterBar/SubsectionBar) umgeleitet.
+% ============================================================
+
+\makeatletter
+\usepackage{needspace}
+
+% Heading-Fonts (kompatibel zur Analysis/Physik-Linie, leicht
+% kompakter wegen 8pt-Body in Informatik)
+\newcommand{\ZSFfontChapter}{\sffamily\bfseries\fontsize{8.6bp}{9.6bp}\selectfont}
+\newcommand{\ZSFfontSection}{\sffamily\bfseries\fontsize{8.0bp}{9.0bp}\selectfont}
+\newcommand{\ZSFfontBoxTitle}{\sffamily\bfseries\fontsize{7.6bp}{8.4bp}\selectfont}
+\newcommand{\ZSFfontNote}{\sffamily\fontsize{6.5bp}{7.3bp}\itshape\selectfont}
+\newcommand{\ZSFfontCodeComment}{\ttfamily\color{ce_green}}
+\newcommand{\ZSFfontTitleHeader}{\sffamily\bfseries\fontsize{11bp}{12.5bp}\selectfont}
+\newcommand{\ZSFfontTitleSubheader}{\sffamily\itshape\fontsize{6.7bp}{7.5bp}\selectfont}
+\newcommand{\ZSFfontTitleTag}{\sffamily\itshape\fontsize{6.4bp}{7.0bp}\selectfont}
+\newcommand{\ZSFfontDangerUpper}{\sffamily\bfseries}
+\newcommand{\ZSFfontSectionUpper}{\sffamily}
+
+% Semantic helpers
+\newcommand{\ZSFkeyword}[1]{\textbf{#1}}
+\newcommand{\ZSFScriptRef}[1]{\hfill\textcolor{ZSFScriptRefColor}{\small (S.#1)}}
+\newcommand{\ZSFconclusion}[1]{%
+  \par\vspace{-\parskip}\vspace{\ZSFspaceS}%
+  \noindent$\Rightarrow$ #1%
+  \par\vspace{-\parskip}\vspace{\ZSFspaceS}%
+}
+
+\newcommand{\ZSFrowColor}{\rowcolor{\FormulaboxBackColor}}
+\newcommand{\ZSFtableRuleColor}{black!70}
+\newcommand{\SetZSFtableRuleColor}[1]{\renewcommand{\ZSFtableRuleColor}{#1}}
+\newcommand{\ZSFtableRuleWidth}{0.5pt}
+\newcommand{\SetZSFtableRuleWidth}[1]{\renewcommand{\ZSFtableRuleWidth}{#1}}
+
+% ============================================================
+% \section / \subsection / \subsubsection -> Bar-System
+% ============================================================
+% Wir ueberschreiben die KOMA-Defaults so, dass sie identisch zu
+% \StartChapter / \SubsectionBar arbeiten. So bleiben alle
+% bestehenden Kapiteldateien (\section{Titel}, \subsection{Titel})
+% unveraendert.
+
+% \section -> ChapterBar mit Kapitel-Palette
+\renewcommand{\section}{\@ifstar{\zsf@section@star}{\zsf@section@plain}}
+\newcommand{\zsf@section@plain}[1]{%
+  \StartChapter{#1}%
+}
+\newcommand{\zsf@section@star}[1]{%
+  \StartFrontChapter{#1}%
+}
+
+% \subsection -> SubsectionBar (verwendet die SubsectionBar-Umgebung
+% aus 60_boxes; das Spacing-Sequencing wird dort verwaltet).
+\renewcommand{\subsection}{\@ifstar{\zsf@subsection@star}{\zsf@subsection@plain}}
+\newcommand{\zsf@subsection@plain}[1]{\SubsectionBar{#1}}
+\newcommand{\zsf@subsection@star}[1]{\SubsectionBar*{#1}}
+
+% \subsubsection -> kompaktes Inline-Heading in Kapitelfarbe
+% (kein Vollbalken, weil im 3-Spalten-Layout sehr eng).
+\renewcommand{\subsubsection}{\@ifstar{\zsf@subsubsection@star}{\zsf@subsubsection@plain}}
+\newcommand{\zsf@subsubsection@plain}[1]{%
+  \par\addvspace{\ZSFspaceS}%
+  \noindent\textcolor{\chaptercolor}{\ZSFfontBoxTitle #1}%
+  \par\nopagebreak\vspace{\ZSFspaceXS}%
+}
+\newcommand{\zsf@subsubsection@star}[1]{\zsf@subsubsection@plain{#1}}
+
+\makeatother

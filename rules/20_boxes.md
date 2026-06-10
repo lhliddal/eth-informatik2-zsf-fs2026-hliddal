@@ -1,0 +1,54 @@
+---
+description: "Box-Umgebungen (contentbox, codebox, defbox, formulabox, statementbox, …) und Struktur-Makros (StartChapter, SubsectionBar, ZSFkeyword)"
+globs:
+  - "chapters/**/*.tex"
+  - "styles/60_boxes.tex"
+  - "styles/40_colors_structure.tex"
+  - "styles/50_typography_semantics.tex"
+alwaysApply: false
+decisionOwner: ai
+decisionStatus: final
+lastUpdatedBy: loris
+lastUpdatedAt: 2026-05-08
+---
+
+## Box-Typen
+
+| Umgebung | Verwendung |
+|---|---|
+| `\begin{contentbox}` | Generischer Inhalts-Container (Prosa, gemischter Inhalt) |
+| `\begin{contentbox}[Titel]` | Mit farbigem Titelbalken |
+| `\begin{contentbox}[Titel][Tag]` | Mit Titelbalken + rechts-ausgerichtetem Sprach-Tag |
+| `\begin{codebox}` | Code-Snippets (zero-padding, für lstlisting) |
+| `\begin{codebox}[Titel][Python]` | Code-Box mit Titelbalken und Sprach-Tag |
+| `\begin{codeboxfirst}` | Split-Gruppe Anfang (oben geschlossen, unten offen) |
+| `\begin{codeboxmid}` | Split-Gruppe Mitte (oben und unten offen) |
+| `\begin{codeboxlast}` | Split-Gruppe Ende (oben offen, unten geschlossen) |
+| `\begin{tablebox}[Titel]` | Tabellenbox mit farbigem Titel |
+| `\begin{defbox}[Titel]` | Definition / hervorgehobene Faktenbox |
+| `\begin{formulabox}` | Zentrierte Schlüsselformeln |
+| `\begin{statementbox}[Titel]` | Aussage mit linkem Akzentstreifen |
+| `\begin{procedure}[Titel]` | Schritt-für-Schritt-Verfahren mit `\ProcStep{title}{desc}` |
+| `\begin{factlist}` | Faktenliste mit `\ZSFFact{lead}{desc}` |
+| `\begin{propertylist}[Titel]` | Eigenschaftsliste |
+| `sectionbox` | Alias für `contentbox` (backward-compat) |
+
+## Struktur-Makros
+
+| Makro | Verwendung |
+|---|---|
+| `\StartChapter{Titel}` | Hauptkapitel mit auto-Nummerierung + Farbpalette |
+| `\StartFrontChapter{Titel}` | Kapitel ohne Nummerierung |
+| `\SubsectionBar{Titel}` | Nummerierter Abschnitt mit farbigem Balken |
+| `\SubsectionBar*{Titel}` | Unnummerierter Abschnitt |
+| `\ZSFTitleHeader{Titel}{Autor}` | Dokumenttitelbox (gleicher Stil wie Analysis/Physik) |
+| `\ZSFkeyword{Begriff}` | Fachbegriff im Fliesstext (→ `\textbf`) |
+| `\hl{text}` | Inline-Hervorhebung (underline + bold) |
+| `\eqbox{formel}` | Inline-Formelbox mit farbigem Hintergrund |
+| `\ZSFTitleTag{text}` | Rechts-ausgerichtetes Meta-Tag im Titelbalken |
+
+## Keyword-Hervorhebung
+
+Fachbegriffe im Fliesstext **ausschliesslich** mit `\ZSFkeyword{...}` auszeichnen (definiert in `styles/50_typography_semantics.tex`). Kein manuelles `\textbf{...}` für Fachbegriffe — `\textbf` bleibt strukturellen Markierungen vorbehalten.
+
+Code-Identifier inline: `\texttt{...}`. Begriffshervorhebung: `\hl{...}`.

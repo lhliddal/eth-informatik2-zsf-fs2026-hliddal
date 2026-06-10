@@ -1,0 +1,62 @@
+---
+description: "Code-Listings (lstlisting + CodeExpert-Style), codebox-Verwendung, Inline-Code Konventionen"
+globs: "chapters/**/*.tex,styles/65_code_style.tex"
+alwaysApply: false
+decisionOwner: ai
+decisionStatus: final
+lastUpdatedBy: loris
+lastUpdatedAt: 2026-05-07
+---
+<!-- AUTO-GENERATED — rules-hash:59ba7314bfe74777 —
+     Quelle: rules/40_code.md. Nicht direkt bearbeiten. Änderungen → `make sync-rules`. -->
+
+## Code-Listings
+
+Alle Code-Snippets immer mit `lstlisting` und dem `CodeExpert`-Style (definiert in `styles/65_code_style.tex`):
+
+```latex
+\begin{lstlisting}[style=CodeExpert]
+def hello():
+    return 42
+\end{lstlisting}
+```
+
+Für Code mit Titelbalken:
+
+```latex
+\begin{codebox}[Quicksort][Python]
+\begin{lstlisting}[style=CodeExpert]
+def quicksort(arr): ...
+\end{lstlisting}
+\end{codebox}
+```
+
+Inline-Code: `\texttt{...}`. Begriffshervorhebung: `\hl{...}`. Kein `\textbf{...}` für Code-Identifier.
+
+## Code-Kommentare (Smart Inline/Overflow)
+
+Für annotierte Code-Zeilen mit intelligenter Kommentar-Platzierung siehe **`rules/45_code_comments.md`**.
+
+Kurz:
+- `\CodeLine{code}[comment]` — Kommentar rechts (Standard) oder oben (bei Overflow)
+- `\InlineComment{text}` — Immer rechts
+- `\OverlineComment{text}` — Immer oben
+- Nutze in `contentbox`/`defbox`, nicht in `lstlisting`
+
+## Math-Makros
+
+Definiert in `styles/70_document_settings.tex`. Diese Makros statt direkter `\mathbb{}`-Notation verwenden:
+
+| Makro | Output | Bedeutung |
+|---|---|---|
+| `\C` | $\mathbb{C}$ | Komplexe Zahlen |
+| `\R` | $\mathbb{R}$ | Reelle Zahlen |
+| `\F` | $\mathcal{F}$ | Fourier-Transformation |
+| `\laplace{f}` | $\mathcal{L}[f]$ | Laplace-Transformation |
+| `\unint` | $\int_{-\infty}^\infty$ | Uneigentliches Integral |
+| `\imag` | $\mathrm{i}$ | Imaginäre Einheit |
+| `\infin` | $\mathrm{d}$ | Differentialoperator |
+| `\Arg{z}` | $\mathrm{Arg}(z)$ | Hauptargument |
+| `\Log{z}` | $\mathrm{Log}(z)$ | Hauptlogarithmus |
+| `\Res{f}` | $\mathrm{Res}(f)$ | Residuum |
+

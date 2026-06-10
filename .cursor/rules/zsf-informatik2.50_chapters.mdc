@@ -1,0 +1,45 @@
+---
+description: "Kapitel-Mapping (00_titelbox bis 14_credits), Bilder (Images/, figures/, graphicspath), Antworten mit Kapitel-Referenzen"
+globs: "chapters/**/*.tex,main.tex"
+alwaysApply: false
+decisionOwner: ai
+decisionStatus: final
+lastUpdatedBy: loris
+lastUpdatedAt: 2026-05-07
+---
+<!-- AUTO-GENERATED — rules-hash:59ba7314bfe74777 —
+     Quelle: rules/50_chapters.md. Nicht direkt bearbeiten. Änderungen → `make sync-rules`. -->
+
+## Kapitelstruktur
+
+| Datei | Inhalt |
+|---|---|
+| `chapters/00_titelbox.tex` | Titelbox (`\ZSFTitleHeader`) |
+| `chapters/01_python-syntax.tex` | Python-Grundlagen, Syntax |
+| `chapters/02_classes.tex` | OOP, Klassen, Vererbung |
+| `chapters/03_dynamische-programmierung.tex` | Dynamische Programmierung |
+| `chapters/04_algorithmen.tex` | Sortier- und Suchalgorithmen |
+| `chapters/05_asymptotische-laufzeit.tex` | Landau-Notation, Komplexitätsklassen |
+| `chapters/06_numpy.tex` | NumPy |
+| `chapters/07_pandas.tex` | Pandas |
+| `chapters/08_ml.tex` | Machine Learning |
+| `chapters/09_datenstrukturen.tex` | Datenstrukturen (Stack, Queue, Heap, …) |
+| `chapters/10_neuronale-netzwerke.tex` | Neuronale Netze |
+| `chapters/11_unsupervised.tex` | Unüberwachtes Lernen |
+| `chapters/12_code-examples.tex` | Code-Beispiele |
+| `chapters/13_dp-quiz.tex` | DP-Quiz |
+| `chapters/14_credits.tex` | Credits |
+
+Neue Kapitel nur nach Rücksprache. Neue Datei `chapters/XX_name.tex` anlegen, dann `\input` in `main.tex` ergänzen.
+
+## Bilder
+
+- Primärer Ordner: `Images/`
+- Thematisch gegliedert: `figures/algorithms/`, `figures/data-structures/`, `figures/neural-networks/`
+- `\graphicspath` in `styles/70_document_settings.tex` kennt alle Ordner → `\includegraphics{name}` ohne Pfad reicht
+- Keine neuen Top-Level-Bildordner anlegen
+
+## Referenzen in Antworten
+
+Inhalte immer mit genauem Kapitel referenzieren — z.B. `chapters/04_algorithmen.tex` (Thema "Quicksort Average Case"). Bei ML: `chapters/08_ml.tex` ("Logistic Regression").
+

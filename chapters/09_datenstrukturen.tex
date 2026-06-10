@@ -1,0 +1,414 @@
+\section{Datenstrukturen}
+\subsection{Queue und Stack}
+\begin{contentbox}
+\textbf{Queue:} Eine Warteschlange, bei der Elemente nach dem \textit{First In – First Out} (FIFO) Prinzip verarbeitet werden.
+
+\begin{itemize}
+  \item \texttt{add/enqueue}: Element am Ende der Queue einfügen
+  \item \texttt{remove/dequeue}: Element am Anfang der Queue entfernen
+\end{itemize}
+
+\textbf{Stack:} Ein Stapelspeicher, der nach dem \textit{Last In – First Out} (LIFO) Prinzip arbeitet.
+
+\begin{itemize}
+  \item \texttt{add/push}: Element oben auf den Stack legen
+  \item \texttt{remove/pop}: Oberstes Element entfernen
+\end{itemize}
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+stack = []                        # Stack (LIFO)
+stack.append(x)                   # push   -> O(1)
+top = stack.pop()                 # pop    -> O(1)
+
+from collections import deque     # Queue (FIFO)
+q = deque()
+q.append(x)                       # enqueue-> O(1)
+first = q.popleft()               # dequeue-> O(1)
+# list.pop(0) waere O(n) -> deque benutzen!
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Binary (Search) Trees} 
+\subsubsection{Baumdurchläufe (Traversal)}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def preorder_list(node: Optional[Node]) -> list:
+    if node is None:
+        return []
+    return [node.key] + preorder_list(node.left) +
+    preorder_list(node.right)
+
+def postorder_list(node: Optional[Node]) -> list:
+    if node is None:
+        return []
+    return postorder_list(node.left)
+    + postorder_list(node.right) + [node.key]
+
+def inorder_list(node: Optional[Node]) -> list:
+    if node is None:
+        return []
+    return inorder_list(node.left)
+    + [node.key] + inorder_list(node.right)
+\end{lstlisting}
+\end{codebox}
+\begin{contentbox}
+\begin{center}
+    \includegraphics[scale=0.26]{tree_traversing.png}
+\end{center}
+\text{Preorder: Hauptreihenfolge, mit dem wird Baum gebaut}\\
+\text{Postorder: Nebenreihenfolge}
+\end{contentbox}
+
+\subsubsection{Knoten suchen (search)}
+\begin{contentbox}
+\text{Durchschnittsfall: $\Theta(\log n)$, Worst Case: $\Theta(n)$}
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def search(self, key: int) -> Optional[Node]:
+    """Search for the node with the specified key in the tree and return it, or None if there is no such node."""
+    n = self.root  # Starte bei der Wurzel
+    while n is not None and n.key is not key:  # Laufe, bis Schlüssel gefunden oder Ende erreicht
+        if key < n.key:  # Gesuchter Schlüssel ist kleiner -> links weiter
+            n = n.left  # Gehe zum linken Kind
+        else:
+            n = n.right  # Sonst nach rechts gehen
+    return n  # Gefundener Knoten oder None
+\end{lstlisting}
+\end{codebox}
+
+\subsubsection{Knoten hinzufügen (add)}
+\begin{contentbox}
+\text{Durchschnittsfall: $\Theta(\log n)$, Worst Case: $\Theta(n)$}
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def add(self, key: int) -> bool:
+    """Add a node with the specified key to the tree.
+    Return True if the node was added, and False otherwise."""
+    if self.root is None:
+        self.root = Node(key)
+        return True
+    n = self.root
+    while n.key is not key:
+        if key < n.key:
+            if n.left is None:
+                n.left = Node(key)
+                return True
+            n = n.left
+        else:
+            if n.right is None:
+                n.right = Node(key)
+                return True
+            n = n.right
+    return False
+\end{lstlisting}
+\end{codebox}
+
+
+\subsubsection{Knoten löschen (delete)}
+\begin{contentbox}
+\text{In allen Fällen: $\Theta(n)$}
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def deleteNode(root, key):
+    if root is None:
+        return None
+    if key < root.val:
+        root.left = deleteNode(root.left, key)
+    elif key > root.val:
+        root.right = deleteNode(root.right, key)
+    else:
+        # Case 1: No children
+        if root.left is None and root.right is None:
+            root = None
+        # Case 2: Only right child
+        elif root.left is None:
+            root = root.right
+        # Case 2: Only left child
+        elif root.right is None:
+            root = root.left
+        # Case 3: Two children
+        else:
+            successor = findSuccessor(root)
+            root.val = successor.val
+    return root
+def findSuccessor(start_node):
+    parent = start_node
+    node = start_node.right
+    while node.left is not None:
+        parent = node
+        node = node.left
+    parent.left = node.right
+    return node
+\end{lstlisting}
+\end{codebox}
+\subsubsection{Komplexitäten}
+\begin{contentbox}
+\begin{itemize}
+  \item Baum aufbauen (Worst Case): $\Theta(n^2)$ \; (balanciert: $\Theta(n \log n)$)
+  \item Minimum/Maximum finden: $\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)
+  \item Einfügen: $\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)
+  \item Entfernen (beliebiges Element): $\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)
+\end{itemize}
+\end{contentbox}
+
+
+\subsection{Heaps}
+\begin{center}
+    \includegraphics[scale=0.42]{Bildschirmfoto 2025-08-09 um 11.49.43.png}
+\end{center}
+
+\subsubsection{Grundidee eines Binary Heaps}
+\begin{contentbox}
+Ein Binary Heap ist eine vollständige Binärstruktur, bei der gilt:
+\begin{itemize}
+  \item \textbf{Min-Heap:} Elternknoten ist stets kleiner als seine Kinder.
+  \item \textbf{Max-Heap:} Elternknoten ist stets größer als seine Kinder.
+\end{itemize}
+
+Heaps werden in einer Liste gespeichert, sodass die Knotenebenen hintereinander notiert sind:
+\[
+\texttt{[1, 2, 3, 4, 5, 6]} \Rightarrow \text{Index: } 0,1,2,\dots
+\]
+
+
+    
+
+\textbf{Zugriffsformeln:}
+\begin{itemize}
+  \item \texttt{parent} = $(i-1)//2$
+  \item \texttt{left child} = $2i + 1$
+  \item \texttt{right child} = $2i + 2$
+  \item \texttt{Höhe} = $\log_2(N+1)$ mit $N = \texttt{len(list)}$
+\end{itemize}
+\end{contentbox}
+
+\subsubsection{Heapify (Heap aufbauen)}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def heapify(list):
+    for i in range(len(list)):
+        while list[(i - 1)//2] > list[i] and i > 0:
+            swap(list, (i - 1)//2, i)
+            i = (i - 1)//2
+    return
+\end{lstlisting}
+\end{codebox}
+\begin{contentbox}
+oder:
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def heapify(list):
+    n = len(list)
+    for i in range(n//2 - 1, -1, -1):
+        shift_down(list, i, n)
+    return
+\end{lstlisting}
+\end{codebox}
+
+\subsubsection{SiftDown (oberstes Element löschen)}
+\begin{contentbox}
+Beim Entfernen der Wurzel (z.\,B. Max-Element bei Max-Heap) wird das letzte Element nach oben geschoben und mit seinen Kindern verglichen. Dabei wird immer mit dem größeren (bzw. kleineren bei Min-Heap) Kind getauscht.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def SiftDown(a, i, m):
+    while 2*i + 1 < m:
+        j = 2*i + 1
+        if j + 1 < m and a[j] < a[j + 1]:
+            j += 1
+        if a[i] >= a[j]:
+            break
+        a[i], a[j] = a[j], a[i]
+        i = j
+\end{lstlisting}
+\end{codebox}
+
+\subsubsection{Sortieren mit Heaps (Heap Sort)}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def SortHeap(a):
+    heapify(a)
+    for i in reversed(range(len(a))):
+        swap(a[0], a[i])
+        SiftDown(a, 0, i)
+    return
+\end{lstlisting}
+\end{codebox}
+
+\subsubsection{Elemente einfügen und löschen}
+\begin{contentbox}
+\textbf{Einfügen:} ans Ende der Liste hängen, dann \texttt{siftUp()}
+\textbf{Löschen:} Element mit letztem tauschen, löschen, dann \texttt{SiftDown()}
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def removeMax(heap):
+    if len(heap) == 0:
+        return None
+    max_val = heap[0]
+    heap[0] = heap[-1]
+    heap.pop()
+    SiftDown(heap, 0, len(heap))
+    return max_val
+\end{lstlisting}
+\end{codebox}
+
+
+\subsubsection{Komplexitäten}
+\begin{contentbox}
+\begin{itemize}
+  \item Heap aufbauen (Worst Case): $\Theta(n \log n)$
+  \item Maximum/Minimum holen: $\mathcal{O}(1)$
+  \item Einfügen in Heap: $\mathcal{O}(\log n)$
+  \item Entfernen (Top-Element): $\mathcal{O}(\log n)$
+\end{itemize}
+\end{contentbox}
+
+
+
+
+\subsection{Hash-Tabellen}
+
+\subsubsection{Grundidee}
+\begin{contentbox}
+Eine \textbf{Hash-Tabelle} speichert ungeordnete Sammlungen \textbf{einzigartiger Elemente} (z.\,B. \texttt{set} oder \texttt{dict} in Python).
+
+\textbf{Hashing:} Einer Eingabe wird mittels \textbf{Hash-Funktion} ein Integer zugewiesen. Die Platzierung im Array der Länge $M$ erfolgt am Index:
+\[
+\texttt{index} = \texttt{hash}(x)\ \%\ M \quad(\text{math: } \bmod)
+\]
+\end{contentbox}
+
+\subsubsection{Laufzeiten}
+\begin{contentbox}
+\begin{itemize}
+  \item Suche, Einfügen, Entfernen (Erwartungswert): $\mathcal{O}(1)$
+  \item Suche, Einfügen, Entfernen (Worst Case): $\mathcal{O}(n)$
+\end{itemize}
+\end{contentbox}
+
+\subsubsection{Kollisionsbehandlung}
+\begin{contentbox}
+Treffen mehrere Elemente auf denselben Index, gibt es zwei Lösungsansätze:
+\begin{itemize}
+  \item \textbf{Chaining:} Am Index wird der \textbf{Head-Knoten} einer \textbf{Linked List} gespeichert, die alle kollidierenden Elemente aufnimmt. \\
+  \emph{Vorteil:} Ein oft wiederholter Hash blockiert nicht die restliche Tabelle.
+  \item \textbf{Probing:} Ist der Index besetzt, wird zirkulär der nächste freie Index (\textbf{Wrap-around}) gesucht. \\
+  \emph{Vorteil:} Alle Daten bleiben \textbf{Cache-freundlich} im Array. \\
+  \emph{Nachteil:} Löschungen erfordern \textbf{Tombstoning} (spezielle Literale als Platzhalter) oder komplexes Rückwärts-Verschieben.
+\end{itemize}
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def our_hash(word):
+    return ord(word[0])           # einfache Hash-Fkt.
+
+def create_hash_table(l, M):
+    res = [[] for _ in range(M)]  # M leere Buckets
+    for x in l:
+        idx = our_hash(x) % M     # % statt mod!
+        if x not in res[idx]:     # keine Duplikate
+            res[idx].append(x)    # chaining: anhaengen
+    return res
+\end{lstlisting}
+\end{codebox}
+
+
+\subsection{Quadtrees}
+
+\subsubsection{Grundidee}
+\begin{contentbox}
+\textbf{Quadtrees} sind \textbf{volle Quarternärbäume} (jeder Knoten hat entweder $0$ oder exakt $4$ Kinder) zur effizienten Verarbeitung \textbf{räumlicher Daten in 2D} (z.\,B. Rechteck-Abfragen).
+\end{contentbox}
+
+\subsubsection{Struktur eines Knotens}
+\begin{contentbox}
+Ein Knoten speichert:
+\begin{itemize}
+  \item untere linke Ecke $l$ und obere rechte Ecke $u$
+  \item \textbf{Maximalkapazität} $m$
+  \item Liste $p$ von Punkten
+  \item $4$ Referenzen auf Kinder-Quadtrees $c_0, c_1, c_2, c_3$
+\end{itemize}
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+class QuadTree:
+    def __init__(self, l, u, m):
+        self.l, self.u = l, u     # untere/obere Ecke
+        self.m = m                # Kapazitaet
+        self.p = []               # Punkte im Knoten
+        self.c = [None]*4         # Kinder c0..c3
+\end{lstlisting}
+\end{codebox}
+
+\subsubsection{Einfügen \& Split}
+\begin{contentbox}
+\begin{itemize}
+  \item Ein Punkt wird zu $p$ hinzugefügt.
+  \item Überschreitet die Anzahl der Punkte die Kapazität $m$, wird der Knoten in \textbf{vier Viertel} partitioniert.
+  \item Die Punkte aus $p$ werden auf die Kinder aufgeteilt und das eigene $p$ geleert.
+\end{itemize}
+\end{contentbox}
+
+\subsubsection{Rechtecks-Abfrage (Range Query)}
+\begin{contentbox}
+\begin{itemize}
+  \item Die Suche wächst logarithmisch mit der Anzahl der Punkte: $\mathcal{O}(\log n)$.
+  \item Schneidet das Such-Rechteck einen Quadranten nicht, wird dieser Zweig \textbf{komplett ignoriert} (Pruning).
+\end{itemize}
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def query(node, q_l, q_u):
+    if not overlaps(node, q_l, q_u):  # Pruning!
+        return []                     # Zweig ignorieren
+    hits = [pt for pt in node.p       # lokale Punkte
+            if inside(pt, q_l, q_u)]
+    for child in node.c:              # rekursiv in Kinder
+        if child is not None:
+            hits += query(child, q_l, q_u)
+    return hits
+\end{lstlisting}
+\end{codebox}
+
+\subsubsection{Bemerkung}
+\begin{contentbox}
+Die \textbf{Konstruktion} des Baumes ist relativ aufwendig; der Einsatz lohnt sich daher erst bei \textbf{höherfrequentierten Abfragen}.
+\end{contentbox}
+
+
+\subsection{Übersicht: Laufzeiten im Vergleich}
+\begin{contentbox}
+\renewcommand{\arraystretch}{1.25}
+\begin{ZSFtable}{Q{1.2} L L L}
+\toprule
+\textbf{Datenstruktur} & \textbf{Suche} & \textbf{Einfügen} & \textbf{Entfernen} \\
+\midrule
+Liste / Array       & $\mathcal{O}(n)$          & $\mathcal{O}(n)$ \emph{(worst)}   & $\mathcal{O}(n)$ \emph{(worst)}   \\
+Linked List         & $\mathcal{O}(n)$          & $\mathcal{O}(1)$ \emph{(nach Suche)} & $\mathcal{O}(1)$ \emph{(nach Suche)} \\
+BST \emph{(balanciert)} & $\mathcal{O}(\log n)$ & $\mathcal{O}(\log n)$             & $\mathcal{O}(\log n)$             \\
+BST \emph{(unbal.)} & $\mathcal{O}(n)$          & $\mathcal{O}(n)$                  & $\mathcal{O}(n)$                  \\
+Heap                & $\mathcal{O}(n)$          & $\mathcal{O}(\log n)$             & $\mathcal{O}(\log n)$\,\footnotesize{(Top)} \\
+Hash-Tabelle        & $\mathcal{O}(1)$ \emph{(erw.)} & $\mathcal{O}(1)$ \emph{(erw.)} & $\mathcal{O}(1)$ \emph{(erw.)} \\
+Quadtree            & $\mathcal{O}(\log n)$\,\footnotesize{(Range)} & $\mathcal{O}(\log n)$ & --- \\
+\bottomrule
+\end{ZSFtable}
+
+\ZSFgapXS
+\textbf{Merke:}
+\begin{itemize}
+  \item \textbf{Hash-Tabelle}: schnellster Zugriff im Durchschnitt, aber ungeordnet.
+  \item \textbf{BST / Heap}: geordneter Zugriff, log.\ Laufzeit — nur balanciert effizient.
+  \item \textbf{Quadtree}: spezialisiert auf 2D-Bereichs-Abfragen.
+\end{itemize}
+\end{contentbox}
+
+
+
+

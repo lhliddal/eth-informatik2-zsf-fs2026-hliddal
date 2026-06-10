@@ -1,0 +1,78 @@
+\section{Klassen}
+
+\subsection{Vererbung}
+\begin{contentbox}
+Eine \textbf{Oberklasse} (Superclass) ist eine Klasse, die als Basis für eine andere Klasse dient – die sogenannte \textbf{Unterklasse} (Subclass). Mittels \verb|super().__init__()| kann die Unterklasse auf den Konstruktor der Oberklasse zugreifen.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+class Car:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+
+    def honk(self):
+        return f"{self.model} is honking!"
+\end{lstlisting}
+\end{codebox}
+\begin{contentbox}
+\textit{Oberklasse innerhalb der Unterklasse:}
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+class ElectricCar(Car):
+    def __init__(self, brand, model):
+        # ruft __init__ der Elternklasse Car auf
+        super().__init__(brand, model)
+
+    def charge(self):
+        return f"{self.model} battery is charging."
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Klasseninterne Funktionen implementieren}
+\begin{contentbox}
+\textbf{Achtung:} Wenn Operatoren wie \verb|+| für Klassen überschrieben werden, sollte das Ergebnis wieder eine Instanz dieser Klasse sein. Sonst handelt es sich um einen undefinierten Datentyp, auf den keine Methoden wie \verb|__str__| angewendet werden können.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+class CustomString:
+    def __init__(self, string):
+        self.string = string
+
+    def __str__(self):
+        return self.string
+
+    def __add__(self, other):
+        result_string = ""
+        for i in range(len(self.string)):
+            if i < len(other.string):
+                result_string += self.string[i] + other.string[i]
+            else:
+                result_string += self.string[i]
+        return CustomString(result_string)
+
+s1 = CustomString("abcd")
+s2 = CustomString("123")
+print(s1 + s2)
+\end{lstlisting}
+\end{codebox}
+
+
+
+%=====================================================================================================================
+
+%=====================================================================================================================
+
+%=====================================================================================================================
+
+%=====================================================================================================================
+
+    
+
+
+%=====================================================================================================================
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

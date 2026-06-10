@@ -1,0 +1,48 @@
+% ============================================================
+% DOCUMENT SETTINGS, MATH MACROS, GRAPHICS PATH
+% ============================================================
+% --- Global Unicode Fixes ---
+% Verhindert Fehler, wenn spezielle Unicode-Zeichen (z.B. Minus-Zeichen aus Mac) im restlichen Text stehen
+\DeclareUnicodeCharacter{2212}{-}
+\DeclareUnicodeCharacter{2192}{\ensuremath{\rightarrow}}
+\DeclareUnicodeCharacter{2013}{--}
+\DeclareUnicodeCharacter{2014}{---}
+
+\setcounter{secnumdepth}{3}
+
+\newcommand{\Arg}[1]{\mathrm{Arg}(#1)} 
+\newcommand{\Log}[1]{\mathrm{Log}(#1)} 
+\newcommand{\Res}[1]{\mathrm{Res}(#1)} 
+\newcommand{\wind}[1]{\mathrm{W}(#1)}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\laplace}[1]{\mathcal{L}\left[#1\right]}
+\newcommand{\unint}[0]{\int_{-\infty}^\infty}
+
+\newcommand{\C}[0]{\mathbb{C}}
+\newcommand{\R}[0]{\mathbb{R}}  
+
+\newcommand{\infin}[0]{\mathrm{d}}
+\newcommand{\imag}[0]{\mathrm{i}}
+
+\pagestyle{empty}
+
+% Seitenzahl unten rechts (overlay, layout-neutral)
+\AddToShipoutPictureFG{%
+  \AtPageLowerLeft{%
+    \put(\dimexpr\paperwidth-1.5em\relax,1.2ex){%
+      \makebox(0,0)[rb]{\sffamily\fontsize{6.5pt}{7pt}\selectfont\color{ZSFPageNumberColor}\thepage}%
+    }%
+  }%
+}
+
+\setlength{\unitlength}{1cm}
+\setlist{leftmargin = *}
+
+\graphicspath{%
+  {./}%
+  {Images/}%
+  {figures/}%
+  {figures/algorithms/}%
+  {figures/data-structures/}%
+  {figures/neural-networks/}%
+}

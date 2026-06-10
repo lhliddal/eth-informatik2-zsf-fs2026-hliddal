@@ -1,0 +1,299 @@
+\section{Algorithmen}
+\begin{contentbox}
+\begin{center}
+    \includegraphics[scale=0.5]{Bildschirmfoto 2025-07-29 um 12.56.34.png}
+\end{center}
+
+\end{contentbox}
+
+%=====================================================================================================================
+\subsection{Bubble Sort}
+\begin{contentbox}
+\begin{itemize}
+    \item Vergleicht benachbarte Elemente und vertauscht sie bei falscher Reihenfolge.
+    \item Wiederholt dies, bis keine Vertauschungen mehr nötig sind.
+        \item \texttt{a[:-(i + 1)]} enthält die $i + 1$ größten Elemente von \texttt{a} in sort. Reihe.
+\end{itemize}
+\textbf{Laufzeit:} $\Theta(n^2)$ im Durchschnitt und schlechtesten Fall.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def bubble_sort(a):
+    n = len(a)
+    # Grosse Schleife ueber alle Elemente
+    for i in range(n):
+        # Vergleicht bis zum unsortierten Rest
+        for j in range(0, n-i-1):
+            # Wenn linkes Element groesser...
+            if a[j] > a[j+1]:
+                # ...vertausche beide
+                a[j], a[j+1] = a[j+1], a[j]
+\end{lstlisting}
+\end{codebox}
+
+\begin{center}
+    \includegraphics[scale=0.15]{Images/bubble.png}
+\end{center}
+
+
+\subsection{Selection Sort}
+\begin{contentbox}
+Sucht in jedem Durchlauf das kleinste Element:
+\begin{itemize}
+    \item Tauscht es mit dem aktuellen Element.
+    \item Wiederholt das für den restlichen unsortierten Bereich.
+    \item \texttt{a[:i + 1]} enthält die kleinsten \(i + 1\) Elemente von \texttt{a}, in sort. Reihe.
+\end{itemize}
+\textbf{Laufzeit:} $\Theta(n^2)$ in allen Fällen.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def selection_sort(a):
+    n = len(a)
+    # Grosse Schleife ueber alle Positionen
+    for i in range(n):
+        # Nimm an, dass a[i] das Minimum ist
+        min_idx = i
+        # Suche im restlichen Feld...
+        for j in range(i+1, n):
+            # ...nach einem noch kleineren Element
+            if a[j] < a[min_idx]:
+                # Speichere neuen Index des Minimums
+                min_idx = j
+        # Tausche an sortierte Position
+        a[i], a[min_idx] = a[min_idx], a[i]
+\end{lstlisting}
+\end{codebox}
+
+\begin{contentbox}
+
+
+\begin{minipage}{0.48\textwidth}
+    \includegraphics[scale=0.2]{Selection-sort-0.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+    \includegraphics[scale=0.2]{Images/Selection-sort-1.png}
+\end{minipage}
+
+
+
+\end{contentbox}
+
+
+
+
+\subsection{Insertion Sort}
+\begin{contentbox}
+Sortiert ähnlich wie beim Kartenspiel:
+\begin{itemize}
+    \item Jedes Element wird an die richtige Position im linken, bereits sortierten Teil eingefügt.
+    \item Größere Elemente werden nach rechts verschoben.
+    \item Die Elemente in \texttt{a[:i + 1]} sind sortiert und entsprechen den ersten $i$ Elementen des ursprüngl. Arrays.
+\end{itemize}
+\textbf{Laufzeit:} $\Theta(n)$ im besten Fall (wenn sortiert), $\Theta(n^2)$ im Worst-Case.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def insertion_sort(a):
+    # Starte beim zweiten Element
+    for i in range(1, len(a)):
+        # Speichere aktuelles Element
+        key = a[i]
+        # Betrachte die Elemente links davon
+        j = i - 1
+        # Solange links groessere Elem. sind
+        while j >= 0 and key < a[j]:
+            # Verschiebe sie nach rechts
+            a[j + 1] = a[j]
+            # Gehe weiter nach links
+            j -= 1
+        # Fuege das Element an Luecke ein
+        a[j + 1] = key
+\end{lstlisting}
+\end{codebox}
+
+\begin{center}
+    \includegraphics[scale=0.420]{Images/insertion-sort.PNG}
+\end{center}
+
+
+
+\subsection{Merge Sort}
+\begin{contentbox}
+Ein rekursiver \textbf{Divide-and-Conquer}-Algorithmus:
+\begin{itemize}
+    \item Das Array wird in zwei Hälften geteilt.
+    \item Beide Hälften werden rekursiv sortiert.
+    \item Die sortierten Hälften werden zusammengeführt (merge).
+    \item Das Resultat-Array \texttt{b[:i + 1]} enthält die $i + 1$ kleinsten Elemente von \texttt{a} in sortierter Reihenfolge.
+\end{itemize}
+\textbf{Laufzeit:} $\Theta(n \log n)$ in allen Fällen.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def merge_sort(a):
+    # Wenn Array mehr als 1 Element hat
+    if len(a) > 1:
+        # Finde die Mitte
+        mid = len(a) // 2
+        # Teile das Array in zwei Haelfen
+        L, R = a[:mid], a[mid:]
+        # Sortiere beide rekursiv
+        merge_sort(L); merge_sort(R)
+        i = j = k = 0
+        # Beide Haelfen zusammenfuegen
+        while i < len(L) and j < len(R):
+            # Nimm das kleinere Element ...
+            if L[i] < R[j]:
+                # ...aus linker Haelfte
+                a[k] = L[i]; i+=1
+            else:
+                # ...aus rechter Haelfte
+                a[k] = R[j]; j+=1
+            k+=1
+        # Rest links anhaengen
+        while i < len(L):
+            a[k] = L[i]; i+=1; k+=1
+        # Rest rechts anhaengen
+        while j < len(R):
+            a[k] = R[j]; j+=1; k+=1
+\end{lstlisting}
+\end{codebox}
+
+\begin{center}
+    \includegraphics[scale=0.2]{Images/merge-sort-example_0.png}
+\end{center}
+
+
+\subsection{Quick Sort}
+\begin{contentbox}
+Ein effizienter rekursiver \textbf{Divide-and-Conquer}-Algorithmus:
+\begin{itemize}
+    \item Wählt ein \emph{Pivot}-Element.
+    \item Teilt das Array in Elemente kleiner und größer als das Pivot.
+    \item Sortiert beide Teilarrays rekursiv.
+    \item Das Pivotelement befindet sich an der richtigen Posit., Elem. links davon sind kleiner und rechts davon gröss als das Pivot..
+\end{itemize}
+\textbf{Laufzeit:} $\Theta(n \log n)$ durchschnittlich, $\Theta(n^2)$ im Worst-Case.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def quick_sort(a, low, high):
+    # Wenn mehr als ein Element da ist
+    if low < high:
+        # Waehle ganz rechts als Pivot
+        pivot = a[high]
+        # Zeiger fuer kleineres Element
+        i = low - 1
+        # Gehe durch das Array
+        for j in range(low, high):
+            # Wenn Element kleiner/gleich Pivot
+            if a[j] <= pivot:
+                # Verschiebe Zeiger
+                i += 1
+                # Vertausche Elemente
+                a[i], a[j] = a[j], a[i]
+        # Setze Pivot in die Mitte
+        a[i+1], a[high] = a[high], a[i+1]
+        # Dies ist die fertige Pivot-Position
+        pi = i + 1
+        # Sortiere rekursiv links vom Pivot
+        quick_sort(a, low, pi - 1)
+        # Sortiere rekursiv rechts vom Pivot
+        quick_sort(a, pi + 1, high)
+\end{lstlisting}
+\end{codebox}
+
+\begin{center}
+    \includegraphics[scale=0.2]{Images/quicky.png}
+\end{center}
+
+
+
+
+\subsection{Heap Sort}
+\begin{contentbox}
+\begin{itemize}
+    \item Erst wird ein Max-Heap aufgebaut.
+    \item Grösstes Element (Wurzel) wird entfernt und ans Ende gesetzt.
+    \item Der Heap wird danach angepasst (heapify).
+\end{itemize}
+\textbf{Laufzeit:} $\Theta(n \log n)$ in allen Fällen.
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def heapify(a, n, i):
+    # Setze root als groesstes Element
+    largest = i
+    # Linkes und rechtes Kind
+    l, r = 2 * i + 1, 2 * i + 2
+    # Kind links groesser?
+    if l < n and a[l] > a[largest]: largest = l
+    # Kind rechts groesser?
+    if r < n and a[r] > a[largest]: largest = r
+    # Wenn Root nicht das Groesste ist...
+    if largest != i:
+        # ...vertausche beide
+        a[i], a[largest] = a[largest], a[i]
+        # Max-Heap-Eigenschaft wiederherst.
+        heapify(a, n, largest)
+
+def heap_sort(a):
+    n = len(a)
+    # Baue einen Max-Heap auf (bottom-up)
+    for i in range(n//2 - 1, -1, -1):
+        heapify(a, n, i)
+    # Elemente einzeln entnehmen
+    for i in range(n-1, 0, -1):
+        # Aktuelle Wurzel ans Ende setzen
+        a[i], a[0] = a[0], a[i]
+        # Erneut Max-Heap aufbauen
+        heapify(a, i, 0)
+\end{lstlisting}
+\end{codebox}
+
+\begin{center}
+    \includegraphics[scale=0.1]{Images/Heap-sort-algo.png}
+\end{center}
+
+
+\subsection{Binary Sort}
+\begin{contentbox}
+Eine Variante von Insertion Sort:
+\begin{itemize}
+    \item Findet die Einfügeposition per binärer Suche.
+    \item Die Verschiebung der Elemente bleibt aber linear.
+\end{itemize}
+\textbf{Laufzeit:} $\Theta(n^2)$ (Vergleiche: $\Theta(n \log n)$, Verschiebungen: $\Theta(n^2)$).
+\end{contentbox}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+def binary_insertion_sort(a):
+    # Starte beim zweiten Element
+    for i in range(1, len(a)):
+        # Element das eingefuegt wird
+        key = a[i]
+        # Grenzen fuer binaere Suche
+        low, high = 0, i - 1
+        # Suche richtige Position
+        while low <= high:
+            mid = (low + high) // 2
+            # Suche in linker Haelfte
+            if key < a[mid]: high = mid - 1
+            # Suche in rechter Haelfte
+            else: low = mid + 1
+        # Verschiebe alle groesseren Elem...
+        for j in range(i, low, -1):
+            # ...eins nach rechts
+            a[j] = a[j - 1]
+        # Setze Element an gefundene Pos
+        a[low] = key
+\end{lstlisting}
+\end{codebox}
+
+\begin{center}
+    \includegraphics[scale=0.36]{Images/2021-01-28-BinarySearch-fig2.png}
+\end{center}
+
+

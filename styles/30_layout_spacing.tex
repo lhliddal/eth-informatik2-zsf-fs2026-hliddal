@@ -1,0 +1,93 @@
+% ============================================================
+% LAYOUT AND SPACING
+% ============================================================
+
+\setlength{\parskip}{2.5pt plus 1pt minus 0.5pt}
+\setlength{\parindent}{0pt}
+
+\widowpenalty=10000
+\clubpenalty=10000
+\brokenpenalty=4000
+\predisplaypenalty=10000
+
+\raggedcolumns
+\newcounter{zsfFirstChap}\setcounter{zsfFirstChap}{1}
+
+% Kompakte Spacing-Skala (4 Stufen) - kompatibel mit Analysis/Physik
+\newlength{\ZSFspaceXS}          \setlength{\ZSFspaceXS}{1pt}
+\newlength{\ZSFspaceS}           \setlength{\ZSFspaceS}{3pt}
+\newlength{\ZSFspaceM}           \setlength{\ZSFspaceM}{6pt}
+\newlength{\ZSFspaceL}           \setlength{\ZSFspaceL}{9pt}
+
+% Abstand ober-/unterhalb von TextBlocks und Trennlinien
+\newlength{\ZSFspaceOuter}        \setlength{\ZSFspaceOuter}{6pt}
+\newlength{\ZSFspaceSep}          \setlength{\ZSFspaceSep}{2.5pt}
+
+\newlength{\ZSFtextMinPad}        \setlength{\ZSFtextMinPad}{\ZSFspaceXS}
+
+\setlength{\columnsep}{\ZSFspaceL}
+\setlength{\multicolsep}{\ZSFspaceS}
+\setlength{\emergencystretch}{2em}
+\newlength{\ZSFbreakThreshold}   \setlength{\ZSFbreakThreshold}{3\baselineskip}
+\newlength{\ZSFpostChapterNudge} \setlength{\ZSFpostChapterNudge}{0pt}
+\newlength{\ZSFtitleBarHeight}   \setlength{\ZSFtitleBarHeight}{8.6pt}
+\newlength{\ZSFsubsectionBarBeforeSkip}\setlength{\ZSFsubsectionBarBeforeSkip}{\ZSFspaceL}
+\newlength{\ZSFsubsectionAfterChapterGap}\setlength{\ZSFsubsectionAfterChapterGap}{\ZSFspaceXS}
+\newlength{\ZSFsubsectionAfterGap}\setlength{\ZSFsubsectionAfterGap}{\ZSFspaceXS}
+\newlength{\ZSFchapterBarAfterSkip}\setlength{\ZSFchapterBarAfterSkip}{2pt}
+
+% Tokens fuer statementbox / procedure
+\newlength{\ZSFstatementBarWidth} \setlength{\ZSFstatementBarWidth}{2pt}
+\newlength{\ZSFstatementLeftPad}  \setlength{\ZSFstatementLeftPad}{\ZSFspaceM}
+\newlength{\ZSFprocStepGap}       \setlength{\ZSFprocStepGap}{\ZSFspaceXS}
+\newlength{\ZSFprocItemSep}       \setlength{\ZSFprocItemSep}{\ZSFspaceXS}
+\newlength{\ZSFprocLeftMargin}    \setlength{\ZSFprocLeftMargin}{1.6em}
+\newlength{\ZSFlistLeftMargin}    \setlength{\ZSFlistLeftMargin}{1.2em}
+\newlength{\ZSFprocLabSep}        \setlength{\ZSFprocLabSep}{0.4em}
+\newlength{\ZSFcodeMiniSkip}      \setlength{\ZSFcodeMiniSkip}{1mm}
+\newlength{\ZSFcodeFrameRule}     \setlength{\ZSFcodeFrameRule}{0.4pt}
+\newlength{\ZSFcodeXMargin}       \setlength{\ZSFcodeXMargin}{8pt}
+
+% Tokens fuer Code-Kommentare
+% MaxWidth: max. Breite des rechts-stehenden Kommentars
+% Threshold: Schwelle fuer Auto-Overflow (Code+Kommentar > Threshold -> oben)
+% Default-Register sind immutabel und dienen \ResetCodeCommentThreshold als Anker;
+% \SetCodeCommentThreshold modifiziert nur die "lebenden" Register.
+\newlength{\ZSFcodeCommentMaxWidthDefault}
+  \setlength{\ZSFcodeCommentMaxWidthDefault}{.25\columnwidth}
+\newlength{\ZSFcodeCommentThresholdDefault}
+  \setlength{\ZSFcodeCommentThresholdDefault}{\maxdimen}
+\newlength{\ZSFcodeCommentMaxWidth} \setlength{\ZSFcodeCommentMaxWidth}{\ZSFcodeCommentMaxWidthDefault}
+\newlength{\ZSFcodeCommentThreshold}\setlength{\ZSFcodeCommentThreshold}{\ZSFcodeCommentThresholdDefault}
+\newlength{\ZSFcodeCommentGap}      \setlength{\ZSFcodeCommentGap}{\ZSFspaceM}
+
+% Backward-compat-Aliase fuer die alte v1-API (in 50_typography referenziert)
+\newlength{\zsfheadingskip}\setlength{\zsfheadingskip}{3pt plus 2pt minus 2pt}
+\newlength{\zsfboxskip}    \setlength{\zsfboxskip}{2pt plus 2pt minus 1pt}
+\newlength{\zsfparskip}    \setlength{\zsfparskip}{\parskip}
+
+% Listen-Defaults global kompakt
+\setlist{nosep, leftmargin=*, topsep=0pt, partopsep=0pt}
+
+% ============================================================
+% Semantische Gap-Helfer (Legacy + Skala)
+% ============================================================
+\newcommand{\ZSFgapXS}{\vspace{\ZSFspaceXS}}
+\newcommand{\ZSFgapS}{\vspace{\ZSFspaceS}}
+\newcommand{\ZSFgapM}{\vspace{\ZSFspaceM}}
+\newcommand{\ZSFgapL}{\vspace{\ZSFspaceL}}
+\newcommand{\ZSFSectionGap}{\vspace{\ZSFspaceL}}
+\newcommand{\ZSFmanualColumnBreak}{\columnbreak}
+\newcommand{\ZSFtabColGap}{\hspace{1.5em}}
+
+\newcommand{\ZSFRobustUnskip}{%
+  \ifvmode
+    \ifdim\lastskip>0pt\relax\vskip-\lastskip\fi
+    \ifnum\lastpenalty=0\else\unpenalty\fi
+    \ifdim\lastskip>0pt\relax\vskip-\lastskip\fi
+  \else
+    \ifdim\lastskip>0pt\relax\unskip\fi
+    \ifnum\lastpenalty=0\else\unpenalty\fi
+    \ifdim\lastskip>0pt\relax\unskip\fi
+  \fi
+}

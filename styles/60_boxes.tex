@@ -1,0 +1,451 @@
+% ============================================================
+% BOXES, CHAPTER/SUBSECTION BARS, AND HELPERS
+% ============================================================
+% Architektur (modular, von unten nach oben):
+%   1. Bar-Helpers + Title-Bar-Spacing-Kontrakt
+%   2. ChapterBar / SubsectionBar (Solid-Color)
+%   3. Geteilte tcb-Styles:
+%        zsftitlebar      (Font, Hoehe, Padding fuer Title-Streifen)
+%        zsfcontentbase   (clean Frame, kein Akzentstreifen)
+%        zsfcontenttitled (Frame + Title-Bar in Kapitelfarbe)
+%        zsfstatementstyle(Akzentstreifen links - bewusst, nur fuer
+%                          statementbox/procedure)
+%        zsftitlebox      (defbox: getoenter Hintergrund + Titel)
+%   4. Semantische Wrapper-Environments:
+%        contentbox  generischer Inhalts-Container (Prosa, Mix)
+%        codebox     fuer Code-Snippets (tight padding, optional lang-tag)
+%        tablebox    fuer Tabellen (zero padding, booktabs/tabular friendly)
+%        defbox      fuer Definitionen / hervorgehobene Faktenboxen
+%        formulabox  fuer zentrierte Schluesselformeln
+%        statementbox/procedure/factlist/propertylist (mit Akzentstreifen)
+%   5. Backward-compat-Aliase:
+%        sectionbox -> contentbox
+%        smallbox / bigbox -> dezente neutrale Wrapper
+% ============================================================
+
+% ------------------------------------------------------------
+% 1. Bar-Helpers
+% ------------------------------------------------------------
+\newcommand{\BreakIfNotEnoughSpace}{%
+  \par\penalty0\vspace{0pt plus \ZSFbreakThreshold}\penalty-100\vspace{0pt plus -\ZSFbreakThreshold}\relax
+}
+
+\newcommand{\ZSFTitleBarTopSpacing}[1]{%
+  \par
+  \addvspace{#1}%
+  \BreakIfNotEnoughSpace
+}
+
+% ------------------------------------------------------------
+% 2. ChapterBar / SubsectionBar
+% ------------------------------------------------------------
+\newtcolorbox{chapterbar}[1][]{
+  enhanced jigsaw,
+  breakable=false,
+  colback=\ChapterBarColor,
+  colframe=\ChapterBarColor,
+  boxrule=0pt,
+  boxsep=0pt,
+  left=\ZSFspaceS, right=\ZSFspaceS, top=\ZSFspaceS, bottom=\ZSFspaceS,
+  before skip=\ZSFspaceL,
+  after skip=\ZSFchapterBarAfterSkip,
+  fontupper=\ZSFfontChapter,
+  #1
+}
+\newcommand{\ChapterBar}[1]{%
+  \begin{chapterbar}\textcolor{white}{#1}\end{chapterbar}%
+}
+
+\newtcolorbox{subsectionbar}[1][]{
+  enhanced jigsaw,
+  breakable=false,
+  colback=\SubsectionBarColor,
+  colframe=\SubsectionBarColor,
+  boxrule=0pt,
+  boxsep=0pt,
+  left=\ZSFspaceS, right=\ZSFspaceS, top=\ZSFspaceS, bottom=\ZSFspaceS,
+  before skip=0pt,
+  after skip=\ZSFsubsectionAfterGap,
+  fontupper=\ZSFfontSection,
+  #1
+}
+\makeatletter
+\newcommand{\SubsectionBar}{\@ifstar{\SubsectionBarStar}{\SubsectionBarNumbered}}
+\newcommand{\SubsectionBarNumbered}[2][]{%
+  \ZSFTitleBarTopSpacing{\ZSFsubsectionBarBeforeSkip}%
+  \penalty-500
+  \ZSFCollapseAfterChapterBar
+  \refstepcounter{subsection}%
+  \if\relax\detokenize{#1}\relax\else\label{#1}\fi
+  \begin{subsectionbar}\textcolor{white}{\thesubsection. #2}\end{subsectionbar}%
+  \penalty10000
+  \ZSFMarkAfterSubsectionBar
+}
+\newcommand{\SubsectionBarStar}[2][]{%
+  \ZSFTitleBarTopSpacing{\ZSFsubsectionBarBeforeSkip}%
+  \penalty-500
+  \ZSFCollapseAfterChapterBar
+  \if\relax\detokenize{#1}\relax\else\label{#1}\fi
+  \begin{subsectionbar}\textcolor{white}{#2}\end{subsectionbar}%
+  \penalty10000
+  \ZSFMarkAfterSubsectionBar
+}
+\makeatother
+
+% ------------------------------------------------------------
+% 3a. Geteilter Title-Bar-Stil (Font + Hoehe)
+% ------------------------------------------------------------
+\tcbset{zsftitlebar/.style={
+  fonttitle=\ZSFfontBoxTitle\strut,
+  halign title=flush left,
+  title style={minimum height=\ZSFtitleBarHeight},
+  lefttitle=\ZSFspaceS,
+  righttitle=\ZSFspaceS,
+  toptitle=\ZSFspaceXS,
+  bottomtitle=\ZSFspaceXS,
+  before title={},
+  after title={},
+}}
+
+% ------------------------------------------------------------
+% 3b. zsfcontentbase: rahmenlos-dezente Basis fuer alle
+%     generischen Content-Boxen (Code, Tabellen, Prosa)
+% ------------------------------------------------------------
+\tcbset{zsfcontentbase/.style={
+  enhanced jigsaw,
+  breakable=false,
+  colback=white,
+  colframe=\ZSFBaseBoxBorderColor,
+  boxrule=0.4pt,
+  arc=1pt,
+  outer arc=1pt,
+  boxsep=0pt,
+  before skip=\ZSFBoxBeforeSkip,
+  after skip=\ZSFspaceS,
+  before={\ZSFConsumeAfterSubsectionBar},
+}}
+
+% ------------------------------------------------------------
+% 3c. zsfcontenttitled: Basis + Title-Bar in Kapitelfarbe
+% ------------------------------------------------------------
+\tcbset{zsfcontenttitled/.style={
+  zsfcontentbase,
+  colbacktitle=\chaptercolor,
+  coltitle=white,
+  colframe=\ZSFTitledBoxBorderColor,
+  titlerule=0pt,
+  zsftitlebar,
+}}
+
+% ------------------------------------------------------------
+% 3d. zsftitlebox (defbox): getoenter Hintergrund + Titelbar
+% ------------------------------------------------------------
+\tcbset{zsftitlebox/.style={
+  enhanced jigsaw,
+  breakable=false,
+  colback=\BoxBackColor,
+  colbacktitle=\BoxTitleColor,
+  colframe=\BoxFrameColor,
+  coltitle=\BoxTitleTextColor,
+  boxrule=0.5pt,
+  titlerule=0pt,
+  boxsep=0pt,
+  before skip=\ZSFBoxBeforeSkip,
+  after skip=\ZSFspaceS,
+  before={\ZSFConsumeAfterSubsectionBar},
+  zsftitlebar,
+  before upper={\parskip=\ZSFspaceS\relax},
+}}
+
+% ------------------------------------------------------------
+% 3e. zsfstatementstyle: linker Akzentstreifen (Aussagen)
+% ------------------------------------------------------------
+\tcbset{zsfstatementstyle/.style={
+  enhanced jigsaw,
+  breakable=false,
+  colback=white,
+  colframe=white,
+  frame hidden,
+  borderline west={\ZSFstatementBarWidth}{0pt}{\StatementBarColor},
+  boxrule=0pt,
+  arc=0pt, outer arc=0pt,
+  left=\ZSFstatementLeftPad,
+  right=\ZSFspaceS,
+  top=\ZSFspaceXS,
+  bottom=\ZSFspaceXS,
+  before skip=\ZSFBoxBeforeSkip,
+  after skip=\ZSFspaceS,
+  before={\ZSFConsumeAfterSubsectionBar},
+}}
+
+% ============================================================
+% 4. Semantische Wrapper-Environments
+% ============================================================
+
+% ------------------------------------------------------------
+% Helper: rechtsbuendiges Sprach-/Meta-Tag im Titel
+% ------------------------------------------------------------
+\newcommand{\ZSFTitleTag}[1]{\hfill{\ZSFfontTitleTag #1}}
+
+% ------------------------------------------------------------
+% 4a. contentbox -- generischer Inhalts-Container
+%     Verwendung:
+%       \begin{contentbox}                ... \end{contentbox}
+%       \begin{contentbox}[Titel]         ... \end{contentbox}
+%       \begin{contentbox}[Titel][Tag]    ... \end{contentbox}
+% ------------------------------------------------------------
+\newtcolorbox{zsf@contentbox@plain}[1][]{
+  zsfcontentbase,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
+  #1
+}
+\newtcolorbox{zsf@contentbox@titled}[3][]{
+  zsfcontenttitled,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
+  title={\strut #2\if\relax\detokenize{#3}\relax\else\ZSFTitleTag{#3}\fi},
+  #1
+}
+
+\NewDocumentEnvironment{contentbox}{o O{}}
+  {\IfNoValueTF{#1}{\begin{zsf@contentbox@plain}}{\begin{zsf@contentbox@titled}{#1}{#2}}}
+  {\IfNoValueTF{#1}{\end{zsf@contentbox@plain}}{\end{zsf@contentbox@titled}}}
+
+% ------------------------------------------------------------
+% 4b. codebox -- fuer Code-Snippets
+%     Identische API wie contentbox, aber zero-padding top/bottom
+%     (lstlisting bringt eigenen above/belowskip mit).
+% ------------------------------------------------------------
+\newtcolorbox{zsf@codebox@plain}[1][]{
+  zsfcontentbase,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=0pt, bottom=0pt,
+  #1
+}
+\newtcolorbox{zsf@codebox@titled}[3][]{
+  zsfcontenttitled,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=0pt, bottom=0pt,
+  title={\strut #2\if\relax\detokenize{#3}\relax\else\ZSFTitleTag{#3}\fi},
+  #1
+}
+
+\NewDocumentEnvironment{codebox}{o O{}}
+  {\IfNoValueTF{#1}{\begin{zsf@codebox@plain}}{\begin{zsf@codebox@titled}{#1}{#2}}}
+  {\IfNoValueTF{#1}{\end{zsf@codebox@plain}}{\end{zsf@codebox@titled}}}
+
+% ------------------------------------------------------------
+% 4b'. Split-codebox — drei Teil-Environments fuer mehrteilige
+%      Code-Gruppen mit moeglichem Spaltenumbruch zwischen Teilen.
+%      Visuell zusammenhaengend (offene Kante), physisch getrennt.
+%        codeboxfirst  — Anfang  (Rahmen oben + Seiten, unten offen)
+%        codeboxmid    — Mitte   (nur Seiten, oben und unten offen)
+%        codeboxlast   — Ende    (Rahmen unten + Seiten, oben offen)
+% ------------------------------------------------------------
+\tcbset{zsf@codebox@split@base/.style={
+  enhanced jigsaw,
+  breakable=false,
+  colback=white,
+  colframe=\ZSFBaseBoxBorderColor,
+  leftrule=0.4pt, rightrule=0.4pt,
+  toprule=0pt, bottomrule=0pt,
+  arc=0pt, outer arc=0pt,
+  boxsep=0pt,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=0pt, bottom=0pt,
+  before skip=0pt,
+  after skip=\ZSFspaceXS,
+}}
+
+\newtcolorbox{codeboxfirst}{
+  zsf@codebox@split@base,
+  toprule=0.4pt,
+  arc=1pt, outer arc=1pt,
+  sharp corners=south,
+  before skip=\ZSFBoxBeforeSkip,
+  before={\ZSFConsumeAfterSubsectionBar},
+}
+
+\newtcolorbox{codeboxmid}{
+  zsf@codebox@split@base,
+}
+
+\newtcolorbox{codeboxlast}{
+  zsf@codebox@split@base,
+  bottomrule=0.4pt,
+  arc=1pt, outer arc=1pt,
+  sharp corners=north,
+  after skip=\ZSFspaceS,
+}
+
+% ------------------------------------------------------------
+% 4c. tablebox -- fuer Tabellen
+%     Zero padding, damit booktabs/tabular Regeln den Rand
+%     selbst setzen koennen.
+% ------------------------------------------------------------
+\newtcolorbox{zsf@tablebox@plain}[1][]{
+  zsfcontentbase,
+  left=\ZSFspaceXS, right=\ZSFspaceXS,
+  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
+  halign=center,
+  #1
+}
+\newtcolorbox{zsf@tablebox@titled}[3][]{
+  zsfcontenttitled,
+  left=\ZSFspaceXS, right=\ZSFspaceXS,
+  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
+  halign=center,
+  title={\strut #2\if\relax\detokenize{#3}\relax\else\ZSFTitleTag{#3}\fi},
+  #1
+}
+
+\NewDocumentEnvironment{tablebox}{o O{}}
+  {\IfNoValueTF{#1}{\begin{zsf@tablebox@plain}}{\begin{zsf@tablebox@titled}{#1}{#2}}}
+  {\IfNoValueTF{#1}{\end{zsf@tablebox@plain}}{\end{zsf@tablebox@titled}}}
+
+% ------------------------------------------------------------
+% 4d. defbox -- definitionsstarke, getoenten Hintergrund
+% ------------------------------------------------------------
+\newtcolorbox{defbox}[1][]{zsftitlebox,
+  left=\ZSFspaceS, right=\ZSFspaceS, top=\ZSFspaceS, bottom=\ZSFspaceS,
+  title={#1}}
+
+% ------------------------------------------------------------
+% 4e. formulabox -- zentrierte Schluesselformeln
+% ------------------------------------------------------------
+\newenvironment{longformula}{\[\begin{aligned}}{\end{aligned}\]}
+\newtcolorbox{formulabox}[1][]{
+  enhanced jigsaw,
+  colback=\FormulaboxBackColor,
+  colframe=black,
+  boxrule=0.5pt,
+  left=\ZSFspaceS, right=\ZSFspaceS, top=\ZSFspaceS, bottom=\ZSFspaceS,
+  before skip=\ZSFBoxBeforeSkip,
+  after skip=\ZSFspaceS,
+  before={\ZSFConsumeAfterSubsectionBar},
+  before upper={\parskip=\ZSFspaceS\centering},
+  after upper={\par},
+  middle=\ZSFspaceSep,
+  #1
+}
+
+% ------------------------------------------------------------
+% 4f. statementbox / procedure / factlist / propertylist
+%     (Akzentstreifen links - bewusst, semantisch fuer Aussagen)
+% ------------------------------------------------------------
+\NewDocumentEnvironment{statementbox}{O{}}
+  {\begin{tcolorbox}[zsfstatementstyle]%
+   \if\relax\detokenize{#1}\relax\else
+     {\ZSFfontBoxTitle\color{\StatementTitleColor}#1}\par\vspace{\ZSFspaceXS}%
+   \fi\ignorespaces}
+  {\end{tcolorbox}}
+
+\NewDocumentEnvironment{procedure}{O{}}
+  {\begin{statementbox}[#1]%
+   \begin{enumerate}[leftmargin=\ZSFprocLeftMargin,labelsep=\ZSFprocLabSep,itemsep=\ZSFprocItemSep,topsep=0pt,parsep=0pt,partopsep=0pt]}
+  {\end{enumerate}\end{statementbox}}
+
+\newcommand{\ProcStep}[2]{\item {\ZSFfontBoxTitle #1}\\[\ZSFprocStepGap]#2}
+
+\NewDocumentEnvironment{factlist}{}
+  {\begin{itemize}[
+     leftmargin=\ZSFlistLeftMargin,
+     labelsep=\ZSFprocLabSep,
+     label={\textcolor{\StatementBarColor}{\textbullet}},
+     itemsep=\ZSFprocItemSep,
+     topsep=\ZSFspaceXS,
+     parsep=0pt,
+     partopsep=0pt
+   ]}
+  {\end{itemize}}
+
+\NewDocumentEnvironment{propertylist}{O{}}
+  {\begin{statementbox}[#1]\begin{itemize}[
+     leftmargin=\ZSFlistLeftMargin,
+     labelsep=\ZSFprocLabSep,
+     itemsep=\ZSFprocItemSep,
+     topsep=0pt,
+     parsep=0pt,
+     partopsep=0pt
+   ]}
+  {\end{itemize}\end{statementbox}}
+
+\newcommand{\ZSFFact}[2]{\item \textbf{#1}\,---\,#2}
+
+% ------------------------------------------------------------
+% Inline-Pillen
+% ------------------------------------------------------------
+\newtcbox{\ZSFdanger}{colback=ZSFDangerColor, colframe=ZSFDangerColor, coltext=white,
+  on line, boxsep=\ZSFspaceXS, left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceXS, bottom=\ZSFspaceXS, boxrule=0pt, arc=1pt,
+  fontupper=\ZSFfontDangerUpper}
+
+% ============================================================
+% 5. Backward-compat-Aliase
+% ============================================================
+% sectionbox -> nutzt das gleiche Basis-Modell wie contentbox
+% (kein Akzentstreifen, dezenter Rahmen in Kapitel-Tonung).
+\newtcolorbox{sectionbox}[1][]{%
+  zsfcontentbase,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
+  fontupper=\ZSFfontSectionUpper,
+  #1
+}
+
+\newtcolorbox{smallbox}[1][]{%
+  zsfcontentbase,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
+  #1
+}
+
+\newtcolorbox{bigbox}[1][]{%
+  enhanced jigsaw,
+  breakable=false,
+  colback=white,
+  colframe=\chaptercolor,
+  boxrule=1pt,
+  arc=1pt,
+  boxsep=0pt,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceS, bottom=\ZSFspaceS,
+  before skip=\ZSFBoxBeforeSkip,
+  after skip=\ZSFspaceS,
+  before={\ZSFConsumeAfterSubsectionBar},
+  #1
+}
+
+\newcommand{\eqbox}[1]{\fcolorbox{black}{\chaptercolorlight}{\(\displaystyle #1\)}}
+
+% ------------------------------------------------------------
+% Title Header (gleicher Stil wie Analysis / Physik)
+% ------------------------------------------------------------
+\newtcolorbox{zsftitleheader}[1][]{
+  enhanced jigsaw,
+  breakable=false,
+  colback=ChapterColor0,
+  colframe=ChapterColor0,
+  boxrule=0pt,
+  boxsep=0pt,
+  left=\ZSFspaceM,
+  right=\ZSFspaceM,
+  top=\ZSFspaceS,
+  bottom=\ZSFspaceS,
+  before skip=0pt,
+  after skip=\ZSFspaceXS,
+  halign=center,
+  #1
+}
+\newcommand{\ZSFTitleHeader}[2]{%
+  \penalty-500
+  \begin{zsftitleheader}
+    \ZSFfontSectionUpper
+    {\color{white}\ZSFfontTitleHeader #1\par}%
+    \vspace{\ZSFspaceXS}%
+    {\color{ZSFTitleSubheaderColor}\ZSFfontTitleSubheader von~#2\par}%
+  \end{zsftitleheader}
+  \penalty10000
+}
+\newcommand{\hl}[1]{\underline{\textbf{#1}}}

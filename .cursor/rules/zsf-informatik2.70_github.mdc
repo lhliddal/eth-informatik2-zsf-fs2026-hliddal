@@ -7,22 +7,22 @@ decisionStatus: final
 lastUpdatedBy: loris
 lastUpdatedAt: 2026-05-08
 ---
-<!-- AUTO-GENERATED — rules-hash:59ba7314bfe74777 —
+<!-- AUTO-GENERATED — rules-hash:5d1ea147f238cc15 —
      Quelle: rules/70_github.md. Nicht direkt bearbeiten. Änderungen → `make sync-rules`. -->
 
 ## GitHub & Release
 
 ### Namenskonventionen
 
-- **Repository:** `eth-info2-zsf-fs2025-hliddal` (Muster: `eth-<fach>-zsf-<semester>-hliddal`)
-- **PDF:** `info2_fs2025_hliddal.pdf` (Muster: `fach_semester_hliddal.pdf`)
+- **Repository:** `eth-info2-zsf-fs2026-hliddal` (Muster: `eth-<fach>-zsf-<semester>-hliddal`)
+- **PDF:** `info2_fs2026_hliddal.pdf` (Muster: `fach_semester_hliddal.pdf`)
 - **Semesterformat:** `fsYYYY` oder `hsYYYY`
 - **Release-Tags:** Semantic Versioning `vMAJOR.MINOR.PATCH`
 
 ### GitHub Actions
 
 - **Workflow `CI Build`** (push/PR auf `main`): `make check` + `make build`, PDF als Artifact
-- **Workflow `Release PDF`** (push auf Tag `v*`): `make check` + `make build` + `make release-proof`; GitHub Release mit `info2_fs2025_hliddal.pdf` + `build/main.pdf.sha256`
+- **Workflow `Release PDF`** (push auf Tag `v*`): `make check` + `make build` + `make release-proof`; GitHub Release mit `info2_fs2026_hliddal.pdf` + `build/main.pdf.sha256`
 
 ### Agent-Regeln für GitHub-Änderungen
 

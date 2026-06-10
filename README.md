@@ -1,11 +1,11 @@
-# ZSF Informatik II — D-MAVT FS2025
+# ZSF Informatik II — D-MAVT FS2026
 
 Zusammenfassung Informatik II (Python, Algorithmen, Datenstrukturen, ML, Neuronale Netze).
 
 ## Build
 
 ```bash
-make build      # PDF nach info2_fs2025_hliddal.pdf
+make build      # PDF nach info2_fs2026_hliddal.pdf
 make check      # strukturelle Checks + chktex
 make format     # latexindent über alle .tex
 make clean      # build/ aufräumen

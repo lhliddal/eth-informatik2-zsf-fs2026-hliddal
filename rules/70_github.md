@@ -17,15 +17,15 @@ lastUpdatedAt: 2026-05-08
 
 ### Namenskonventionen
 
-- **Repository:** `eth-info2-zsf-fs2025-hliddal` (Muster: `eth-<fach>-zsf-<semester>-hliddal`)
-- **PDF:** `info2_fs2025_hliddal.pdf` (Muster: `fach_semester_hliddal.pdf`)
+- **Repository:** `eth-info2-zsf-fs2026-hliddal` (Muster: `eth-<fach>-zsf-<semester>-hliddal`)
+- **PDF:** `info2_fs2026_hliddal.pdf` (Muster: `fach_semester_hliddal.pdf`)
 - **Semesterformat:** `fsYYYY` oder `hsYYYY`
 - **Release-Tags:** Semantic Versioning `vMAJOR.MINOR.PATCH`
 
 ### GitHub Actions
 
 - **Workflow `CI Build`** (push/PR auf `main`): `make check` + `make build`, PDF als Artifact
-- **Workflow `Release PDF`** (push auf Tag `v*`): `make check` + `make build` + `make release-proof`; GitHub Release mit `info2_fs2025_hliddal.pdf` + `build/main.pdf.sha256`
+- **Workflow `Release PDF`** (push auf Tag `v*`): `make check` + `make build` + `make release-proof`; GitHub Release mit `info2_fs2026_hliddal.pdf` + `build/main.pdf.sha256`
 
 ### Agent-Regeln für GitHub-Änderungen
 

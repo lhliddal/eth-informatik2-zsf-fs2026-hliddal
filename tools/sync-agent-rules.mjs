@@ -186,7 +186,7 @@ function buildFlatContent({ kind, rules, hash }) {
   lines.push('');
   lines.push('## Working Commands');
   lines.push('');
-  lines.push('- `make build`        — latexmk → `info2_fs2025_hliddal.pdf`');
+  lines.push('- `make build`        — latexmk → `info2_fs2026_hliddal.pdf`');
   lines.push('- `make check`        — full check (main, chapters, root, lint, rules)');
   lines.push('- `make sync-rules`   — `rules/*.md` → alle Adapter regenerieren');
   lines.push('- `make check-rules`  — Drift-Check über Hash-Stempel');

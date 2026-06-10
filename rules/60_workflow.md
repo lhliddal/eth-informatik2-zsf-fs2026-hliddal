@@ -11,7 +11,7 @@ lastUpdatedAt: 2026-05-08
 ## Workflow
 
 ```bash
-make build                  # latexmk → build/main.pdf → info2_fs2025_hliddal.pdf
+make build                  # latexmk → build/main.pdf → info2_fs2026_hliddal.pdf
 make check                  # check-main-full + check-chapters + check-root-clean + lint + check-rule-authorship + check-rules
 make sync-rules             # rules/*.md → CLAUDE.md, AGENTS.md, .github/copilot-instructions.md, .cursor/rules/*.mdc
 make check-rules            # Drift-Check (Hash-Stempel) gegen rules/*.md
@@ -24,7 +24,7 @@ Der Compiler liegt in `tools/sync-agent-rules.mjs` (Node 18+). Quellen sind `rul
 
 ### Agent-Build-Pflicht
 
-Nach **jeder** inhaltlichen oder Layout-Änderung sofort den sauberen Build-Command `make build` ausführen, damit `info2_fs2025_hliddal.pdf` aktuell bleibt und Fehler früh sichtbar werden. Der Build-Befehl ist dabei immer genau dieser Command; keine alternativen oder abgekürzten Build-Kommandos verwenden. Agent-Edits triggern LaTeX Workshop Auto-Build nicht — manuell bauen ist Pflicht.
+Nach **jeder** inhaltlichen oder Layout-Änderung sofort den sauberen Build-Command `make build` ausführen, damit `info2_fs2026_hliddal.pdf` aktuell bleibt und Fehler früh sichtbar werden. Der Build-Befehl ist dabei immer genau dieser Command; keine alternativen oder abgekürzten Build-Kommandos verwenden. Agent-Edits triggern LaTeX Workshop Auto-Build nicht — manuell bauen ist Pflicht.
 
 ### Datei-Platzierung
 
@@ -35,7 +35,7 @@ Nach **jeder** inhaltlichen oder Layout-Änderung sofort den sauberen Build-Comm
 | `main.tex`, `preamble.tex`, `Makefile` | Kerndateien |
 | `.gitignore`, `.pre-commit-config.yaml` | Config |
 | `CLAUDE.md`, `AGENTS.md`, `MODULAR_SYSTEM.md`, `README.md` | Doku (KI-Adapter sind auto-generiert) |
-| `info2_fs2025_hliddal.pdf` (+ `.synctex.gz`) | Output |
+| `info2_fs2026_hliddal.pdf` (+ `.synctex.gz`) | Output |
 
 Alles andere gehört in:
 - `chapters/` — Inhaltsdateien

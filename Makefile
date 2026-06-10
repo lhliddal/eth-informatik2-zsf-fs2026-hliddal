@@ -2,14 +2,14 @@ SHELL := /bin/bash
 
 MAIN := main.tex
 BUILD_DIR := build
-PDF_BASENAME ?= info2_fs2025_hliddal
+PDF_BASENAME ?= info2_fs2026_hliddal
 OUTPUT_PDF := $(PDF_BASENAME).pdf
 OUTPUT_SYNC := $(PDF_BASENAME).synctex.gz
 BUILD_STAMP ?= $(shell date -u +%Y%m%dT%H%M%SZ)
 GIT_COMMIT ?= $(shell git rev-parse --short HEAD 2>/dev/null || echo nogit)
 LATEX_DEFS := \def\ZSFBuildStamp{$(BUILD_STAMP)}\def\ZSFGitCommit{$(GIT_COMMIT)}
 
-.PHONY: build lint format check-main-full check-chapters check-root-clean check-rules check-rule-authorship check release-proof all test clean sync-rules
+.PHONY: build lint format check-main-full check-chapters check-root-clean check-pdf-identity check-rules check-rule-authorship check release-proof all test clean sync-rules
 
 build:
 	latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf -outdir=$(BUILD_DIR) -auxdir=$(BUILD_DIR) \
@@ -23,7 +23,7 @@ lint:
 format:
 	find . -name '*.tex' -print0 | xargs -0 latexindent -w -s -l=.latexindent.yaml
 
-check: check-main-full check-chapters check-root-clean lint check-rule-authorship check-rules
+check: check-main-full check-chapters check-root-clean check-pdf-identity lint check-rule-authorship check-rules
 
 
 check-main-full:
@@ -34,6 +34,9 @@ check-chapters:
 
 check-root-clean:
 	./tests/check_root_clean.sh
+
+check-pdf-identity:
+	PDF_FILE="$(OUTPUT_PDF)" ./tests/check_pdf_identity.sh
 
 sync-rules:
 	@node tools/sync-agent-rules.mjs

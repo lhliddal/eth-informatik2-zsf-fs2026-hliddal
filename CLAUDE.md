@@ -1,6 +1,6 @@
 # ZSF Informatik II — CLAUDE.md
 
-> AUTO-GENERATED — rules-hash:59ba7314bfe74777
+> AUTO-GENERATED — rules-hash:5d1ea147f238cc15
 >
 > Quelle: `rules/*.md` (mit YAML-Frontmatter).
 > Nicht direkt bearbeiten. Änderungen: `rules/*.md` editieren → `make sync-rules`.
@@ -21,10 +21,11 @@ Bei Konflikt zwischen dieser Datei und `rules/*.md` gewinnen die Quelldateien.
 - `rules/50_chapters.md`
 - `rules/60_workflow.md`
 - `rules/70_github.md`
+- `rules/80_didaktik.md`
 
 ## Working Commands
 
-- `make build`        — latexmk → `info2_fs2025_hliddal.pdf`
+- `make build`        — latexmk → `info2_fs2026_hliddal.pdf`
 - `make check`        — full check (main, chapters, root, lint, rules)
 - `make sync-rules`   — `rules/*.md` → alle Adapter regenerieren
 - `make check-rules`  — Drift-Check über Hash-Stempel
@@ -46,6 +47,7 @@ Bei Konflikt zwischen dieser Datei und `rules/*.md` gewinnen die Quelldateien.
 - `50_chapters.md` — Scoped; gilt bei Änderungen an `chapters/**/*.tex`, `main.tex` — Kapitel-Mapping (00_titelbox bis 14_credits), Bilder (Images/, figures/, graphicspath), Antworten mit Kapitel-Referenzen
 - `60_workflow.md` — Project-wide — Build-Targets (make build, check, sync-rules), Agent-Build-Pflicht nach jeder Änderung, Datei-Platzierung, Pre-commit
 - `70_github.md` — Scoped; gilt bei Änderungen an `.github/**`, `Makefile`, `tests/**`, `styles/75_pdf_identity.tex`, `README.md` — Naming-Konventionen (Repo, PDF, Tags), GitHub Actions (CI Build, Release), PDF-Identity, Schwester-Projekt-Verhältnis
+- `80_didaktik.md` — Project-wide; besonders relevant für `chapters/**/*.tex` — Didaktisches Prinzip für Inhalt/Erklärungen: nützlicher + intuitiver statt korrekter, Rezept-Charakter, Stolperfallen — keine eigenmächtigen Präzisierungen
 
 ## Compiled Rules
 
@@ -56,7 +58,7 @@ Bei Konflikt zwischen dieser Datei und `rules/*.md` gewinnen die Quelldateien.
 - Beschreibung: ZSF Informatik II — Projekt-Meta, Zweck, kritische Regeln (Sprache, Modularität, keine Inhaltsänderung ohne Befehl)
 - Zuletzt aktualisiert: 2026-05-07 (loris)
 
-LaTeX-Zusammenfassung Informatik II (D-MAVT FS2025). Inhalt: Python, Algorithmen, Datenstrukturen, ML, Neuronale Netze. A4 Querformat, 3 Spalten, 8pt.
+LaTeX-Zusammenfassung Informatik II (D-MAVT FS2026). Inhalt: Python, Algorithmen, Datenstrukturen, ML, Neuronale Netze. A4 Querformat, 3 Spalten, 8pt.
 
 **Zweck:** Prüfungsvorbereitung — wird direkt in der Prüfung verwendet. Schnelle Auffindbarkeit und klare Übersicht haben höchste Priorität.
 
@@ -501,7 +503,7 @@ Inhalte immer mit genauem Kapitel referenzieren — z.B. `chapters/04_algorithme
 ##### Workflow
 
 ```bash
-make build                  # latexmk → build/main.pdf → info2_fs2025_hliddal.pdf
+make build                  # latexmk → build/main.pdf → info2_fs2026_hliddal.pdf
 make check                  # check-main-full + check-chapters + check-root-clean + lint + check-rule-authorship + check-rules
 make sync-rules             # rules/*.md → CLAUDE.md, AGENTS.md, .github/copilot-instructions.md, .cursor/rules/*.mdc
 make check-rules            # Drift-Check (Hash-Stempel) gegen rules/*.md
@@ -514,7 +516,7 @@ Der Compiler liegt in `tools/sync-agent-rules.mjs` (Node 18+). Quellen sind `rul
 
 ###### Agent-Build-Pflicht
 
-Nach **jeder** inhaltlichen oder Layout-Änderung sofort den sauberen Build-Command `make build` ausführen, damit `info2_fs2025_hliddal.pdf` aktuell bleibt und Fehler früh sichtbar werden. Der Build-Befehl ist dabei immer genau dieser Command; keine alternativen oder abgekürzten Build-Kommandos verwenden. Agent-Edits triggern LaTeX Workshop Auto-Build nicht — manuell bauen ist Pflicht.
+Nach **jeder** inhaltlichen oder Layout-Änderung sofort den sauberen Build-Command `make build` ausführen, damit `info2_fs2026_hliddal.pdf` aktuell bleibt und Fehler früh sichtbar werden. Der Build-Befehl ist dabei immer genau dieser Command; keine alternativen oder abgekürzten Build-Kommandos verwenden. Agent-Edits triggern LaTeX Workshop Auto-Build nicht — manuell bauen ist Pflicht.
 
 ###### Datei-Platzierung
 
@@ -525,7 +527,7 @@ Nach **jeder** inhaltlichen oder Layout-Änderung sofort den sauberen Build-Comm
 | `main.tex`, `preamble.tex`, `Makefile` | Kerndateien |
 | `.gitignore`, `.pre-commit-config.yaml` | Config |
 | `CLAUDE.md`, `AGENTS.md`, `MODULAR_SYSTEM.md`, `README.md` | Doku (KI-Adapter sind auto-generiert) |
-| `info2_fs2025_hliddal.pdf` (+ `.synctex.gz`) | Output |
+| `info2_fs2026_hliddal.pdf` (+ `.synctex.gz`) | Output |
 
 Alles andere gehört in:
 - `chapters/` — Inhaltsdateien
@@ -554,15 +556,15 @@ Alles andere gehört in:
 
 ###### Namenskonventionen
 
-- **Repository:** `eth-info2-zsf-fs2025-hliddal` (Muster: `eth-<fach>-zsf-<semester>-hliddal`)
-- **PDF:** `info2_fs2025_hliddal.pdf` (Muster: `fach_semester_hliddal.pdf`)
+- **Repository:** `eth-info2-zsf-fs2026-hliddal` (Muster: `eth-<fach>-zsf-<semester>-hliddal`)
+- **PDF:** `info2_fs2026_hliddal.pdf` (Muster: `fach_semester_hliddal.pdf`)
 - **Semesterformat:** `fsYYYY` oder `hsYYYY`
 - **Release-Tags:** Semantic Versioning `vMAJOR.MINOR.PATCH`
 
 ###### GitHub Actions
 
 - **Workflow `CI Build`** (push/PR auf `main`): `make check` + `make build`, PDF als Artifact
-- **Workflow `Release PDF`** (push auf Tag `v*`): `make check` + `make build` + `make release-proof`; GitHub Release mit `info2_fs2025_hliddal.pdf` + `build/main.pdf.sha256`
+- **Workflow `Release PDF`** (push auf Tag `v*`): `make check` + `make build` + `make release-proof`; GitHub Release mit `info2_fs2026_hliddal.pdf` + `build/main.pdf.sha256`
 
 ###### Agent-Regeln für GitHub-Änderungen
 
@@ -588,4 +590,33 @@ Release-Flow nie auf manuelle Uploads zurückbauen.
 ###### Verhältnis zu Schwester-Projekten
 
 `ZSF_Analysis_2` und `ZSF_Physik_V4` sind ähnlich strukturiert (modulare Styles, `chapters/`, `tests/`). Infrastruktur-Dateien (`.gitattributes`, `.latexindent.yaml`) bei Bedarf manuell synchronisieren. **Inhaltliche Regeln** (`rules/*.md`, `MODULAR_SYSTEM.md`) sind projekt-spezifisch — nicht auto-synced.
+
+### `80_didaktik.md`
+
+- Quelle: `rules/80_didaktik.md`
+- Scope: Project-wide; besonders relevant für `chapters/**/*.tex`
+- Beschreibung: Didaktisches Prinzip für Inhalt/Erklärungen: nützlicher + intuitiver statt korrekter, Rezept-Charakter, Stolperfallen — keine eigenmächtigen Präzisierungen
+- Zuletzt aktualisiert: 2026-06-10 (loris)
+
+Diese Regel betrifft **was** drinsteht und **wie** erklärt wird (nicht das Layout). Vollständige Leitlinie: `ZSF_DIDAKTIK_PRINZIP.md`.
+
+##### Maßstab
+
+Die ZSF wird **direkt in der Prüfung** verwendet. Maßstab für jeden Satz:
+
+> Hilft das beim schnellen, sicheren Lösen von Prüfungsaufgaben?
+
+Nicht der Maßstab ist Vollständigkeit, Allgemeinheit oder lückenlose Strenge.
+
+##### Kernregeln
+
+- **Ungenauigkeiten auf Kursniveau sind toleriert**, solange sie intuitiv tragfähig sind.
+- **Sonderfälle/Präzisierungen hinzuzufügen ist ein Fehler**, wenn sie die Aussage nur „wasserdicht", aber schwerer lesbar machen. Regel: nicht „korrekter" machen — sondern **nützlicher und intuitiver**.
+- Gute Erklärung: Rezept-Charakter (`procedure` + `\ProcStep`), konkretes Beispiel, Intuition in einem Satz, Stolperfallen via `\ZSFdanger`, Querchecks zur Selbstkontrolle. Bei Code: lauffähige, knappe Snippets mit aussagekräftigen Kommentaren.
+
+##### Konsequenz für KI-Assistenten
+
+- Beim Review/Bearbeiten **keine** Sonderfälle, Ausnahmen oder Präzisierungen eigenmächtig ergänzen.
+- Erklärungen verbessern heißt: klarer formulieren, Beispiel/Intuition ergänzen, Stolperfalle markieren — **nicht** Korrektheit erhöhen.
+- Inhalte nie ohne expliziten Befehl ändern, kürzen oder „korrigieren" (siehe `00_meta`).
 

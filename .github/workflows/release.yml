@@ -41,5 +41,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            info2_fs2025_hliddal.pdf
+            info2_fs2026_hliddal.pdf
             build/main.pdf.sha256

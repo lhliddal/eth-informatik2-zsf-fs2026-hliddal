@@ -7,10 +7,10 @@ decisionStatus: final
 lastUpdatedBy: loris
 lastUpdatedAt: 2026-05-07
 ---
-<!-- AUTO-GENERATED — rules-hash:59ba7314bfe74777 —
+<!-- AUTO-GENERATED — rules-hash:5d1ea147f238cc15 —
      Quelle: rules/00_meta.md. Nicht direkt bearbeiten. Änderungen → `make sync-rules`. -->
 
-LaTeX-Zusammenfassung Informatik II (D-MAVT FS2025). Inhalt: Python, Algorithmen, Datenstrukturen, ML, Neuronale Netze. A4 Querformat, 3 Spalten, 8pt.
+LaTeX-Zusammenfassung Informatik II (D-MAVT FS2026). Inhalt: Python, Algorithmen, Datenstrukturen, ML, Neuronale Netze. A4 Querformat, 3 Spalten, 8pt.
 
 **Zweck:** Prüfungsvorbereitung — wird direkt in der Prüfung verwendet. Schnelle Auffindbarkeit und klare Übersicht haben höchste Priorität.
 

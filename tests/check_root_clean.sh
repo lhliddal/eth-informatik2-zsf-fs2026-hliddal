@@ -4,10 +4,11 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 allowed_files=(
   "main.tex" "main.pdf" "main.synctex.gz"
-  "info2_fs2025_hliddal.pdf" "info2_fs2025_hliddal.synctex.gz"
+  "info2_fs2026_hliddal.pdf" "info2_fs2026_hliddal.synctex.gz"
   "preamble.tex" "Makefile"
   ".gitignore" ".pre-commit-config.yaml"
   "CLAUDE.md" "AGENTS.md" "MODULAR_SYSTEM.md" "README.md"
+  "ZSF_DIDAKTIK_PRINZIP.md"
 )
 allowed_dirs=(
   "chapters" "styles" "tests" "scripts" "tools" "rules"

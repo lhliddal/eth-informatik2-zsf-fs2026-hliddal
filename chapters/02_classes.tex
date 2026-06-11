@@ -1,7 +1,7 @@
 \section{Klassen}\label{sec:02-klassen}
 
 \subsection{Vererbung}\label{sec:02-vererbung}
-\begin{defbox}[Vererbung]
+\begin{defbox}[Oberklasse / Unterklasse]
 Eine \ZSFkeyword{Oberklasse} (Superclass) ist eine Klasse, die als Basis für eine andere Klasse dient – die sogenannte \ZSFkeyword{Unterklasse} (Subclass). Mittels \verb|super().__init__()| kann die Unterklasse auf den Konstruktor der Oberklasse zugreifen.
 \end{defbox}
 \begin{codebox}
@@ -15,10 +15,7 @@ class Car:
         return f"{self.model} is honking!"
 \end{lstlisting}
 \end{codebox}
-\begin{contentbox}
-\textit{Oberklasse innerhalb der Unterklasse:}
-\end{contentbox}
-\begin{codebox}
+\begin{codebox}[Oberklasse innerhalb der Unterklasse][Python]
 \begin{lstlisting}[style=CodeExpert]
 class ElectricCar(Car):
     def __init__(self, brand, model):

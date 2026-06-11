@@ -17,24 +17,22 @@
 \section{Dynamische Programmierung}\label{sec:03-dynamische-programmierung}
 
 % --- Kernidee: DP-Prinzip und zwei Implementierungsansätze ---
-\begin{contentbox}
+\begin{contentbox}[Kernidee]
     Ein komplexes Problem wird in kleinere Teilprobleme zerlegt. Diese werden einmal gelöst und das Ergebnis gespeichert (in einer Liste, Tabelle o.ä.), um es später bei Bedarf wiederzuverwenden.
 
-\begin{itemize}
-    \item \textbf{Memoization (Top-down):}
-    Beginnt mit dem ursprünglichen Problem und löst es rekursiv, speichert aber bereits berechnete Ergebnisse in einem Speicher (z.B. einer Liste oder einem Dictionary). Der Speicher verhindert doppelte Berechnungen.
-
-    \item \textbf{Dynamische Programmierung (Bottom-up):}
-    Baut die Lösung iterativ von den kleinsten Teilproblemen auf. Die Ergebnisse werden schrittweise gespeichert und zur Lösung größerer Probleme verwendet. Keine Rekursion nötig.
-\end{itemize}
-
-\textbf{Unterschied:}
-Beide Ansätze nutzen Speicher zur Optimierung, aber:
-\begin{itemize}
-    \item \textbf{Memoization:} rekursiv + speichert nur tatsächlich verwendete Teilprobleme.
-    \item \textbf{DP (Bottom-up):} iterativ + berechnet alle möglichen Teilprobleme systematisch.
-\end{itemize}
+\begin{factlist}
+\ZSFFact{Memoization (Top-down)}{Beginnt mit dem ursprünglichen Problem und löst es rekursiv, speichert aber bereits berechnete Ergebnisse in einem Speicher (z.B. einer Liste oder einem Dictionary). Der Speicher verhindert doppelte Berechnungen.}
+\ZSFFact{Dynamische Programmierung (Bottom-up)}{Baut die Lösung iterativ von den kleinsten Teilproblemen auf. Die Ergebnisse werden schrittweise gespeichert und zur Lösung größerer Probleme verwendet. Keine Rekursion nötig.}
+\end{factlist}
 \end{contentbox}
+
+\begin{statementbox}[Unterschied]
+Beide Ansätze nutzen Speicher zur Optimierung, aber:
+\begin{factlist}
+\ZSFFact{Memoization}{rekursiv + speichert nur tatsächlich verwendete Teilprobleme.}
+\ZSFFact{DP (Bottom-up)}{iterativ + berechnet alle möglichen Teilprobleme systematisch.}
+\end{factlist}
+\end{statementbox}
 
 
 % ============================================================
@@ -45,7 +43,7 @@ Beide Ansätze nutzen Speicher zur Optimierung, aber:
 % [EHA] Exam Hliddal Addition — Übersichtstabelle neu
 \subsection{[EHA] Mustererkennung: Welcher Zustand?}\label{sec:03-mustererkennung-welcher-zustand}
 
-\begin{contentbox}
+\begin{tablebox}
 \begin{ZSFtable}[\ZSFfontTableDense]{Y{1.1} Y{0.85} Y{1.05}}
     \ZSFheaderRow \ZSFhead{Zustandsraum} & \ZSFhead{Muster} & \ZSFhead{Beispiele} \\
     \texttt{dp[i]} & 1D-Sequenz & Fibonacci, House Robber \\
@@ -53,7 +51,7 @@ Beide Ansätze nutzen Speicher zur Optimierung, aber:
     \texttt{dp[i][j]} & Zwei-Index & Grid, LCS, Edit Dist. \\
     \texttt{dp[i][j]}, $i \leq j$ & Intervall + Split & Matrix Chain, Opt.\ BST \\
 \end{ZSFtable}
-\end{contentbox}
+\end{tablebox}
 
 
 % ============================================================
@@ -67,16 +65,18 @@ Beide Ansätze nutzen Speicher zur Optimierung, aber:
 
 % --- Muster-Steckbrief: Zustands- und Übergangsdefinition ---
 \begin{contentbox}
-\textbf{Zustand:} \texttt{dp[i]} = optimale Lösung für die ersten $i$ Elemente \\
-\textbf{Übergang:} \texttt{dp[i] = f(dp[i-1], dp[i-2], \ldots)} \\
-\textbf{Basisfall:} \texttt{dp[0]}, \texttt{dp[1]} explizit setzen \\
-\textbf{Antwort:} \texttt{dp[n]} \\
-\textbf{Komplexität:} $O(n)$ Zeit, $O(n)$ Raum
+\begin{factlist}
+\ZSFFact{Zustand}{\texttt{dp[i]} = optimale Lösung für die ersten $i$ Elemente}
+\ZSFFact{Übergang}{\texttt{dp[i] = f(dp[i-1], dp[i-2], \ldots)}}
+\ZSFFact{Basisfall}{\texttt{dp[0]}, \texttt{dp[1]} explizit setzen}
+\ZSFFact{Antwort}{\texttt{dp[n]}}
+\ZSFFact{Komplexität}{$O(n)$ Zeit, $O(n)$ Raum}
+\end{factlist}
 \end{contentbox}
 
 % --- Fibonacci: Bottom-up und Top-down (bestehend) ---
-\begin{contentbox}
-\textbf{Fibonacci — Bottom-up:} Iterative Berechnung. Berechnet auch unnötige Elemente, geht in 1D.
+\begin{contentbox}[Fibonacci — Bottom-up]
+Iterative Berechnung. Berechnet auch unnötige Elemente, geht in 1D.
 
 \CodeLine{def fib_DP(n):}[gesucht: n-te Fibonacci-Zahl]\\
 \CodeLine{F = [None] * (n+1)}[Tabelle anlegen: Indizes 0..n]\\
@@ -87,8 +87,10 @@ Beide Ansätze nutzen Speicher zur Optimierung, aber:
 \CodeLine{for i in range(2, n+1):}\\
 \CodeLine{    F[i] = F[i-1] + F[i-2]}[Rekurrenz anwenden]\\
 \CodeLine{return F[n]}[Ergebnis: letzter Eintrag]
+\end{contentbox}
 
-\textbf{Top-down:} Rekursive Berechnung mit Memoization. Berechnet nur benötigte Elemente, meistens in 2D.
+\begin{contentbox}[Fibonacci — Top-down]
+Rekursive Berechnung mit Memoization. Berechnet nur benötigte Elemente, meistens in 2D. \ZSFref{sec:12-dp-memoization}
 
 \CodeLine{def fibonacci(n, memo = None):}\\
 \OverlineComment{memo: Zwischenspeicher fuer bereits berechnete Werte}
@@ -105,10 +107,11 @@ Beide Ansätze nutzen Speicher zur Optimierung, aber:
 
 % --- [EHA] House Robber / Coin Row: 1D-DP mit Auswahlbedingung ---
 % [EHA] Exam Hliddal Addition
-\begin{contentbox}
-\textbf{[EHA] House Robber / Coin Row} \\
-\textbf{Problem:} Array mit Werten; keine zwei direkt benachbarten Elemente gleichzeitig wählbar. Maximiere die Summe. \\
-\textbf{Übergang:} \texttt{dp[i] = max(dp[i-1],\ dp[i-2] + val[i])}
+\begin{contentbox}[{[EHA] House Robber / Coin Row}]
+\begin{factlist}
+\ZSFFact{Problem}{Array mit Werten; keine zwei direkt benachbarten Elemente gleichzeitig wählbar. Maximiere die Summe.}
+\ZSFFact{Übergang}{\texttt{dp[i] = max(dp[i-1],\ dp[i-2] + val[i])}}
+\end{factlist}
 
 \CodeLine{def house_robber(nums):}\\
 \CodeLine{    n = len(nums)}\\
@@ -134,23 +137,26 @@ Beide Ansätze nutzen Speicher zur Optimierung, aber:
 
 % --- Muster-Steckbrief ---
 \begin{contentbox}
-\textbf{Zustand:} \texttt{dp[i][w]} = opt. Wert mit ersten $i$ Objekten bei Kapazität $w$ \\
-\textbf{Übergang:} Objekt nehmen oder weglassen \\
-\textbf{Basisfall:} \texttt{dp[0][*] = dp[*][0] = 0} \\
-\textbf{Antwort:} \texttt{dp[n][W]} \\
-\textbf{Komplexität:} $O(n \cdot W)$ Zeit und Raum \\
-\textbf{Varianten:}
-\begin{itemize}
-    \item \textbf{0/1 Knapsack} — jedes Objekt max.\ einmal wählbar
-    \item \textbf{Unbounded} (Coin Change, Rod Cutting) — Objekte wiederholbar
-    \item \textbf{Subset Sum} — Entscheidungsproblem (\texttt{bool})
-\end{itemize}
+\begin{factlist}
+\ZSFFact{Zustand}{\texttt{dp[i][w]} = opt. Wert mit ersten $i$ Objekten bei Kapazität $w$}
+\ZSFFact{Übergang}{Objekt nehmen oder weglassen}
+\ZSFFact{Basisfall}{\texttt{dp[0][*] = dp[*][0] = 0}}
+\ZSFFact{Antwort}{\texttt{dp[n][W]}}
+\ZSFFact{Komplexität}{$O(n \cdot W)$ Zeit und Raum}
+\item \textbf{Varianten:}
+    \begin{itemize}
+        \item \textbf{0/1 Knapsack} — jedes Objekt max.\ einmal wählbar
+        \item \textbf{Unbounded} (Coin Change, Rod Cutting) — Objekte wiederholbar
+        \item \textbf{Subset Sum} — Entscheidungsproblem (\texttt{bool})
+    \end{itemize}
+\end{factlist}
 \end{contentbox}
 
 % --- 0/1 Knapsack: jedes Objekt einmal; Übergang schaut auf i-1 ---
-\begin{contentbox}
-\textbf{[EHA] 0/1 Knapsack} \\
-\textbf{Übergang:} \texttt{dp[i][w] = max(dp[i-1][w],\ val[i] + dp[i-1][w-wt[i]])}
+\begin{contentbox}[{[EHA] 0/1 Knapsack}]
+\begin{factlist}
+\ZSFFact{Übergang}{\texttt{dp[i][w] = max(dp[i-1][w],\ val[i] + dp[i-1][w-wt[i]])}}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -169,9 +175,10 @@ def knapsack(wt, val, W):
 \end{codebox}
 
 % --- Coin Change: Unbounded-Variante; Übergang schaut auf dp[i][...] (gleiche Zeile) ---
-\begin{contentbox}
-\textbf{[EHA] Coin Change (Unbounded)} \\
-\textbf{Übergang:} \texttt{dp[a] = min(dp[a],\ dp[a-c] + 1)} für alle Münzen \texttt{c}
+\begin{contentbox}[{[EHA] Coin Change (Unbounded)}]
+\begin{factlist}
+\ZSFFact{Übergang}{\texttt{dp[a] = min(dp[a],\ dp[a-c] + 1)} für alle Münzen \texttt{c}}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -201,21 +208,22 @@ def coin_change(coins, amount):
 
 % --- Muster-Steckbrief ---
 \begin{contentbox}
-\textbf{Zustand:} \texttt{dp[i][j]} = opt.\ Lösung für Präfix $i$ von $A$ und Präfix $j$ von $B$ \\
-\textbf{Übergang:} aus \texttt{dp[i-1][j-1]}, \texttt{dp[i-1][j]}, \texttt{dp[i][j-1]} \\
-\textbf{Basisfall:} erste Zeile \& Spalte (Index 0) explizit setzen \\
-\textbf{Antwort:} \texttt{dp[m][n]} \\
-\textbf{Komplexität:} $O(m \cdot n)$ Zeit und Raum
+\begin{factlist}
+\ZSFFact{Zustand}{\texttt{dp[i][j]} = opt.\ Lösung für Präfix $i$ von $A$ und Präfix $j$ von $B$}
+\ZSFFact{Übergang}{aus \texttt{dp[i-1][j-1]}, \texttt{dp[i-1][j]}, \texttt{dp[i][j-1]}}
+\ZSFFact{Basisfall}{erste Zeile \& Spalte (Index 0) explizit setzen}
+\ZSFFact{Antwort}{\texttt{dp[m][n]}}
+\ZSFFact{Komplexität}{$O(m \cdot n)$ Zeit und Raum}
+\end{factlist}
 \end{contentbox}
 
 % --- LCS: Übergang diagonal bei Match, sonst Max von links/oben ---
-\begin{contentbox}
-\textbf{[EHA] Longest Common Subsequence (LCS)} \\
+\begin{contentbox}[{[EHA] Longest Common Subsequence (LCS)}]
 \textbf{Übergang:}
-\begin{itemize}
-    \item \texttt{X[i]==Y[j]:} \quad \texttt{dp[i][j] = dp[i-1][j-1] + 1}
-    \item sonst: \quad \texttt{dp[i][j] = max(dp[i-1][j], dp[i][j-1])}
-\end{itemize}
+\begin{factlist}
+\ZSFFact{\texttt{X[i]==Y[j]}}{\texttt{dp[i][j] = dp[i-1][j-1] + 1}}
+\ZSFFact{sonst}{\texttt{dp[i][j] = max(dp[i-1][j], dp[i][j-1])}}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -235,9 +243,10 @@ def lcs(X, Y):
 \end{codebox}
 
 % --- Grid: Basisfälle erste Zeile/Spalte separat, dann 2D-Übergang ---
-\begin{contentbox}
-\textbf{[EHA] Grid: Minimale Pfadkosten} \\
-\textbf{Übergang:} \texttt{dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])}
+\begin{contentbox}[{[EHA] Grid: Minimale Pfadkosten}]
+\begin{factlist}
+\ZSFFact{Übergang}{\texttt{dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])}}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -272,20 +281,22 @@ def min_path(grid):
 
 % --- Muster-Steckbrief ---
 \begin{contentbox}
-\textbf{Zustand:} \texttt{dp[i][j]} = optimale Lösung für Teilproblem über $[i..j]$ \\
-\textbf{Übergang:} probe alle Split-Punkte $k \in [i,\, j{-}1]$: \\
-\quad \texttt{dp[i][j] = min\textsubscript{k}\{dp[i][k] + dp[k+1][j] + cost(i,j)\}} \\
-\textbf{Basisfall:} \texttt{dp[i][i] = 0} (Intervall der Länge 1) \\
-\textbf{Antwort:} \texttt{dp[0][n-1]} \\
-\textbf{Komplexität:} $O(n^3)$ Zeit, $O(n^2)$ Raum \\
-\textbf{Füllreihenfolge:} äussere Schleife über Länge $\ell$, nicht über Zeilen!
+\begin{factlist}
+\ZSFFact{Zustand}{\texttt{dp[i][j]} = optimale Lösung für Teilproblem über $[i..j]$}
+\ZSFFact{Übergang}{probe alle Split-Punkte $k \in [i,\, j{-}1]$: \texttt{dp[i][j] = min\textsubscript{k}\{dp[i][k] + dp[k+1][j] + cost(i,j)\}}}
+\ZSFFact{Basisfall}{\texttt{dp[i][i] = 0} (Intervall der Länge 1)}
+\ZSFFact{Antwort}{\texttt{dp[0][n-1]}}
+\ZSFFact{Komplexität}{$O(n^3)$ Zeit, $O(n^2)$ Raum}
+\ZSFFact{Füllreihenfolge}{äussere Schleife über Länge $\ell$, nicht über Zeilen!}
+\end{factlist}
 \end{contentbox}
 
 % --- Matrix Chain: klassisches Intervall-DP mit Kostenfunktion ---
-\begin{contentbox}
-\textbf{[EHA] Matrix Chain Multiplication} \\
-Gegeben $n$ Matrizen, Dimensionen via Array $p$ (Länge $n{+}1$). \\
-\textbf{Übergang:} \texttt{dp[i][j] = min\textsubscript{k}\{dp[i][k] + dp[k+1][j] + p[i]·p[k+1]·p[j+1]\}}
+\begin{contentbox}[{[EHA] Matrix Chain Multiplication}]
+Gegeben $n$ Matrizen, Dimensionen via Array $p$ (Länge $n{+}1$).
+\begin{factlist}
+\ZSFFact{Übergang}{\texttt{dp[i][j] = min\textsubscript{k}\{dp[i][k] + dp[k+1][j] + p[i]·p[k+1]·p[j+1]\}}}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]

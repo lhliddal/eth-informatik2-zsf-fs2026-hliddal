@@ -8,8 +8,8 @@ globs:
 alwaysApply: false
 decisionOwner: ai
 decisionStatus: final
-lastUpdatedBy: loris
-lastUpdatedAt: 2026-05-08
+lastUpdatedBy: claude
+lastUpdatedAt: 2026-06-11
 ---
 
 ## Box-Typen
@@ -31,7 +31,36 @@ lastUpdatedAt: 2026-05-08
 | `\begin{procedure}[Titel]` | Schritt-für-Schritt-Verfahren mit `\ProcStep{title}{desc}` |
 | `\begin{factlist}` | Faktenliste mit `\ZSFFact{lead}{desc}` |
 | `\begin{propertylist}[Titel]` | Eigenschaftsliste |
-| `sectionbox` | Alias für `contentbox` (backward-compat) |
+
+Die Alt-Aliases `sectionbox`, `smallbox`, `bigbox` sind entfernt — immer die semantischen Umgebungen oben verwenden.
+
+## Box-Wahl (Entscheidungstabelle)
+
+Pro Inhaltstyp gibt es genau eine richtige Box — nicht alles in `contentbox` packen:
+
+| Inhalt | Box |
+|---|---|
+| Definition eines Begriffs | `defbox[Begriff]` |
+| Schlüsselformel (die eine Formel des Abschnitts) | `formulabox` |
+| Verfahren / Rezept mit Schritten in fester Reihenfolge | `procedure` + `\ProcStep{Titel}{Beschreibung}` |
+| Ungeordnete Fakten („Begriff — Erklärung") | `factlist` + `\ZSFFact{Begriff}{Erklärung}` |
+| Eigenschaften eines Objekts | `propertylist[Titel]` |
+| Wichtige Aussage / Satz / Voraussetzung | `statementbox[Titel]` |
+| Tabelle | `tablebox[Titel]` mit `ZSFtable*` innen |
+| Code | `codebox[Titel][Sprache]` |
+| Prosa / gemischter Restinhalt | `contentbox` |
+
+`contentbox` bleibt die Mehrheit — wenn fast jede Box eine Spezialbox ist, sticht nichts mehr heraus. Rohe `itemize`/`enumerate` direkt in `contentbox` sind ein Warnsignal: meist ist `factlist` oder `procedure` gemeint.
+
+## Border-Stärken
+
+Semantische Register in `styles/30_layout_spacing.tex` — keine `pt`-Literale bei `boxrule`:
+
+| Register | Wert | Verwendung |
+|---|---|---|
+| `\ZSFborderThin` | 0.4pt | Standardrahmen (contentbox, codebox, tablebox, Splits) |
+| `\ZSFborderBox` | 0.5pt | Betonte Boxen mit getöntem Hintergrund (defbox, formulabox) |
+| `\ZSFborderStrong` | 1pt | Starke Betonung (reserviert) |
 
 ## Struktur-Makros
 
@@ -53,3 +82,18 @@ lastUpdatedAt: 2026-05-08
 Fachbegriffe im Fliesstext **ausschliesslich** mit `\ZSFkeyword{...}` auszeichnen (definiert in `styles/50_typography_semantics.tex`). Kein manuelles `\textbf{...}` für Fachbegriffe — `\textbf` bleibt strukturellen Markierungen vorbehalten.
 
 Code-Identifier inline: `\texttt{...}`. Begriffshervorhebung: `\hl{...}`.
+
+### `\textbf`-Triage
+
+Für jede Hervorhebung gilt:
+
+| Muster | Markup |
+|---|---|
+| Fachbegriff (Memoization, Overfitting, Algorithmus-/Strukturname) | `\ZSFkeyword{...}` |
+| Code-Identifier, Parameter, Funktionsname (`max_iter`, `append`) | `\texttt{...}` |
+| Pseudo-Heading am Item-Anfang („**Vorteil:** …") | in `\ProcStep`/`\ZSFFact` auflösen |
+| Echte Betonung („**nicht** stabil") | `\textbf` (selten); `\hl` nur für das prüfungskritischste Faktum pro Box |
+
+### `\ZSFref`-Labels
+
+Label-Konvention: `sec:NN-slug` (z.B. `sec:03-memoization`), direkt nach `\section`/`\subsection` gesetzt. `\ZSFref` bewusst sparsam — nur wo ein Konzept aus einem **anderen** Kapitel verwendet wird.

@@ -1,6 +1,6 @@
 # ZSF Informatik II — .github/copilot-instructions.md
 
-> AUTO-GENERATED — rules-hash:b01659f9db62a6b2
+> AUTO-GENERATED — rules-hash:6dcfd89aea968b8b
 >
 > Quelle: `rules/*.md` (mit YAML-Frontmatter).
 > Nicht direkt bearbeiten. Änderungen: `rules/*.md` editieren → `make sync-rules`.
@@ -128,7 +128,7 @@ LaTeX-Zusammenfassung Informatik II (D-MAVT FS2026). Inhalt: Python, Algorithmen
 - Quelle: `rules/20_boxes.md`
 - Scope: Scoped; gilt bei Änderungen an `chapters/**/*.tex`, `styles/60_boxes.tex`, `styles/40_colors_structure.tex`, `styles/50_typography_semantics.tex`
 - Beschreibung: Box-Umgebungen (contentbox, codebox, defbox, formulabox, statementbox, …) und Struktur-Makros (StartChapter, SubsectionBar, ZSFkeyword)
-- Zuletzt aktualisiert: 2026-05-08 (loris)
+- Zuletzt aktualisiert: 2026-06-11 (claude)
 
 ##### Box-Typen
 
@@ -149,7 +149,36 @@ LaTeX-Zusammenfassung Informatik II (D-MAVT FS2026). Inhalt: Python, Algorithmen
 | `\begin{procedure}[Titel]` | Schritt-für-Schritt-Verfahren mit `\ProcStep{title}{desc}` |
 | `\begin{factlist}` | Faktenliste mit `\ZSFFact{lead}{desc}` |
 | `\begin{propertylist}[Titel]` | Eigenschaftsliste |
-| `sectionbox` | Alias für `contentbox` (backward-compat) |
+
+Die Alt-Aliases `sectionbox`, `smallbox`, `bigbox` sind entfernt — immer die semantischen Umgebungen oben verwenden.
+
+##### Box-Wahl (Entscheidungstabelle)
+
+Pro Inhaltstyp gibt es genau eine richtige Box — nicht alles in `contentbox` packen:
+
+| Inhalt | Box |
+|---|---|
+| Definition eines Begriffs | `defbox[Begriff]` |
+| Schlüsselformel (die eine Formel des Abschnitts) | `formulabox` |
+| Verfahren / Rezept mit Schritten in fester Reihenfolge | `procedure` + `\ProcStep{Titel}{Beschreibung}` |
+| Ungeordnete Fakten („Begriff — Erklärung") | `factlist` + `\ZSFFact{Begriff}{Erklärung}` |
+| Eigenschaften eines Objekts | `propertylist[Titel]` |
+| Wichtige Aussage / Satz / Voraussetzung | `statementbox[Titel]` |
+| Tabelle | `tablebox[Titel]` mit `ZSFtable*` innen |
+| Code | `codebox[Titel][Sprache]` |
+| Prosa / gemischter Restinhalt | `contentbox` |
+
+`contentbox` bleibt die Mehrheit — wenn fast jede Box eine Spezialbox ist, sticht nichts mehr heraus. Rohe `itemize`/`enumerate` direkt in `contentbox` sind ein Warnsignal: meist ist `factlist` oder `procedure` gemeint.
+
+##### Border-Stärken
+
+Semantische Register in `styles/30_layout_spacing.tex` — keine `pt`-Literale bei `boxrule`:
+
+| Register | Wert | Verwendung |
+|---|---|---|
+| `\ZSFborderThin` | 0.4pt | Standardrahmen (contentbox, codebox, tablebox, Splits) |
+| `\ZSFborderBox` | 0.5pt | Betonte Boxen mit getöntem Hintergrund (defbox, formulabox) |
+| `\ZSFborderStrong` | 1pt | Starke Betonung (reserviert) |
 
 ##### Struktur-Makros
 
@@ -171,6 +200,21 @@ LaTeX-Zusammenfassung Informatik II (D-MAVT FS2026). Inhalt: Python, Algorithmen
 Fachbegriffe im Fliesstext **ausschliesslich** mit `\ZSFkeyword{...}` auszeichnen (definiert in `styles/50_typography_semantics.tex`). Kein manuelles `\textbf{...}` für Fachbegriffe — `\textbf` bleibt strukturellen Markierungen vorbehalten.
 
 Code-Identifier inline: `\texttt{...}`. Begriffshervorhebung: `\hl{...}`.
+
+###### `\textbf`-Triage
+
+Für jede Hervorhebung gilt:
+
+| Muster | Markup |
+|---|---|
+| Fachbegriff (Memoization, Overfitting, Algorithmus-/Strukturname) | `\ZSFkeyword{...}` |
+| Code-Identifier, Parameter, Funktionsname (`max_iter`, `append`) | `\texttt{...}` |
+| Pseudo-Heading am Item-Anfang („**Vorteil:** …") | in `\ProcStep`/`\ZSFFact` auflösen |
+| Echte Betonung („**nicht** stabil") | `\textbf` (selten); `\hl` nur für das prüfungskritischste Faktum pro Box |
+
+###### `\ZSFref`-Labels
+
+Label-Konvention: `sec:NN-slug` (z.B. `sec:03-memoization`), direkt nach `\section`/`\subsection` gesetzt. `\ZSFref` bewusst sparsam — nur wo ein Konzept aus einem **anderen** Kapitel verwendet wird.
 
 ### `30_spacing.md`
 
@@ -217,7 +261,7 @@ Alle Abstände zentral in `styles/30_layout_spacing.tex`. **Nie** hardcodierte `
 - Quelle: `rules/40_code.md`
 - Scope: Scoped; gilt bei Änderungen an `chapters/**/*.tex`, `styles/65_code_style.tex`
 - Beschreibung: Code-Listings (lstlisting + CodeExpert-Style), codebox-Verwendung, Inline-Code Konventionen
-- Zuletzt aktualisiert: 2026-05-07 (loris)
+- Zuletzt aktualisiert: 2026-06-11 (claude)
 
 ##### Code-Listings
 
@@ -251,6 +295,16 @@ Kurz:
 - `\InlineComment{text}` — Immer rechts
 - `\OverlineComment{text}` — Immer oben
 - Nutze in `contentbox`/`defbox`, nicht in `lstlisting`
+
+##### Overfull-Fixes (Katalog sicherer Operationen)
+
+Bei `Overfull \hbox`-Warnungen nur bedeutungserhaltende Fixes:
+
+1. **Lange Python-Zeilen in `lstlisting`:** innerhalb von Klammern oder nach Kommas umbrechen (implizite Continuation — semantisch identisch). Nie in String-Literalen brechen.
+2. **Zu breite `\CodeLine`-Paare:** lokal `\SetCodeCommentThreshold{...}`/`\ResetCodeCommentThreshold` (Kommentar wandert nach oben) oder Code-Zeile wie in 1 brechen. Kommentar-Wortlaut nicht kürzen.
+3. **Breite Tabellen:** Spaltenfaktoren in `ZSFtable*` anpassen (`Y{..}`-Proportionen); keine Spalte entfernen, nichts abkürzen.
+4. **Lange Boxen / schlechte Spaltenumbrüche:** Box an semantischer Grenze teilen; für Code `codeboxfirst`/`codeboxmid`/`codeboxlast`.
+5. Rest-Overfulls ≤2pt sind akzeptabel. Kein Micro-Spacing in Kapiteln (verboten per `30_spacing`).
 
 ##### Math-Makros
 

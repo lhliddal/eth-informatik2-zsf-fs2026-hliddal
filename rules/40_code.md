@@ -6,8 +6,8 @@ globs:
 alwaysApply: false
 decisionOwner: ai
 decisionStatus: final
-lastUpdatedBy: loris
-lastUpdatedAt: 2026-05-07
+lastUpdatedBy: claude
+lastUpdatedAt: 2026-06-11
 ---
 
 ## Code-Listings
@@ -42,6 +42,16 @@ Kurz:
 - `\InlineComment{text}` — Immer rechts
 - `\OverlineComment{text}` — Immer oben
 - Nutze in `contentbox`/`defbox`, nicht in `lstlisting`
+
+## Overfull-Fixes (Katalog sicherer Operationen)
+
+Bei `Overfull \hbox`-Warnungen nur bedeutungserhaltende Fixes:
+
+1. **Lange Python-Zeilen in `lstlisting`:** innerhalb von Klammern oder nach Kommas umbrechen (implizite Continuation — semantisch identisch). Nie in String-Literalen brechen.
+2. **Zu breite `\CodeLine`-Paare:** lokal `\SetCodeCommentThreshold{...}`/`\ResetCodeCommentThreshold` (Kommentar wandert nach oben) oder Code-Zeile wie in 1 brechen. Kommentar-Wortlaut nicht kürzen.
+3. **Breite Tabellen:** Spaltenfaktoren in `ZSFtable*` anpassen (`Y{..}`-Proportionen); keine Spalte entfernen, nichts abkürzen.
+4. **Lange Boxen / schlechte Spaltenumbrüche:** Box an semantischer Grenze teilen; für Code `codeboxfirst`/`codeboxmid`/`codeboxlast`.
+5. Rest-Overfulls ≤2pt sind akzeptabel. Kein Micro-Spacing in Kapiteln (verboten per `30_spacing`).
 
 ## Math-Makros
 

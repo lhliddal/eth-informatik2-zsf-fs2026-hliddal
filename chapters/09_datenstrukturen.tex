@@ -69,10 +69,14 @@ Durchschnittsfall: $\Theta(\log n)$, Worst Case: $\Theta(n)$
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 def search(self, key: int) -> Optional[Node]:
-    """Search for the node with the specified key in the tree and return it, or None if there is no such node."""
+    """Search for the node with the specified key
+    in the tree and return it, or None if there
+    is no such node."""
     n = self.root  # Starte bei der Wurzel
-    while n is not None and n.key is not key:  # Laufe, bis Schlüssel gefunden oder Ende erreicht
-        if key < n.key:  # Gesuchter Schlüssel ist kleiner -> links weiter
+    # Laufe, bis Schluessel gefunden oder Ende erreicht
+    while n is not None and n.key is not key:
+        # Gesuchter Schluessel ist kleiner -> links weiter
+        if key < n.key:
             n = n.left  # Gehe zum linken Kind
         else:
             n = n.right  # Sonst nach rechts gehen

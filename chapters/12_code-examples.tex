@@ -116,14 +116,16 @@ def binarySearch(Array, N, key):
 
 def binaryInsertionSort(Array):
     # We assume the 1st element of Array to be already sorted.
-    # Start iterating from the 2nd element to the last element.
+    # Start iterating from the 2nd element
+    # to the last element.
     for i in range(1, len(Array)):
         key = Array[i]
         pos = binarySearch(Array, i, key)
         # 'pos' will now contain the index
         # where 'key' should be inserted.
         j = i
-        # Shifting every element from 'pos' to 'i' towards right
+        # Shifting every element from 'pos'
+        # to 'i' towards right
         while (j > pos):
             Array[j] = Array[j - 1]
             j -= 1
@@ -270,7 +272,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import warnings
 from sklearn.datasets import make_circles
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import (train_test_split,
+    GridSearchCV)
 from sklearn.neural_network import MLPClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier, plot_tree
@@ -292,7 +295,8 @@ y = df["label"].to_numpy()
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.5, random_state=42)
 
-# Crossvalidate the different tree lengths using the train data
+# Crossvalidate the different tree lengths
+# using the train data
 dt = DecisionTreeClassifier()
 # tree depth from 1 to 9
 grid = {"max_depth": range(1, 10)}
@@ -457,7 +461,8 @@ def dp_best_way(a):
         reward3 = s[i + 1][j + 2]
       if i + 2 < n and j + 1 < m:
         reward4 = s[i + 2][j + 1]
-      s[i][j] = a[i][j] + max([reward1, reward2, reward3, reward4])
+      s[i][j] = a[i][j] + max([reward1, reward2,
+                                reward3, reward4])
 
   return s[0][0]
 \end{lstlisting}
@@ -530,7 +535,8 @@ def possible_amounts(max_amount, denominations):
     # Pointer for traversing list2
     p2 = list2
 
-    # Traverse both lists and merge them by comparing node values
+    # Traverse both lists and merge them
+    # by comparing node values
     while p1 is not None and p2 is not None:
         if p1.val <= p2.val:
             last.next = p1

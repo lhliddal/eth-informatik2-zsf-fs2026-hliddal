@@ -5,18 +5,19 @@
 \subsection{Array erzeugen}\label{sec:06-array-erzeugen}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
-np.array([1, 2, 3])             # Array aus Python-Liste erstellen
-np.asarray(x)                   # kein Copy falls x schon Array
-np.copy(x)                      # tiefe Kopie: unabh. vom Original
-np.zeros((3, 3))                # 3x3-Matrix, alle Werte = 0.0
-np.ones((2, 4))                 # 2x4-Matrix, alle Werte = 1.0
-np.full((2, 2), fill_value=9)   # 2x2-Matrix, alle Werte = 9
-vk = np.full((gr1, gr2), fill_value=None)   # gr1xgr2-Array, alle Werte = None (dtype=object)
-np.eye(4)                       # Einheitsmatrix: 1 auf Hauptdiag.
-np.arange(1, 10, 2)             # [1,3,5,7,9] von 1 bis <10, Schr. 2
-np.linspace(0, 1, 100)          # 100 gleichm. Werte von 0 bis 1
-np.logspace(0, 3, 4)            # [1,10,100,1000]: 10^0 bis 10^3
-np.empty((2, 2))                # nicht init. – zuf. Speicherinhalt
+np.array([1, 2, 3])  # Array aus Python-Liste erstellen
+np.asarray(x)  # kein Copy falls x schon Array
+np.copy(x)  # tiefe Kopie: unabh. vom Original
+np.zeros((3, 3))  # 3x3-Matrix, alle Werte = 0.0
+np.ones((2, 4))  # 2x4-Matrix, alle Werte = 1.0
+np.full((2, 2), fill_value=9)  # 2x2-Matrix, alle Werte = 9
+# gr1xgr2-Array, alle Werte = None (dtype=object)
+vk = np.full((gr1, gr2), fill_value=None)
+np.eye(4)  # Einheitsmatrix: 1 auf Hauptdiag.
+np.arange(1, 10, 2)  # [1,3,5,7,9] von 1 bis <10, Schr. 2
+np.linspace(0, 1, 100)  # 100 gleichm. Werte von 0 bis 1
+np.logspace(0, 3, 4)  # [1,10,100,1000]: 10^0 bis 10^3
+np.empty((2, 2))  # nicht init. – zuf. Speicherinhalt
 \end{lstlisting}
 \end{codebox}
 
@@ -24,16 +25,16 @@ np.empty((2, 2))                # nicht init. – zuf. Speicherinhalt
 \subsection{Array-Informationen}\label{sec:06-array-informationen}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
-a.shape        # Tupel der Dimensionen (z.B. (3,4) = 3x4)
-a.ndim         # Anzahl Dimensionen (2 fuer Matrix, 1 fuer Vektor)
-a.size         # Gesamtanzahl Elemente (Produkt der Dimensionen)
-a.dtype        # Datentyp der Elemente (z.B. int32, float64)
-a.itemsize     # Bytes pro Element (z.B. 4 fuer int32)
-a.nbytes       # Gesamtspeicher in Bytes (= size * itemsize)
-a.T            # Transponierte Matrix
-a.strides      # Schrittgroesse pro Achse in Bytes
-a.flags        # Speicherlayout-Flags (C_CONTIGUOUS, etc.)
-a.base         # Basisdaten: None=Owner, sonst Quelle des Views
+a.shape     # Tupel der Dimensionen (z.B. (3,4) = 3x4)
+a.ndim      # Anzahl Dimensionen (2 fuer Matrix, 1 fuer Vektor)
+a.size      # Gesamtanzahl Elemente (Produkt der Dimensionen)
+a.dtype     # Datentyp der Elemente (z.B. int32, float64)
+a.itemsize  # Bytes pro Element (z.B. 4 fuer int32)
+a.nbytes    # Gesamtspeicher in Bytes (= size * itemsize)
+a.T         # Transponierte Matrix
+a.strides   # Schrittgroesse pro Achse in Bytes
+a.flags     # Speicherlayout-Flags (C_CONTIGUOUS, etc.)
+a.base      # Basisdaten: None=Owner, sonst Quelle des Views
 \end{lstlisting}
 \end{codebox}
 
@@ -41,23 +42,25 @@ a.base         # Basisdaten: None=Owner, sonst Quelle des Views
 \subsection{Typumwandlung}\label{sec:06-typumwandlung}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
-a.astype(np.float32)              # in float32 umwandeln (kopiert)
-a.astype("int32", copy=False)     # kein Copy falls dtype schon passt
-a.tolist()                        # zurueck zur Python-Liste
+a.astype(np.float32)           # in float32 umwandeln (kopiert)
+# kein Copy falls dtype schon passt
+a.astype("int32", copy=False)
+a.tolist()                     # zurueck zur Python-Liste
 \end{lstlisting}
 \end{codebox}
 
 \subsection{Indexing, Slicing, Maskierung}\label{sec:06-indexing-slicing-maskierung}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
-a[1], a[1, :], a[:, 0]     # Element / ganze Zeile / ganze Spalte
-a[1:4], a[::2]             # Slicing / jedes 2. Element
-a[a > 3]                   # boolescher Indexzugriff (Maske)
-np.where(a > 0, a, 0)      # bedingte Ersetzung: a wenn >0, sonst 0
-np.nonzero(a)              # Indizes aller Nicht-Null-Elemente
-np.take(a, [0, 2])         # Elemente per Index sammeln
-np.put(a, [1, 3], [9, 10]) # Elemente per Index setzen (in-place)
-np.compress(a > 2, a)      # Elemente filtern per boolescher Maske
+a[1], a[1, :], a[:, 0]  # Element / ganze Zeile / ganze Spalte
+a[1:4], a[::2]          # Slicing / jedes 2. Element
+a[a > 3]                # boolescher Indexzugriff (Maske)
+np.where(a > 0, a, 0)   # bedingte Ersetzung: a wenn >0, sonst 0
+np.nonzero(a)           # Indizes aller Nicht-Null-Elemente
+np.take(a, [0, 2])      # Elemente per Index sammeln
+# Elemente per Index setzen (in-place)
+np.put(a, [1, 3], [9, 10])
+np.compress(a > 2, a)   # Elemente filtern per boolescher Maske
 \end{lstlisting}
 \end{codebox}
 
@@ -65,13 +68,14 @@ np.compress(a > 2, a)      # Elemente filtern per boolescher Maske
 \subsection{Broadcasting und Shapes}\label{sec:06-broadcasting-und-shapes}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
-a + b                                  # Shape automatisch erweitern
-np.broadcast_shapes(a.shape, b.shape) # resultierenden Shape bestimmen
-np.broadcast_to(a, (3, 4))            # manuelles Broadcasting (View)
-np.expand_dims(a, axis=0)             # neue Achse einfuegen
-np.squeeze(a)                         # Achsen der Groesse 1 entfernen
-np.reshape(a, (2, -1))                # Form aendern (-1 = auto)
-np.tile(a, (2, 3))                    # Muster 2x vertikal, 3x horiz.
+a + b                       # Shape automatisch erweitern
+# resultierenden Shape bestimmen
+np.broadcast_shapes(a.shape, b.shape)
+np.broadcast_to(a, (3, 4))  # manuelles Broadcasting (View)
+np.expand_dims(a, axis=0)   # neue Achse einfuegen
+np.squeeze(a)               # Achsen der Groesse 1 entfernen
+np.reshape(a, (2, -1))      # Form aendern (-1 = auto)
+np.tile(a, (2, 3))          # Muster 2x vertikal, 3x horiz.
 \end{lstlisting}
 \end{codebox}
 
@@ -80,16 +84,16 @@ np.tile(a, (2, 3))                    # Muster 2x vertikal, 3x horiz.
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 # Kombinieren von Arrays
-np.concatenate((a, b), axis=0)   # entlang bestehender Achse
-np.stack([a, b], axis=0)         # neue Achse einfuegen
-np.vstack([a, b])                # vertikal stapeln (Zeilen)
-np.hstack([a, b])                # horizontal stapeln (Spalten)
-np.dstack([a, b])                # tiefen-stapeln (3. Achse)
+np.concatenate((a, b), axis=0)  # entlang bestehender Achse
+np.stack([a, b], axis=0)        # neue Achse einfuegen
+np.vstack([a, b])               # vertikal stapeln (Zeilen)
+np.hstack([a, b])               # horizontal stapeln (Spalten)
+np.dstack([a, b])               # tiefen-stapeln (3. Achse)
 # Aufteilen von Arrays
-np.split(a, 3)                   # in 3 gleiche Teile aufteilen
-np.array_split(a, 3)             # in 3 Teile (ungleiche OK)
-np.vsplit(a, 2)                  # vertikal in 2 Haelften teilen
-np.hsplit(a, 2)                  # horizontal in 2 Haelften teilen
+np.split(a, 3)                  # in 3 gleiche Teile aufteilen
+np.array_split(a, 3)            # in 3 Teile (ungleiche OK)
+np.vsplit(a, 2)                 # vertikal in 2 Haelften teilen
+np.hsplit(a, 2)  # horizontal in 2 Haelften teilen
 \end{lstlisting}
 \end{codebox}
 
@@ -97,14 +101,15 @@ np.hsplit(a, 2)                  # horizontal in 2 Haelften teilen
 \subsection{Mathematik}\label{sec:06-mathematik}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
-np.add(a, b), np.subtract(a, b)      # Addition, Subtraktion
-np.multiply(a, b), np.divide(a, b)   # Multiplikation, Division
-np.mod(a, b), np.remainder(a, b)     # Modulo / Rest
-np.exp(a), np.log(a), np.log10(a)    # e^a, ln(a), log10(a)
-np.sqrt(a), np.square(a)             # Wurzel, Quadrat (a^2)
-np.clip(a, min, max)                 # Werte auf [min, max] begrenzen
-np.sign(a), np.abs(a)                # Vorzeichen (-1/0/1), Betrag
-np.ceil(a), np.floor(a), np.round(a) # Aufrunden, Abrunden, Runden
+np.add(a, b), np.subtract(a, b)     # Addition, Subtraktion
+np.multiply(a, b), np.divide(a, b)  # Multiplikation, Division
+np.mod(a, b), np.remainder(a, b)    # Modulo / Rest
+np.exp(a), np.log(a), np.log10(a)   # e^a, ln(a), log10(a)
+np.sqrt(a), np.square(a)            # Wurzel, Quadrat (a^2)
+np.clip(a, min, max)  # Werte auf [min, max] begrenzen
+np.sign(a), np.abs(a)  # Vorzeichen (-1/0/1), Betrag
+# Aufrunden, Abrunden, Runden
+np.ceil(a), np.floor(a), np.round(a)
 \end{lstlisting}
 \end{codebox}
 
@@ -112,14 +117,14 @@ np.ceil(a), np.floor(a), np.round(a) # Aufrunden, Abrunden, Runden
 \subsection{Aggregate und Statistik}\label{sec:06-aggregate-und-statistik}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
-np.sum(a), np.prod(a)          # Summe, Produkt aller Elemente
-np.mean(a), np.median(a)       # arithm. Mittelwert, Median
-np.std(a), np.var(a)           # Standardabweichung, Varianz
-np.min(a), np.max(a)           # kleinster, groesster Wert
-np.argmin(a), np.argmax(a)     # Index von Min bzw. Max
-np.ptp(a)                      # Peak-to-Peak: max(a) - min(a)
-np.percentile(a, 75)           # 75. Perzentil
-np.histogram(a, bins=10)       # Histogramm berechnen
+np.sum(a), np.prod(a)       # Summe, Produkt aller Elemente
+np.mean(a), np.median(a)    # arithm. Mittelwert, Median
+np.std(a), np.var(a)        # Standardabweichung, Varianz
+np.min(a), np.max(a)        # kleinster, groesster Wert
+np.argmin(a), np.argmax(a)  # Index von Min bzw. Max
+np.ptp(a)                   # Peak-to-Peak: max(a) - min(a)
+np.percentile(a, 75)        # 75. Perzentil
+np.histogram(a, bins=10)    # Histogramm berechnen
 \end{lstlisting}
 \end{codebox}
 

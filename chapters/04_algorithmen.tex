@@ -9,12 +9,12 @@
 %=====================================================================================================================
 \subsection{Bubble Sort}\label{sec:04-bubble-sort}
 \begin{contentbox}
-\begin{itemize}
-    \item Vergleicht benachbarte Elemente und vertauscht sie bei falscher Reihenfolge.
-    \item Wiederholt dies, bis keine Vertauschungen mehr nötig sind.
-        \item \texttt{a[:-(i + 1)]} enthält die $i + 1$ größten Elemente von \texttt{a} in sort. Reihe.
-\end{itemize}
-\textbf{Laufzeit:} $\Theta(n^2)$ im Durchschnitt und schlechtesten Fall.
+\begin{factlist}
+\item Vergleicht benachbarte Elemente und vertauscht sie bei falscher Reihenfolge.
+\item Wiederholt dies, bis keine Vertauschungen mehr nötig sind.
+\item \texttt{a[:-(i + 1)]} enthält die $i + 1$ größten Elemente von \texttt{a} in sort. Reihe.
+\ZSFFact{Laufzeit}{$\Theta(n^2)$ im Durchschnitt und schlechtesten Fall.}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -39,12 +39,12 @@ def bubble_sort(a):
 \subsection{Selection Sort}\label{sec:04-selection-sort}
 \begin{contentbox}
 Sucht in jedem Durchlauf das kleinste Element:
-\begin{itemize}
-    \item Tauscht es mit dem aktuellen Element.
-    \item Wiederholt das für den restlichen unsortierten Bereich.
-    \item \texttt{a[:i + 1]} enthält die kleinsten \(i + 1\) Elemente von \texttt{a}, in sort. Reihe.
-\end{itemize}
-\textbf{Laufzeit:} $\Theta(n^2)$ in allen Fällen.
+\begin{factlist}
+\item Tauscht es mit dem aktuellen Element.
+\item Wiederholt das für den restlichen unsortierten Bereich.
+\item \texttt{a[:i + 1]} enthält die kleinsten \(i + 1\) Elemente von \texttt{a}, in sort. Reihe.
+\ZSFFact{Laufzeit}{$\Theta(n^2)$ in allen Fällen.}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -86,12 +86,12 @@ def selection_sort(a):
 \subsection{Insertion Sort}\label{sec:04-insertion-sort}
 \begin{contentbox}
 Sortiert ähnlich wie beim Kartenspiel:
-\begin{itemize}
-    \item Jedes Element wird an die richtige Position im linken, bereits sortierten Teil eingefügt.
-    \item Größere Elemente werden nach rechts verschoben.
-    \item Die Elemente in \texttt{a[:i + 1]} sind sortiert und entsprechen den ersten $i$ Elementen des ursprüngl. Arrays.
-\end{itemize}
-\textbf{Laufzeit:} $\Theta(n)$ im besten Fall (wenn sortiert), $\Theta(n^2)$ im Worst-Case.
+\begin{factlist}
+\item Jedes Element wird an die richtige Position im linken, bereits sortierten Teil eingefügt.
+\item Größere Elemente werden nach rechts verschoben.
+\item Die Elemente in \texttt{a[:i + 1]} sind sortiert und entsprechen den ersten $i$ Elementen des ursprüngl. Arrays.
+\ZSFFact{Laufzeit}{$\Theta(n)$ im besten Fall (wenn sortiert), $\Theta(n^2)$ im Worst-Case.}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -121,14 +121,14 @@ def insertion_sort(a):
 
 \subsection{Merge Sort}\label{sec:04-merge-sort}
 \begin{contentbox}
-Ein rekursiver \textbf{Divide-and-Conquer}-Algorithmus:
-\begin{itemize}
-    \item Das Array wird in zwei Hälften geteilt.
-    \item Beide Hälften werden rekursiv sortiert.
-    \item Die sortierten Hälften werden zusammengeführt (merge).
-    \item Das Resultat-Array \texttt{b[:i + 1]} enthält die $i + 1$ kleinsten Elemente von \texttt{a} in sortierter Reihenfolge.
-\end{itemize}
-\textbf{Laufzeit:} $\Theta(n \log n)$ in allen Fällen.
+Ein rekursiver \ZSFkeyword{Divide-and-Conquer}-Algorithmus:
+\begin{factlist}
+\item Das Array wird in zwei Hälften geteilt.
+\item Beide Hälften werden rekursiv sortiert.
+\item Die sortierten Hälften werden zusammengeführt (merge).
+\item Das Resultat-Array \texttt{b[:i + 1]} enthält die $i + 1$ kleinsten Elemente von \texttt{a} in sortierter Reihenfolge.
+\ZSFFact{Laufzeit}{$\Theta(n \log n)$ in allen Fällen.}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -168,14 +168,14 @@ def merge_sort(a):
 
 \subsection{Quick Sort}\label{sec:04-quick-sort}
 \begin{contentbox}
-Ein effizienter rekursiver \textbf{Divide-and-Conquer}-Algorithmus:
-\begin{itemize}
-    \item Wählt ein \emph{Pivot}-Element.
-    \item Teilt das Array in Elemente kleiner und größer als das Pivot.
-    \item Sortiert beide Teilarrays rekursiv.
-    \item Das Pivotelement befindet sich an der richtigen Posit., Elem. links davon sind kleiner und rechts davon gröss als das Pivot..
-\end{itemize}
-\textbf{Laufzeit:} $\Theta(n \log n)$ durchschnittlich, $\Theta(n^2)$ im Worst-Case.
+Ein effizienter rekursiver \ZSFkeyword{Divide-and-Conquer}-Algorithmus:
+\begin{factlist}
+\item Wählt ein \emph{Pivot}-Element.
+\item Teilt das Array in Elemente kleiner und größer als das Pivot.
+\item Sortiert beide Teilarrays rekursiv.
+\item Das Pivotelement befindet sich an der richtigen Posit., Elem. links davon sind kleiner und rechts davon gröss als das Pivot..
+\ZSFFact{Laufzeit}{$\Theta(n \log n)$ durchschnittlich, $\Theta(n^2)$ im Worst-Case.}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -214,12 +214,12 @@ def quick_sort(a, low, high):
 
 \subsection{Heap Sort}\label{sec:04-heap-sort}
 \begin{contentbox}
-\begin{itemize}
-    \item Erst wird ein Max-Heap aufgebaut.
-    \item Grösstes Element (Wurzel) wird entfernt und ans Ende gesetzt.
-    \item Der Heap wird danach angepasst (heapify).
-\end{itemize}
-\textbf{Laufzeit:} $\Theta(n \log n)$ in allen Fällen.
+\begin{factlist}
+\item Erst wird ein Max-Heap aufgebaut. \ZSFref{sec:09-heaps}
+\item Grösstes Element (Wurzel) wird entfernt und ans Ende gesetzt.
+\item Der Heap wird danach angepasst (heapify).
+\ZSFFact{Laufzeit}{$\Theta(n \log n)$ in allen Fällen.}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -261,11 +261,11 @@ def heap_sort(a):
 \subsection{Binary Sort}\label{sec:04-binary-sort}
 \begin{contentbox}
 Eine Variante von Insertion Sort:
-\begin{itemize}
-    \item Findet die Einfügeposition per binärer Suche.
-    \item Die Verschiebung der Elemente bleibt aber linear.
-\end{itemize}
-\textbf{Laufzeit:} $\Theta(n^2)$ (Vergleiche: $\Theta(n \log n)$, Verschiebungen: $\Theta(n^2)$).
+\begin{factlist}
+\item Findet die Einfügeposition per binärer Suche.
+\item Die Verschiebung der Elemente bleibt aber linear.
+\ZSFFact{Laufzeit}{$\Theta(n^2)$ (Vergleiche: $\Theta(n \log n)$, Verschiebungen: $\Theta(n^2)$).}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]

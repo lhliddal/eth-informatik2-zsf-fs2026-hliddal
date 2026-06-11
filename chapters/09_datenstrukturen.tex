@@ -393,7 +393,7 @@ Die \textbf{Konstruktion} des Baumes ist relativ aufwendig; der Einsatz lohnt si
 \subsection{Übersicht: Laufzeiten im Vergleich}\label{sec:09-uebersicht-laufzeiten-im-vergleich}
 \begin{tablebox}
 \renewcommand{\arraystretch}{1.25}
-\begin{ZSFtable}{Q{1.2} Y{0.94} Y{0.93} Y{0.93}}
+\begin{ZSFtable}[\ZSFfontTableDense]{Q{1.2} Y{0.94} Y{0.93} Y{0.93}}
 \toprule
 \textbf{Datenstruktur} & \textbf{Suche} & \textbf{Einfügen} & \textbf{Entfernen} \\
 \midrule
@@ -401,9 +401,9 @@ Liste / Array       & $\mathcal{O}(n)$          & $\mathcal{O}(n)$ \emph{(worst)
 Linked List         & $\mathcal{O}(n)$          & $\mathcal{O}(1)$ \emph{(nach Suche)} & $\mathcal{O}(1)$ \emph{(nach Suche)} \\
 BST \emph{(balanciert)} & $\mathcal{O}(\log n)$ & $\mathcal{O}(\log n)$             & $\mathcal{O}(\log n)$             \\
 BST \emph{(unbal.)} & $\mathcal{O}(n)$          & $\mathcal{O}(n)$                  & $\mathcal{O}(n)$                  \\
-Heap                & $\mathcal{O}(n)$          & $\mathcal{O}(\log n)$             & $\mathcal{O}(\log n)$\,\footnotesize{(Top)} \\
+Heap                & $\mathcal{O}(n)$          & $\mathcal{O}(\log n)$             & $\mathcal{O}(\log n)$ \emph{(Top)} \\
 Hash-Tabelle        & $\mathcal{O}(1)$ \emph{(erw.)} & $\mathcal{O}(1)$ \emph{(erw.)} & $\mathcal{O}(1)$ \emph{(erw.)} \\
-Quadtree            & $\mathcal{O}(\log n)$\,\footnotesize{(Range)} & $\mathcal{O}(\log n)$ & --- \\
+Quadtree            & $\mathcal{O}(\log n)$ \emph{(Range)} & $\mathcal{O}(\log n)$ & --- \\
 \bottomrule
 \end{ZSFtable}
 \end{tablebox}

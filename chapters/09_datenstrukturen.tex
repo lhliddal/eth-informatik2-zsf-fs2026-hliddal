@@ -91,8 +91,9 @@ Durchschnittsfall: $\Theta(\log n)$, Worst Case: $\Theta(n)$
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 def add(self, key: int) -> bool:
-    """Add a node with the specified key to the tree.
-    Return True if the node was added, and False otherwise."""
+    """Add a node with the specified key to the
+    tree. Return True if the node was added,
+    and False otherwise."""
     if self.root is None:
         self.root = Node(key)
         return True
@@ -392,7 +393,7 @@ Die \textbf{Konstruktion} des Baumes ist relativ aufwendig; der Einsatz lohnt si
 \subsection{Übersicht: Laufzeiten im Vergleich}\label{sec:09-uebersicht-laufzeiten-im-vergleich}
 \begin{tablebox}
 \renewcommand{\arraystretch}{1.25}
-\begin{ZSFtable}{Q{1.2} L L L}
+\begin{ZSFtable}{Q{1.2} Y{0.94} Y{0.93} Y{0.93}}
 \toprule
 \textbf{Datenstruktur} & \textbf{Suche} & \textbf{Einfügen} & \textbf{Entfernen} \\
 \midrule

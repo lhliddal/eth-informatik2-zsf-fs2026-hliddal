@@ -47,7 +47,8 @@ class CustomString:
         result_string = ""
         for i in range(len(self.string)):
             if i < len(other.string):
-                result_string += self.string[i] + other.string[i]
+                result_string += (self.string[i]
+                                  + other.string[i])
             else:
                 result_string += self.string[i]
         return CustomString(result_string)

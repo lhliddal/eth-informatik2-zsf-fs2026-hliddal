@@ -154,7 +154,8 @@ function solve(n, seq):
         return seq[n]
     if n == 0: return 0
     if n == 1 or n == 2: return 1
-    seq[n] = solve(n-1, seq) + solve(n-2, seq) + solve(n-3, seq)
+    seq[n] = (solve(n-1, seq) + solve(n-2, seq)
+              + solve(n-3, seq))
     return seq[n]
 
 function main(n):

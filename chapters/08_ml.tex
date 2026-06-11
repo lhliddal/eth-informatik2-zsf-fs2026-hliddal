@@ -545,7 +545,8 @@ from sklearn.decomposition import PCA
 
 # --- Daten laden ---
 data, labels = load_digits(return_X_y=True)
-(n_samples, n_features), n_digits = data.shape, np.unique(labels).size
+(n_samples, n_features), n_digits = (
+    data.shape, np.unique(labels).size)
 
 # --- Vorverarbeitung ---
 scaled = StandardScaler().fit_transform(data)
@@ -554,7 +555,8 @@ scaled = StandardScaler().fit_transform(data)
 reduced_data = PCA(n_components=2).fit_transform(scaled)
 
 # --- K-Means Clustering ---
-kmeans = KMeans(init="k-means++", n_clusters=n_digits, n_init=4)
+kmeans = KMeans(init="k-means++", n_clusters=n_digits,
+                n_init=4)
 kmeans.fit(reduced_data)
 \end{lstlisting}
 \end{codebox}

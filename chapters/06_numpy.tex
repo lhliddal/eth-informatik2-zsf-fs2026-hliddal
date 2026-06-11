@@ -26,7 +26,8 @@ np.empty((2, 2))  # nicht init. – zuf. Speicherinhalt
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 a.shape     # Tupel der Dimensionen (z.B. (3,4) = 3x4)
-a.ndim      # Anzahl Dimensionen (2 fuer Matrix, 1 fuer Vektor)
+# Anzahl Dimensionen (2 fuer Matrix, 1 fuer Vektor)
+a.ndim
 a.size      # Gesamtanzahl Elemente (Produkt der Dimensionen)
 a.dtype     # Datentyp der Elemente (z.B. int32, float64)
 a.itemsize  # Bytes pro Element (z.B. 4 fuer int32)
@@ -55,7 +56,8 @@ a.tolist()                     # zurueck zur Python-Liste
 a[1], a[1, :], a[:, 0]  # Element / ganze Zeile / ganze Spalte
 a[1:4], a[::2]          # Slicing / jedes 2. Element
 a[a > 3]                # boolescher Indexzugriff (Maske)
-np.where(a > 0, a, 0)   # bedingte Ersetzung: a wenn >0, sonst 0
+# bedingte Ersetzung: a wenn >0, sonst 0
+np.where(a > 0, a, 0)
 np.nonzero(a)           # Indizes aller Nicht-Null-Elemente
 np.take(a, [0, 2])      # Elemente per Index sammeln
 # Elemente per Index setzen (in-place)

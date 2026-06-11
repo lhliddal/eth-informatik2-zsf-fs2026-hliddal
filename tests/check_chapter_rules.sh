@@ -16,6 +16,9 @@ patterns=(
   '\\rowcolor\{'
   '\\begin\{tabular\*?\}'
   '\\begin\{tabularx\}'
+  '\\begin\{(sectionbox|smallbox|bigbox)\}'
+  '\\(small|med|big)break\b'
+  '\\(scriptsize|footnotesize)\b'
 )
 
 messages=(
@@ -25,6 +28,9 @@ messages=(
   'Use \ZSFrowColor (or zebra via ZSFtable*) instead of direct \\rowcolor in chapters.'
   'Use \begin{ZSFtable}/\begin{ZSFtableFlat}/\begin{ZSFtablePlain} instead of raw tabular.'
   'Use \begin{ZSFtable}/\begin{ZSFtableFlat}/\begin{ZSFtablePlain} instead of raw tabularx.'
+  'Removed aliases: use contentbox/defbox/statementbox (see rules/20_boxes.md).'
+  'Use \ZSFgapXS/S/M/L instead of \smallbreak/\medbreak/\bigbreak.'
+  'Use semantic font macros (\ZSFfontTableDense, \ZSFfontNote) instead of direct size commands.'
 )
 
 violations=0

@@ -18,9 +18,7 @@
 %        defbox      fuer Definitionen / hervorgehobene Faktenboxen
 %        formulabox  fuer zentrierte Schluesselformeln
 %        statementbox/procedure/factlist/propertylist (mit Akzentstreifen)
-%   5. Backward-compat-Aliase:
-%        sectionbox -> contentbox
-%        smallbox / bigbox -> dezente neutrale Wrapper
+%   5. Inline-Formelbox (\eqbox)
 % ============================================================
 
 % ------------------------------------------------------------
@@ -116,7 +114,7 @@
   breakable=false,
   colback=white,
   colframe=\ZSFBaseBoxBorderColor,
-  boxrule=0.4pt,
+  boxrule=\ZSFborderThin,
   arc=1pt,
   outer arc=1pt,
   boxsep=0pt,
@@ -147,7 +145,7 @@
   colbacktitle=\BoxTitleColor,
   colframe=\BoxFrameColor,
   coltitle=\BoxTitleTextColor,
-  boxrule=0.5pt,
+  boxrule=\ZSFborderBox,
   titlerule=0pt,
   boxsep=0pt,
   before skip=\ZSFBoxBeforeSkip,
@@ -248,7 +246,7 @@
   breakable=false,
   colback=white,
   colframe=\ZSFBaseBoxBorderColor,
-  leftrule=0.4pt, rightrule=0.4pt,
+  leftrule=\ZSFborderThin, rightrule=\ZSFborderThin,
   toprule=0pt, bottomrule=0pt,
   arc=0pt, outer arc=0pt,
   boxsep=0pt,
@@ -260,7 +258,7 @@
 
 \newtcolorbox{codeboxfirst}{
   zsf@codebox@split@base,
-  toprule=0.4pt,
+  toprule=\ZSFborderThin,
   arc=1pt, outer arc=1pt,
   sharp corners=south,
   before skip=\ZSFBoxBeforeSkip,
@@ -273,7 +271,7 @@
 
 \newtcolorbox{codeboxlast}{
   zsf@codebox@split@base,
-  bottomrule=0.4pt,
+  bottomrule=\ZSFborderThin,
   arc=1pt, outer arc=1pt,
   sharp corners=north,
   after skip=\ZSFspaceS,
@@ -318,8 +316,8 @@
 \newtcolorbox{formulabox}[1][]{
   enhanced jigsaw,
   colback=\FormulaboxBackColor,
-  colframe=black,
-  boxrule=0.5pt,
+  colframe=\ZSFTitledBoxBorderColor,
+  boxrule=\ZSFborderBox,
   left=\ZSFspaceS, right=\ZSFspaceS, top=\ZSFspaceS, bottom=\ZSFspaceS,
   before skip=\ZSFBoxBeforeSkip,
   after skip=\ZSFspaceS,
@@ -382,42 +380,9 @@
   fontupper=\ZSFfontDangerUpper}
 
 % ============================================================
-% 5. Backward-compat-Aliase
+% 5. Inline-Formelbox
 % ============================================================
-% sectionbox -> nutzt das gleiche Basis-Modell wie contentbox
-% (kein Akzentstreifen, dezenter Rahmen in Kapitel-Tonung).
-\newtcolorbox{sectionbox}[1][]{%
-  zsfcontentbase,
-  left=\ZSFspaceS, right=\ZSFspaceS,
-  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
-  fontupper=\ZSFfontSectionUpper,
-  #1
-}
-
-\newtcolorbox{smallbox}[1][]{%
-  zsfcontentbase,
-  left=\ZSFspaceS, right=\ZSFspaceS,
-  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
-  #1
-}
-
-\newtcolorbox{bigbox}[1][]{%
-  enhanced jigsaw,
-  breakable=false,
-  colback=white,
-  colframe=\chaptercolor,
-  boxrule=1pt,
-  arc=1pt,
-  boxsep=0pt,
-  left=\ZSFspaceS, right=\ZSFspaceS,
-  top=\ZSFspaceS, bottom=\ZSFspaceS,
-  before skip=\ZSFBoxBeforeSkip,
-  after skip=\ZSFspaceS,
-  before={\ZSFConsumeAfterSubsectionBar},
-  #1
-}
-
-\newcommand{\eqbox}[1]{\fcolorbox{black}{\chaptercolorlight}{\(\displaystyle #1\)}}
+\newcommand{\eqbox}[1]{\fcolorbox{\ZSFTitledBoxBorderColor}{\chaptercolorlight}{\(\displaystyle #1\)}}
 
 % ------------------------------------------------------------
 % Title Header (gleicher Stil wie Analysis / Physik)

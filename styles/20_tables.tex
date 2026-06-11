@@ -1,5 +1,5 @@
 % Adaptiert aus ZSF_Physik_V3/styles/20_tables.tex
-% Anpassungen: \chaptercolor → title, \chaptercolorlight → title!10!white
+% Header/Zebra folgen der Kapitel-Palette (\chaptercolor, use-time expandiert)
 \providecommand{\ZSFfontTable}{\normalsize}
 \providecommand{\ZSFfontTableDense}{\footnotesize}
 
@@ -51,7 +51,7 @@
 % ------------------------------------------------------------
 % Zebra-Streifen (Scannbarkeit)
 % ------------------------------------------------------------
-\newcommand{\ZSFzebraBG}{title!10!white}
+\newcommand{\ZSFzebraBG}{\chaptercolor!10!white}
 \newcommand{\SetZSFzebraBG}[1]{\renewcommand{\ZSFzebraBG}{#1}}
 \newcommand{\ZSFzebra}{\rowcolors{2}{white}{\ZSFzebraBG}}          % Header in Zeile 1
 \newcommand{\ZSFzebraStart}[1]{\rowcolors{#1}{white}{\ZSFzebraBG}} % frei waehlbar
@@ -69,7 +69,7 @@
 % &-Grenzen. Die erste Zelle verliert die Farbe, andere behalten sie — je
 % nach Spaltenbreite und Content (siehe SI-Praefix-Bug). Per-Zelle-Wrapper
 % via \ZSFhead{...} ist robust und konsistent.
-\newcommand{\ZSFheaderRowBG}{title}
+\newcommand{\ZSFheaderRowBG}{\chaptercolor}
 \newcommand{\ZSFheaderRowFG}{white}
 \newcommand{\ZSFheaderRow}{\rowcolor{\ZSFheaderRowBG}}
 \newcommand{\ZSFhead}[1]{{\color{\ZSFheaderRowFG}\bfseries #1}}

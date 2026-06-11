@@ -36,6 +36,14 @@
 \newlength{\ZSFsubsectionAfterGap}\setlength{\ZSFsubsectionAfterGap}{\ZSFspaceXS}
 \newlength{\ZSFchapterBarAfterSkip}\setlength{\ZSFchapterBarAfterSkip}{2pt}
 
+% Border-Staerken (semantisch, fuer styles/60_boxes.tex):
+%   Thin   = Standardrahmen aller Content-/Code-/Tabellen-Boxen
+%   Box    = betonte Boxen mit getoentem Hintergrund (defbox, formulabox)
+%   Strong = starke Betonung (reserviert)
+\newlength{\ZSFborderThin}   \setlength{\ZSFborderThin}{0.4pt}
+\newlength{\ZSFborderBox}    \setlength{\ZSFborderBox}{0.5pt}
+\newlength{\ZSFborderStrong} \setlength{\ZSFborderStrong}{1pt}
+
 % Tokens fuer statementbox / procedure
 \newlength{\ZSFstatementBarWidth} \setlength{\ZSFstatementBarWidth}{2pt}
 \newlength{\ZSFstatementLeftPad}  \setlength{\ZSFstatementLeftPad}{\ZSFspaceM}
@@ -45,7 +53,7 @@
 \newlength{\ZSFlistLeftMargin}    \setlength{\ZSFlistLeftMargin}{1.2em}
 \newlength{\ZSFprocLabSep}        \setlength{\ZSFprocLabSep}{0.4em}
 \newlength{\ZSFcodeMiniSkip}      \setlength{\ZSFcodeMiniSkip}{1mm}
-\newlength{\ZSFcodeFrameRule}     \setlength{\ZSFcodeFrameRule}{0.4pt}
+\newlength{\ZSFcodeFrameRule}     \setlength{\ZSFcodeFrameRule}{\ZSFborderThin}
 \newlength{\ZSFcodeXMargin}       \setlength{\ZSFcodeXMargin}{8pt}
 
 % Tokens fuer Code-Kommentare

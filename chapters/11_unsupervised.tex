@@ -1,16 +1,20 @@
 \section{Unsupervised Learning}\label{sec:11-unsupervised-learning}
 \subsection{Clustering}\label{sec:11-clustering}
-\begin{contentbox}
 
-K-Means ist ein Unsupervised-Learning-Algorithmus, der $n$ Datenpunkte in $K$ disjunkte Cluster aufteilt, indem die Varianz innerhalb der Cluster minimiert wird.
+\begin{defbox}[K-Means]
+K-Means ist ein Unsupervised-Learning-Algorithmus, der $n$ Datenpunkte in $K$ disjunkte Cluster aufteilt, indem die Varianz innerhalb der Cluster minimiert wird. \ZSFref{sec:08-clustering}
+\end{defbox}
 
-\textbf{Loss Function (Zielfunktion)}
+\begin{contentbox}[Loss Function (Zielfunktion)]
 Sei:
+\begin{factlist}
+\ZSFFact{$X = {\mathbf{x}_1, \dots, \mathbf{x}_n}$}{mit $\mathbf{x}_i \in \R^d$}
+\ZSFFact{$\mu_k$}{Centroid des Clusters $k$}
+\ZSFFact{$C_k$}{Menge der Punkte im Cluster $k$}
+\end{factlist}
+\end{contentbox}
 
- $X = {\mathbf{x}_1, \dots, \mathbf{x}_n}$, mit $\mathbf{x}_i \in \R^d$
- $\mu_k$ = Centroid des Clusters $k$
- $C_k$ = Menge der Punkte im Cluster $k$
-
+\begin{formulabox}
 Die Verlustfunktion (Distortion/Inertia) lautet:
 
 $
@@ -22,81 +26,52 @@ Ziel:
 $
 \min_{C_1,\dots,C_K, \ \mu_1,\dots,\mu_K} J
 $
+\end{formulabox}
 
-\smallbreak
+\begin{procedure}[Lloyd's Algorithm (Standard K-Means)]
+\ProcStep{Initialisierung}{Wähle $K$ initiale Centroide $\mu_1^{(0)}, \dots, \mu_K^{(0)}$}
+\ProcStep{Zuweisungs-Schritt}{Weise jedem Punkt seinen nächstgelegenen Centroid zu:
+$c_i = \arg\min_{k} \| \mathbf{x}_i - \mu_k \|^2$}
+\ProcStep{Update-Schritt}{Berechne die Centroide neu als Mittelwert der zugewiesenen Punkte:
+$\mu_k = \frac{1}{|C_k|} \sum_{\mathbf{x}_i \in C_k} \mathbf{x}_i$}
+\ProcStep{Wiederhole}{die Schritte 2--3, bis sich die Zuweisungen nicht mehr ändern oder $J$ konvergiert.}
+\ProcStep{Teste verschiedene initiale Centroide}{um lokale Optima zu vermeiden (mehr als 20 unterschiedliche Startzustände).}
+\end{procedure}
 
-\textbf{Lloyd's Algorithm (Standard K-Means)}
-
-1. \textbf{Initialisierung}: Wähle $K$ initiale Centroide $\mu_1^{(0)}, \dots, \mu_K^{(0)}$
-
-2. \textbf{Zuweisungs-Schritt}: Weise jedem Punkt seinen nächstgelegenen Centroid zu:
-
-$
-c_i = \arg\min_{k} \| \mathbf{x}_i - \mu_k \|^2
-$
-
-3. \textbf{Update-Schritt}: Berechne die Centroide neu als Mittelwert der zugewiesenen Punkte:
-
-$
-\mu_k = \frac{1}{|C_k|} \sum_{\mathbf{x}_i \in C_k} \mathbf{x}_i
-$
-
-4. \textbf{Wiederhole} die Schritte 2–3, bis sich die Zuweisungen nicht mehr ändern oder $J$ konvergiert.
-
-5. \textbf{Teste verschiedene initiale Centroide}, um lokale Optima zu vermeiden (mehr als 20 unterschiedliche Startzustände).
-
-\textbf{Elbow-Kriterium}
+\begin{contentbox}[Elbow-Kriterium]
 Um $K$ zu wählen, berechne $J(K)$ für verschiedene Werte von $K$ und plotte:
-
- x-Achse: $K$ (Anzahl Cluster),
- y-Achse: $J(K)$ (Within-Cluster Sum of Squares)
-
+\begin{factlist}
+\ZSFFact{x-Achse}{$K$ (Anzahl Cluster)}
+\ZSFFact{y-Achse}{$J(K)$ (Within-Cluster Sum of Squares)}
+\end{factlist}
 Der Elbow-Punkt ist dort, wo zusätzliche Cluster nur noch marginalen Gewinn bringen — die Kurve macht einen sichtbaren Knick.
-
 \end{contentbox}
 
 \subsection{Dimensionsreduktion}\label{sec:11-dimensionsreduktion}
-\begin{contentbox}
-\textbf{Dimensionsreduktion}
 
+\begin{defbox}[Dimensionsreduktion]
 Dimensionsreduktionsverfahren stellen hochdimensionale Daten in weniger Dimensionen dar, wobei die wesentliche Struktur erhalten bleibt. Dies erleichtert Visualisierung, Rauschunterdrückung und beschleunigt Lernverfahren.
+\end{defbox}
 
-\smallbreak
-
-\textbf{Principal Component Analysis (PCA)}
-
-    
-
-PCA ist ein lineares Verfahren, das neue orthogonale Achsen (Hauptkomponenten) bestimmt, entlang derer die Varianz der Daten maximal ist. Die erste Hauptkomponente erfasst die größte Varianz, die zweite die nächstgrößte, usw. Die Daten werden anschließend in dieses neue Koordinatensystem projiziert, sodass man von $d$ auf $m \ll d$ Dimensionen reduzieren kann, während der größte Teil der Informationsstreuung erhalten bleibt.
-
-\smallbreak
+\begin{contentbox}[Principal Component Analysis (PCA)]
+PCA ist ein lineares Verfahren, das neue orthogonale Achsen (Hauptkomponenten) bestimmt, entlang derer die Varianz der Daten maximal ist. Die erste Hauptkomponente erfasst die größte Varianz, die zweite die nächstgrößte, usw. Die Daten werden anschließend in dieses neue Koordinatensystem projiziert, sodass man von $d$ auf $m \ll d$ Dimensionen reduzieren kann, während der größte Teil der Informationsstreuung erhalten bleibt. \ZSFref{sec:08-dimensionsreduktion}
 \end{contentbox}
-\begin{contentbox}
-\textbf{t-SNE}
 
+\begin{contentbox}[t-SNE]
 t-SNE ist ein nichtlineares Verfahren, das vor allem lokale Nachbarschaften im Datensatz erhält. Es betont kleine Distanzen und bildet dadurch ähnliche Punkte nahe beieinander ab, was oft zu klar getrennten Clustern in 2D oder 3D führt. Es eignet sich besonders für die Visualisierung komplexer Strukturen.
-
 \end{contentbox}
+
 \subsection{Zusammenfassung}\label{sec:11-zusammenfassung}
 \begin{contentbox}
-\begin{itemize}
-    \item \textbf{MLP:} Gut für strukturierte Daten (z.\,B. Tabellen)
-    \item \textbf{CNN:} Gut für unstrukturierte Bilddaten
-    \item \textbf{Versteckte Schichten:} meist ReLU
-    \item \textbf{Ausgabeschicht:}
+\begin{factlist}
+\ZSFFact{MLP}{Gut für strukturierte Daten (z.\,B. Tabellen) \ZSFref{sec:10-standard-neural-network-mlp}}
+\ZSFFact{CNN}{Gut für unstrukturierte Bilddaten \ZSFref{sec:10-convolutional-neural-network-cnn}}
+\ZSFFact{Versteckte Schichten}{meist ReLU}
+\item \textbf{Ausgabeschicht:}
     \begin{itemize}
         \item Sigmoid bei binärer Klassifikation
-        \item Softmax bei Mehrklassenklassifikation
+        \item Softmax bei Mehrklassenklassifikation \ZSFref{sec:10-softmax-schicht-ausgabe}
     \end{itemize}
-    \item Lernt erfolgt über Anpassung der Gewichtungen $w$ und Bias-Terme $b$
-\end{itemize}
+\item Lernt erfolgt über Anpassung der Gewichtungen $w$ und Bias-Terme $b$
+\end{factlist}
 \end{contentbox}
-
-
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

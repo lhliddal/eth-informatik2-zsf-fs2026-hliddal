@@ -1,20 +1,20 @@
 \section{Datenstrukturen}\label{sec:09-datenstrukturen}
 \subsection{Queue und Stack}\label{sec:09-queue-und-stack}
-\begin{contentbox}
-\textbf{Queue:} Eine Warteschlange, bei der Elemente nach dem \textit{First In – First Out} (FIFO) Prinzip verarbeitet werden.
+\begin{defbox}[Queue]
+Eine Warteschlange, bei der Elemente nach dem \textit{First In – First Out} (FIFO) Prinzip verarbeitet werden.
+\begin{factlist}
+\ZSFFact{\texttt{add/enqueue}}{Element am Ende der Queue einfügen}
+\ZSFFact{\texttt{remove/dequeue}}{Element am Anfang der Queue entfernen}
+\end{factlist}
+\end{defbox}
 
-\begin{itemize}
-  \item \texttt{add/enqueue}: Element am Ende der Queue einfügen
-  \item \texttt{remove/dequeue}: Element am Anfang der Queue entfernen
-\end{itemize}
-
-\textbf{Stack:} Ein Stapelspeicher, der nach dem \textit{Last In – First Out} (LIFO) Prinzip arbeitet.
-
-\begin{itemize}
-  \item \texttt{add/push}: Element oben auf den Stack legen
-  \item \texttt{remove/pop}: Oberstes Element entfernen
-\end{itemize}
-\end{contentbox}
+\begin{defbox}[Stack]
+Ein Stapelspeicher, der nach dem \textit{Last In – First Out} (LIFO) Prinzip arbeitet.
+\begin{factlist}
+\ZSFFact{\texttt{add/push}}{Element oben auf den Stack legen}
+\ZSFFact{\texttt{remove/pop}}{Oberstes Element entfernen}
+\end{factlist}
+\end{defbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 stack = []                        # Stack (LIFO)
@@ -36,34 +36,36 @@ first = q.popleft()               # dequeue-> O(1)
 def preorder_list(node: Optional[Node]) -> list:
     if node is None:
         return []
-    return [node.key] + preorder_list(node.left) +
-    preorder_list(node.right)
+    return ([node.key] + preorder_list(node.left)
+            + preorder_list(node.right))
 
 def postorder_list(node: Optional[Node]) -> list:
     if node is None:
         return []
-    return postorder_list(node.left)
-    + postorder_list(node.right) + [node.key]
+    return (postorder_list(node.left)
+            + postorder_list(node.right) + [node.key])
 
 def inorder_list(node: Optional[Node]) -> list:
     if node is None:
         return []
-    return inorder_list(node.left)
-    + [node.key] + inorder_list(node.right)
+    return (inorder_list(node.left)
+            + [node.key] + inorder_list(node.right))
 \end{lstlisting}
 \end{codebox}
 \begin{contentbox}
 \begin{center}
     \includegraphics[scale=0.26]{tree_traversing.png}
 \end{center}
-\text{Preorder: Hauptreihenfolge, mit dem wird Baum gebaut}\\
-\text{Postorder: Nebenreihenfolge}
+\begin{factlist}
+\ZSFFact{Preorder}{Hauptreihenfolge, mit dem wird Baum gebaut}
+\ZSFFact{Postorder}{Nebenreihenfolge}
+\end{factlist}
 \end{contentbox}
 
 \subsubsection{Knoten suchen (search)}
-\begin{contentbox}
-\text{Durchschnittsfall: $\Theta(\log n)$, Worst Case: $\Theta(n)$}
-\end{contentbox}
+\begin{statementbox}
+Durchschnittsfall: $\Theta(\log n)$, Worst Case: $\Theta(n)$
+\end{statementbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 def search(self, key: int) -> Optional[Node]:
@@ -79,9 +81,9 @@ def search(self, key: int) -> Optional[Node]:
 \end{codebox}
 
 \subsubsection{Knoten hinzufügen (add)}
-\begin{contentbox}
-\text{Durchschnittsfall: $\Theta(\log n)$, Worst Case: $\Theta(n)$}
-\end{contentbox}
+\begin{statementbox}
+Durchschnittsfall: $\Theta(\log n)$, Worst Case: $\Theta(n)$
+\end{statementbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 def add(self, key: int) -> bool:
@@ -108,9 +110,9 @@ def add(self, key: int) -> bool:
 
 
 \subsubsection{Knoten löschen (delete)}
-\begin{contentbox}
-\text{In allen Fällen: $\Theta(n)$}
-\end{contentbox}
+\begin{statementbox}
+In allen Fällen: $\Theta(n)$
+\end{statementbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 def deleteNode(root, key):
@@ -147,12 +149,12 @@ def findSuccessor(start_node):
 \end{codebox}
 \subsubsection{Komplexitäten}
 \begin{contentbox}
-\begin{itemize}
-  \item Baum aufbauen (Worst Case): $\Theta(n^2)$ \; (balanciert: $\Theta(n \log n)$)
-  \item Minimum/Maximum finden: $\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)
-  \item Einfügen: $\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)
-  \item Entfernen (beliebiges Element): $\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)
-\end{itemize}
+\begin{factlist}
+\ZSFFact{Baum aufbauen (Worst Case)}{$\Theta(n^2)$ \; (balanciert: $\Theta(n \log n)$)}
+\ZSFFact{Minimum/Maximum finden}{$\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)}
+\ZSFFact{Einfügen}{$\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)}
+\ZSFFact{Entfernen (beliebiges Element)}{$\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)}
+\end{factlist}
 \end{contentbox}
 
 
@@ -162,28 +164,26 @@ def findSuccessor(start_node):
 \end{center}
 
 \subsubsection{Grundidee eines Binary Heaps}
-\begin{contentbox}
+\begin{defbox}[Binary Heap]
 Ein Binary Heap ist eine vollständige Binärstruktur, bei der gilt:
-\begin{itemize}
-  \item \textbf{Min-Heap:} Elternknoten ist stets kleiner als seine Kinder.
-  \item \textbf{Max-Heap:} Elternknoten ist stets größer als seine Kinder.
-\end{itemize}
+\begin{factlist}
+\ZSFFact{Min-Heap}{Elternknoten ist stets kleiner als seine Kinder.}
+\ZSFFact{Max-Heap}{Elternknoten ist stets größer als seine Kinder.}
+\end{factlist}
 
 Heaps werden in einer Liste gespeichert, sodass die Knotenebenen hintereinander notiert sind:
 \[
 \texttt{[1, 2, 3, 4, 5, 6]} \Rightarrow \text{Index: } 0,1,2,\dots
 \]
+\end{defbox}
 
-
-    
-
-\textbf{Zugriffsformeln:}
-\begin{itemize}
-  \item \texttt{parent} = $(i-1)//2$
-  \item \texttt{left child} = $2i + 1$
-  \item \texttt{right child} = $2i + 2$
-  \item \texttt{Höhe} = $\log_2(N+1)$ mit $N = \texttt{len(list)}$
-\end{itemize}
+\begin{contentbox}[Zugriffsformeln]
+\begin{factlist}
+\ZSFFact{\texttt{parent}}{$(i-1)//2$}
+\ZSFFact{\texttt{left child}}{$2i + 1$}
+\ZSFFact{\texttt{right child}}{$2i + 2$}
+\ZSFFact{Höhe}{$\log_2(N+1)$ mit $N = \texttt{len(list)}$}
+\end{factlist}
 \end{contentbox}
 
 \subsubsection{Heapify (Heap aufbauen)}
@@ -242,8 +242,10 @@ def SortHeap(a):
 
 \subsubsection{Elemente einfügen und löschen}
 \begin{contentbox}
-\textbf{Einfügen:} ans Ende der Liste hängen, dann \texttt{siftUp()}
-\textbf{Löschen:} Element mit letztem tauschen, löschen, dann \texttt{SiftDown()}
+\begin{factlist}
+\ZSFFact{Einfügen}{ans Ende der Liste hängen, dann \texttt{siftUp()}}
+\ZSFFact{Löschen}{Element mit letztem tauschen, löschen, dann \texttt{SiftDown()}}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -261,12 +263,12 @@ def removeMax(heap):
 
 \subsubsection{Komplexitäten}
 \begin{contentbox}
-\begin{itemize}
-  \item Heap aufbauen (Worst Case): $\Theta(n \log n)$
-  \item Maximum/Minimum holen: $\mathcal{O}(1)$
-  \item Einfügen in Heap: $\mathcal{O}(\log n)$
-  \item Entfernen (Top-Element): $\mathcal{O}(\log n)$
-\end{itemize}
+\begin{factlist}
+\ZSFFact{Heap aufbauen (Worst Case)}{$\Theta(n \log n)$}
+\ZSFFact{Maximum/Minimum holen}{$\mathcal{O}(1)$}
+\ZSFFact{Einfügen in Heap}{$\mathcal{O}(\log n)$}
+\ZSFFact{Entfernen (Top-Element)}{$\mathcal{O}(\log n)$}
+\end{factlist}
 \end{contentbox}
 
 
@@ -275,33 +277,33 @@ def removeMax(heap):
 \subsection{Hash-Tabellen}\label{sec:09-hash-tabellen}
 
 \subsubsection{Grundidee}
-\begin{contentbox}
-Eine \textbf{Hash-Tabelle} speichert ungeordnete Sammlungen \textbf{einzigartiger Elemente} (z.\,B. \texttt{set} oder \texttt{dict} in Python).
+\begin{defbox}[Hash-Tabelle]
+Eine Hash-Tabelle speichert ungeordnete Sammlungen \textbf{einzigartiger Elemente} (z.\,B. \texttt{set} oder \texttt{dict} in Python).
 
-\textbf{Hashing:} Einer Eingabe wird mittels \textbf{Hash-Funktion} ein Integer zugewiesen. Die Platzierung im Array der Länge $M$ erfolgt am Index:
+\ZSFkeyword{Hashing}: Einer Eingabe wird mittels \ZSFkeyword{Hash-Funktion} ein Integer zugewiesen. Die Platzierung im Array der Länge $M$ erfolgt am Index:
 \[
 \texttt{index} = \texttt{hash}(x)\ \%\ M \quad(\text{math: } \bmod)
 \]
-\end{contentbox}
+\end{defbox}
 
 \subsubsection{Laufzeiten}
 \begin{contentbox}
-\begin{itemize}
-  \item Suche, Einfügen, Entfernen (Erwartungswert): $\mathcal{O}(1)$
-  \item Suche, Einfügen, Entfernen (Worst Case): $\mathcal{O}(n)$
-\end{itemize}
+\begin{factlist}
+\ZSFFact{Suche, Einfügen, Entfernen (Erwartungswert)}{$\mathcal{O}(1)$}
+\ZSFFact{Suche, Einfügen, Entfernen (Worst Case)}{$\mathcal{O}(n)$}
+\end{factlist}
 \end{contentbox}
 
 \subsubsection{Kollisionsbehandlung}
 \begin{contentbox}
 Treffen mehrere Elemente auf denselben Index, gibt es zwei Lösungsansätze:
-\begin{itemize}
-  \item \textbf{Chaining:} Am Index wird der \textbf{Head-Knoten} einer \textbf{Linked List} gespeichert, die alle kollidierenden Elemente aufnimmt. \\
-  \emph{Vorteil:} Ein oft wiederholter Hash blockiert nicht die restliche Tabelle.
-  \item \textbf{Probing:} Ist der Index besetzt, wird zirkulär der nächste freie Index (\textbf{Wrap-around}) gesucht. \\
-  \emph{Vorteil:} Alle Daten bleiben \textbf{Cache-freundlich} im Array. \\
-  \emph{Nachteil:} Löschungen erfordern \textbf{Tombstoning} (spezielle Literale als Platzhalter) oder komplexes Rückwärts-Verschieben.
-\end{itemize}
+\begin{factlist}
+\ZSFFact{Chaining}{Am Index wird der Head-Knoten einer \ZSFkeyword{Linked List} gespeichert, die alle kollidierenden Elemente aufnimmt. \ZSFref{sec:12-linked-lists}\\
+  \emph{Vorteil:} Ein oft wiederholter Hash blockiert nicht die restliche Tabelle.}
+\ZSFFact{Probing}{Ist der Index besetzt, wird zirkulär der nächste freie Index (\ZSFkeyword{Wrap-around}) gesucht. \\
+  \emph{Vorteil:} Alle Daten bleiben Cache-freundlich im Array. \\
+  \emph{Nachteil:} Löschungen erfordern \ZSFkeyword{Tombstoning} (spezielle Literale als Platzhalter) oder komplexes Rückwärts-Verschieben.}
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -322,19 +324,19 @@ def create_hash_table(l, M):
 \subsection{Quadtrees}\label{sec:09-quadtrees}
 
 \subsubsection{Grundidee}
-\begin{contentbox}
-\textbf{Quadtrees} sind \textbf{volle Quarternärbäume} (jeder Knoten hat entweder $0$ oder exakt $4$ Kinder) zur effizienten Verarbeitung \textbf{räumlicher Daten in 2D} (z.\,B. Rechteck-Abfragen).
-\end{contentbox}
+\begin{defbox}[Quadtree]
+Quadtrees sind \ZSFkeyword{volle Quarternärbäume} (jeder Knoten hat entweder $0$ oder exakt $4$ Kinder) zur effizienten Verarbeitung \textbf{räumlicher Daten in 2D} (z.\,B. Rechteck-Abfragen).
+\end{defbox}
 
 \subsubsection{Struktur eines Knotens}
 \begin{contentbox}
 Ein Knoten speichert:
-\begin{itemize}
-  \item untere linke Ecke $l$ und obere rechte Ecke $u$
-  \item \textbf{Maximalkapazität} $m$
-  \item Liste $p$ von Punkten
-  \item $4$ Referenzen auf Kinder-Quadtrees $c_0, c_1, c_2, c_3$
-\end{itemize}
+\begin{factlist}
+\item untere linke Ecke $l$ und obere rechte Ecke $u$
+\item \textbf{Maximalkapazität} $m$
+\item Liste $p$ von Punkten
+\item $4$ Referenzen auf Kinder-Quadtrees $c_0, c_1, c_2, c_3$
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -349,19 +351,19 @@ class QuadTree:
 
 \subsubsection{Einfügen \& Split}
 \begin{contentbox}
-\begin{itemize}
-  \item Ein Punkt wird zu $p$ hinzugefügt.
-  \item Überschreitet die Anzahl der Punkte die Kapazität $m$, wird der Knoten in \textbf{vier Viertel} partitioniert.
-  \item Die Punkte aus $p$ werden auf die Kinder aufgeteilt und das eigene $p$ geleert.
-\end{itemize}
+\begin{factlist}
+\item Ein Punkt wird zu $p$ hinzugefügt.
+\item Überschreitet die Anzahl der Punkte die Kapazität $m$, wird der Knoten in \textbf{vier Viertel} partitioniert.
+\item Die Punkte aus $p$ werden auf die Kinder aufgeteilt und das eigene $p$ geleert.
+\end{factlist}
 \end{contentbox}
 
 \subsubsection{Rechtecks-Abfrage (Range Query)}
 \begin{contentbox}
-\begin{itemize}
-  \item Die Suche wächst logarithmisch mit der Anzahl der Punkte: $\mathcal{O}(\log n)$.
-  \item Schneidet das Such-Rechteck einen Quadranten nicht, wird dieser Zweig \textbf{komplett ignoriert} (Pruning).
-\end{itemize}
+\begin{factlist}
+\item Die Suche wächst logarithmisch mit der Anzahl der Punkte: $\mathcal{O}(\log n)$.
+\item Schneidet das Such-Rechteck einen Quadranten nicht, wird dieser Zweig \textbf{komplett ignoriert} (\ZSFkeyword{Pruning}).
+\end{factlist}
 \end{contentbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -378,13 +380,13 @@ def query(node, q_l, q_u):
 \end{codebox}
 
 \subsubsection{Bemerkung}
-\begin{contentbox}
+\begin{statementbox}
 Die \textbf{Konstruktion} des Baumes ist relativ aufwendig; der Einsatz lohnt sich daher erst bei \textbf{höherfrequentierten Abfragen}.
-\end{contentbox}
+\end{statementbox}
 
 
 \subsection{Übersicht: Laufzeiten im Vergleich}\label{sec:09-uebersicht-laufzeiten-im-vergleich}
-\begin{contentbox}
+\begin{tablebox}
 \renewcommand{\arraystretch}{1.25}
 \begin{ZSFtable}{Q{1.2} L L L}
 \toprule
@@ -399,15 +401,15 @@ Hash-Tabelle        & $\mathcal{O}(1)$ \emph{(erw.)} & $\mathcal{O}(1)$ \emph{(e
 Quadtree            & $\mathcal{O}(\log n)$\,\footnotesize{(Range)} & $\mathcal{O}(\log n)$ & --- \\
 \bottomrule
 \end{ZSFtable}
+\end{tablebox}
 
-\ZSFgapXS
-\textbf{Merke:}
-\begin{itemize}
-  \item \textbf{Hash-Tabelle}: schnellster Zugriff im Durchschnitt, aber ungeordnet.
-  \item \textbf{BST / Heap}: geordneter Zugriff, log.\ Laufzeit — nur balanciert effizient.
-  \item \textbf{Quadtree}: spezialisiert auf 2D-Bereichs-Abfragen.
-\end{itemize}
-\end{contentbox}
+\begin{statementbox}[Merke]
+\begin{factlist}
+\ZSFFact{Hash-Tabelle}{schnellster Zugriff im Durchschnitt, aber ungeordnet.}
+\ZSFFact{BST / Heap}{geordneter Zugriff, log.\ Laufzeit — nur balanciert effizient.}
+\ZSFFact{Quadtree}{spezialisiert auf 2D-Bereichs-Abfragen.}
+\end{factlist}
+\end{statementbox}
 
 
 

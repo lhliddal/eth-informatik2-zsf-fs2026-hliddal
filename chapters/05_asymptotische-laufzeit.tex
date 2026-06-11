@@ -10,7 +10,7 @@ Vergleiche dazu die "`äußere Arbeit"' $f(n)$ mit der Laufzeit der Rekursion $n
 \ZSFgapS
 \begin{ZSFtable}{L L L}
 \toprule
-\textbf{Fall ($f(n)$ vs $n^{\log_t(a)}$)} & \textbf{Intuition} & \textbf{Ergebnis $T(n)$} \\
+\ZSFheaderRow \ZSFhead{Fall ($f(n)$ vs $n^{\log_t(a)}$)} & \ZSFhead{Intuition} & \ZSFhead{Ergebnis $T(n)$} \\
 \midrule
 $f(n)$ ist \textbf{polynomiell} kleiner & Rekursion dominiert & $\Theta(n^{\log_t(a)})$ \\
 beide sind gleich ($f(n) \in \Theta(n^{\log_t(a)})$)& Balance              & $\Theta(n^{\log_t(a)} \cdot \log n)$ \\
@@ -26,7 +26,7 @@ $f(n)$ ist \textbf{polynomiell} größer  & Arbeit außen dominiert & $\Theta(f(
 \begin{contentbox} 
 \begin{ZSFtable}{L L L}
 \toprule
-\textbf{Summe} & \textbf{Vereinfachung} & \textbf{Laufzeit ($\Theta$)} \\
+\ZSFheaderRow \ZSFhead{Summe} & \ZSFhead{Vereinfachung} & \ZSFhead{Laufzeit ($\Theta$)} \\
 \midrule
 $\sum_{i=1}^{n} 1$ & $n$ & $\Theta(n)$ \\
 $\sum_{i=1}^{n} i$ & $\frac{n(n+1)}{2}$ & $\Theta(n^2)$ \\
@@ -274,14 +274,13 @@ Aufrufe: $\lfloor \log_2 n \rfloor + 1$ \quad Laufzeit: $\Theta(\log n)$
 
 
 \subsection{Asymptotische Laufzeit von Rekursionen}\label{sec:05-asymptotische-laufzeit-von-rekursionen}
-\begin{contentbox}
-    \textbf{Gegebene Rekurrenz:}
+\begin{procedure}
+\ProcStep{Gegebene Rekurrenz}{%
 \[
 T(n) = a \, T\!\left(\frac{n}{b}\right) + f(n), \quad T(1) = c
 \]
-(Annahme: $n$ ist eine Potenz von $b$, für sauberere Algebra.)
-
-\textbf{Rekurrenz auflösen (ausrollen):}
+(Annahme: $n$ ist eine Potenz von $b$, für sauberere Algebra.)}
+\ProcStep{Rekurrenz auflösen (ausrollen)}{%
 \[
 \begin{aligned}
 T(n) &= a \, T\!\left(\frac{n}{b}\right) + f(n) \\
@@ -289,16 +288,13 @@ T(n) &= a \, T\!\left(\frac{n}{b}\right) + f(n) \\
      &= a^2 T\!\left(\frac{n}{b^2}\right) + a f\!\left(\frac{n}{b}\right) + f(n) \\
      &= a^k T\!\left(\frac{n}{b^k}\right) + \sum_{i=0}^{k-1} a^i f\!\left(\frac{n}{b^i}\right).
 \end{aligned}
-\]
-
-\textbf{Abbruchbedingung:}
-Stoppe, wenn $\frac{n}{b^k} = 1 \; \Rightarrow \; k = \log_b n$.
-
-\textbf{Einsetzen:}
+\]}
+\ProcStep{Abbruchbedingung}{Stoppe, wenn $\frac{n}{b^k} = 1 \; \Rightarrow \; k = \log_b n$.}
+\ProcStep{Einsetzen}{%
 \[
 T(n) = a^{\log_b n} \, T(1) + \sum_{i=0}^{\log_b n - 1} a^i \, f\!\left(\frac{n}{b^i}\right).
-\]
-\end{contentbox}
+\]}
+\end{procedure}
 
 \begin{contentbox}
 

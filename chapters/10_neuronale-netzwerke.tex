@@ -1,57 +1,50 @@
 \section{Neuronale Netzwerke}\label{sec:10-neuronale-netzwerke}
 
 \begin{contentbox}
-Neuronale Netzwerke (Neural Networks, NNs) bestehen aus vielen kleinen Funktionseinheiten, den sogenannten \textbf{Neuronen}. Diese eignen sich besonders gut zur Erkennung komplexer Muster in strukturierten Daten, Bildern oder Text.
+Neuronale Netzwerke (Neural Networks, NNs) bestehen aus vielen kleinen Funktionseinheiten, den sogenannten \ZSFkeyword{Neuronen}. Diese eignen sich besonders gut zur Erkennung komplexer Muster in strukturierten Daten, Bildern oder Text.
 \begin{center}
     \includegraphics[scale=0.26]{Bildschirmfoto 2025-07-29 um 14.36.34.png}
 \end{center}
 \end{contentbox}
 \subsection{Standard Neural Network (MLP)}\label{sec:10-standard-neural-network-mlp}
 \begin{contentbox}
-\begin{itemize}
-    \item \textbf{Ein Neuron} berechnet:
-    \[
-    y_k = f(x_1 \cdot w_{k1} + x_2 \cdot w_{k2} + \cdots + x_n \cdot w_{kn} + b_k)
-    \]
-    \item $x_i$ = Eingabewerte
-    \item $w_{ki}$ = Gewichtung für Neuron $k$
-    \item $b_k$ = Bias-Term
-    \item $f$ = Aktivierungsfunktion, z.\,B.:
+\textbf{Ein Neuron} berechnet:
+\[
+y_k = f(x_1 \cdot w_{k1} + x_2 \cdot w_{k2} + \cdots + x_n \cdot w_{kn} + b_k)
+\]
+\begin{factlist}
+\ZSFFact{$x_i$}{Eingabewerte}
+\ZSFFact{$w_{ki}$}{Gewichtung für Neuron $k$}
+\ZSFFact{$b_k$}{Bias-Term}
+\ZSFFact{$f$}{Aktivierungsfunktion, z.\,B.:}
     \begin{itemize}
-        \item \textbf{ReLU}: $f(x) = \max(0, x)$ (oft in versteckten Schichten)
-        \item \textbf{Sigmoid}: $\sigma(x) = \frac{1}{1 + e^{-x}}$ (Ausgabe bei binärer Klassifikation)
+        \item \ZSFkeyword{ReLU}: $f(x) = \max(0, x)$ (oft in versteckten Schichten)
+        \item \ZSFkeyword{Sigmoid}: $\sigma(x) = \frac{1}{1 + e^{-x}}$ (Ausgabe bei binärer Klassifikation)
     \end{itemize}
-    \item Gewichtungen $w_{ki}$ und Bias $b_k$ werden im Training angepasst
-\end{itemize}
+\item Gewichtungen $w_{ki}$ und Bias $b_k$ werden im Training angepasst
+\end{factlist}
 \end{contentbox}
 
 \subsection{Softmax-Schicht (Ausgabe)}\label{sec:10-softmax-schicht-ausgabe}
 \begin{contentbox}
-\begin{itemize}
-    \item Wandelt Ausgaben in Wahrscheinlichkeiten um:
+\begin{factlist}
+\item Wandelt Ausgaben in Wahrscheinlichkeiten um:
     \[
     P_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)} \quad \text{mit} \quad \sum_i P_i = 1
     \]
-    \item Wird bei Mehrklassenklassifikation als Ausgabeschicht genutzt
-\end{itemize}
+\item Wird bei Mehrklassenklassifikation als Ausgabeschicht genutzt
+\end{factlist}
 \end{contentbox}
 
 \subsection{Convolutional Neural Network (CNN)}\label{sec:10-convolutional-neural-network-cnn}
 \begin{contentbox}
 Ein Neuron in einem Convolutional Neural Network (CNN) entsteht durch folgende Schritte:
 
-\begin{itemize}
-    \item \textbf{Convolutional Filter:}
-    \begin{itemize}
-        \item Kleiner Filter (z.\,B. $2 \times 2$) wird auf Bildbereiche angewendet
-        \item Ergebnis wird durch eine Aktivierungsfunktion verarbeitet (z.\,B. ReLU)
-    \end{itemize}
-
-    \item \textbf{Pooling Layer:}
-    \begin{itemize}
-        \item Kleine Pooling-Matrix (z.\,B. $2 \times 2$) mit Aggregationsfunktion, typischerweise \textbf{MAX}
-    \end{itemize}
-\end{itemize}
+\begin{factlist}
+\ZSFFact{Convolutional Filter}{Kleiner Filter (z.\,B. $2 \times 2$) wird auf Bildbereiche angewendet.
+Ergebnis wird durch eine Aktivierungsfunktion verarbeitet (z.\,B. ReLU)}
+\ZSFFact{Pooling Layer}{Kleine Pooling-Matrix (z.\,B. $2 \times 2$) mit Aggregationsfunktion, typischerweise \textbf{MAX}}
+\end{factlist}
 
 \textbf{Prozess:}
 \begin{enumerate}

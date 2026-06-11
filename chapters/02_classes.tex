@@ -1,9 +1,9 @@
 \section{Klassen}\label{sec:02-klassen}
 
 \subsection{Vererbung}\label{sec:02-vererbung}
-\begin{contentbox}
-Eine \textbf{Oberklasse} (Superclass) ist eine Klasse, die als Basis für eine andere Klasse dient – die sogenannte \textbf{Unterklasse} (Subclass). Mittels \verb|super().__init__()| kann die Unterklasse auf den Konstruktor der Oberklasse zugreifen.
-\end{contentbox}
+\begin{defbox}[Vererbung]
+Eine \ZSFkeyword{Oberklasse} (Superclass) ist eine Klasse, die als Basis für eine andere Klasse dient – die sogenannte \ZSFkeyword{Unterklasse} (Subclass). Mittels \verb|super().__init__()| kann die Unterklasse auf den Konstruktor der Oberklasse zugreifen.
+\end{defbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 class Car:
@@ -31,9 +31,9 @@ class ElectricCar(Car):
 \end{codebox}
 
 \subsection{Klasseninterne Funktionen implementieren}\label{sec:02-klasseninterne-funktionen-implementieren}
-\begin{contentbox}
-\textbf{Achtung:} Wenn Operatoren wie \verb|+| für Klassen überschrieben werden, sollte das Ergebnis wieder eine Instanz dieser Klasse sein. Sonst handelt es sich um einen undefinierten Datentyp, auf den keine Methoden wie \verb|__str__| angewendet werden können.
-\end{contentbox}
+\begin{statementbox}[Achtung]
+Wenn Operatoren wie \verb|+| für Klassen überschrieben werden, sollte das Ergebnis wieder eine Instanz dieser Klasse sein. Sonst handelt es sich um einen undefinierten Datentyp, auf den keine Methoden wie \verb|__str__| angewendet werden können.
+\end{statementbox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 class CustomString:

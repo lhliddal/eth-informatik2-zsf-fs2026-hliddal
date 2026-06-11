@@ -1,10 +1,8 @@
-\section{Numpy}
-\label{sec:06-numpy}
+\section{Numpy}\label{sec:06-numpy}
 
 
 % -----------------------------
-\subsection{Array erzeugen}
-\label{sec:06-array-erzeugen}
+\subsection{Array erzeugen}\label{sec:06-array-erzeugen}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 np.array([1, 2, 3])             # Array aus Python-Liste erstellen
@@ -23,8 +21,7 @@ np.empty((2, 2))                # nicht init. – zuf. Speicherinhalt
 \end{codebox}
 
 
-\subsection{Array-Informationen}
-\label{sec:06-array-informationen}
+\subsection{Array-Informationen}\label{sec:06-array-informationen}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 a.shape        # Tupel der Dimensionen (z.B. (3,4) = 3x4)
@@ -41,8 +38,7 @@ a.base         # Basisdaten: None=Owner, sonst Quelle des Views
 \end{codebox}
 
 
-\subsection{Typumwandlung}
-\label{sec:06-typumwandlung}
+\subsection{Typumwandlung}\label{sec:06-typumwandlung}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 a.astype(np.float32)              # in float32 umwandeln (kopiert)
@@ -51,8 +47,7 @@ a.tolist()                        # zurueck zur Python-Liste
 \end{lstlisting}
 \end{codebox}
 
-\subsection{Indexing, Slicing, Maskierung}
-\label{sec:06-indexing-slicing-maskierung}
+\subsection{Indexing, Slicing, Maskierung}\label{sec:06-indexing-slicing-maskierung}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 a[1], a[1, :], a[:, 0]     # Element / ganze Zeile / ganze Spalte
@@ -67,8 +62,7 @@ np.compress(a > 2, a)      # Elemente filtern per boolescher Maske
 \end{codebox}
 
 
-\subsection{Broadcasting und Shapes}
-\label{sec:06-broadcasting-und-shapes}
+\subsection{Broadcasting und Shapes}\label{sec:06-broadcasting-und-shapes}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 a + b                                  # Shape automatisch erweitern
@@ -82,8 +76,7 @@ np.tile(a, (2, 3))                    # Muster 2x vertikal, 3x horiz.
 \end{codebox}
 
 
-\subsection{Stacking und Splitting}
-\label{sec:06-stacking-und-splitting}
+\subsection{Stacking und Splitting}\label{sec:06-stacking-und-splitting}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 # Kombinieren von Arrays
@@ -101,8 +94,7 @@ np.hsplit(a, 2)                  # horizontal in 2 Haelften teilen
 \end{codebox}
 
 
-\subsection{Mathematik}
-\label{sec:06-mathematik}
+\subsection{Mathematik}\label{sec:06-mathematik}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 np.add(a, b), np.subtract(a, b)      # Addition, Subtraktion
@@ -117,8 +109,7 @@ np.ceil(a), np.floor(a), np.round(a) # Aufrunden, Abrunden, Runden
 \end{codebox}
 
 
-\subsection{Aggregate und Statistik}
-\label{sec:06-aggregate-und-statistik}
+\subsection{Aggregate und Statistik}\label{sec:06-aggregate-und-statistik}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 np.sum(a), np.prod(a)          # Summe, Produkt aller Elemente

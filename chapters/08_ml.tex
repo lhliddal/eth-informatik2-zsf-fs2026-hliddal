@@ -1,5 +1,4 @@
-\section{ML}
-\label{sec:08-ml}
+\section{ML}\label{sec:08-ml}
 
 \begin{contentbox}
 \textbf{1. Daten einlesen, Modell trainieren und validieren}
@@ -71,8 +70,7 @@ model.fit(X_train, y_train)
 \end{lstlisting}
 \end{codebox}
 
-\subsection{Wichtige Parameter}
-\label{sec:08-wichtige-parameter}
+\subsection{Wichtige Parameter}\label{sec:08-wichtige-parameter}
 \begin{contentbox}
 \begin{itemize}
   \item \textbf{max\_iter}: Maximale Anzahl Iterationen, die ein Modell während des Trainings durchläuft, um die Verlustfunktion zu minimieren (z.\,B. Training endet, wenn Loss $< 0.001$).\\
@@ -103,8 +101,7 @@ Jeder Fold dient genau einmal als Validierung, sodass eine zuverlässige Schätz
 \end{itemize}
 \end{contentbox}
 
-\subsection{Modelle}
-\label{sec:08-modelle}
+\subsection{Modelle}\label{sec:08-modelle}
 
 \subsubsection{ML-Typen: Regression vs. Klassifikation}
 \begin{contentbox}
@@ -473,8 +470,7 @@ search.fit(X_train, y_train)
 
 
 
-\subsection{Nicht-numerische Daten: Kategorische Merkmale encodieren}
-\label{sec:08-kategorische-daten}
+\subsection{Nicht-numerische Daten: Kategorische Merkmale encodieren}\label{sec:08-kategorische-daten}
 \begin{contentbox}
 Maschinelles Lernen erfordert in der Regel numerische Eingabedaten. Nicht-numerische (kategorische) Daten wie z.\,B. \texttt{“Farbe”} oder \texttt{“Beruf”} müssen zuerst in eine numerische Form gebracht werden. Dazu gibt es verschiedene Kodierungsverfahren – je nach Kontext und Modell mit eigenen Vor- und Nachteilen:
 \end{contentbox}
@@ -527,8 +523,7 @@ pd.get_dummies(a)
 \end{codebox}
 
 
-\subsection{Dimensionsreduktion}
-\label{sec:08-dimensionsreduktion}
+\subsection{Dimensionsreduktion}\label{sec:08-dimensionsreduktion}
 \begin{contentbox}
 \textbf{Faustregeln}
 \texttt{n\_components}: 2--3 für Visualisierung, höher für Preprocessing.
@@ -563,8 +558,7 @@ model = PCA(n_components=2)
 images_trans = model.fit_transform(images_flat)
 \end{lstlisting}
 \end{codebox}
-\subsection{Clustering}
-\label{sec:08-clustering}
+\subsection{Clustering}\label{sec:08-clustering}
 
 \begin{contentbox}
 \textbf{Faustregeln}
@@ -598,8 +592,7 @@ kmeans.fit(reduced_data)
 
 
 
-\subsection{Was tun, wenn der \texttt{accuracy\_score} zu niedrig ist?}
-\label{sec:08-accuracy-zu-niedrig}
+\subsection{Was tun, wenn der \texttt{accuracy\_score} zu niedrig ist?}\label{sec:08-accuracy-zu-niedrig}
 
 \begin{contentbox}
 Wenn dein Klassifikationsmodell eine zu geringe Genauigkeit erreicht, kannst du systematisch folgende Maßnahmen ausprobieren:

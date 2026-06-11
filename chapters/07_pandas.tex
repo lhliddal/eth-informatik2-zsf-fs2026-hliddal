@@ -1,6 +1,8 @@
 \section{Pandas}
+\label{sec:07-pandas}
 
 \subsection{DataFrame erzeugen und darauf zugreifen}
+\label{sec:07-dataframe-erzeugen}
 \begin{contentbox}
 \CodeLine{import pandas as pd}\\
 \CodeLine{df = pd.DataFrame()}[leerer DataFrame]\\
@@ -19,6 +21,7 @@
 
 
 \subsection{Spalten umbenennen}
+\label{sec:07-spalten-umbenennen}
 \begin{contentbox}
 \CodeLine{data.set_index("Row")}[setzt `Row' als Index]\\
 \texttt{data.rename(columns=\{"City": "Location"\})}\InlineComment{Spalte umbenennen}\\
@@ -26,6 +29,7 @@
 \end{contentbox}
 
 \subsection{Filtern von Zeilen}
+\label{sec:07-filtern-von-zeilen}
 \begin{contentbox}
 \CodeLine{data[data["Age"] > 30]}[alle Personen über 30]\\
 \CodeLine{data["Name"][data["Age"] > 30]}[nur Namen dieser Personen]
@@ -33,6 +37,7 @@
 
 
 \subsection{Zeilen und Spalten löschen}
+\label{sec:07-zeilen-und-spalten-loeschen}
 \begin{contentbox}
 \CodeLine{data.drop(columns=["Age"])}[löscht Spalte `Age']\\
 \CodeLine{data.drop(data.index[0])}[löscht erste Zeile]\\
@@ -47,6 +52,7 @@
 
 
 \subsection{Hilfsfunktionen für DataFrames}
+\label{sec:07-hilfsfunktionen-fuer-dataframes}
 \begin{contentbox}
 \CodeLine{data["Age"].sum()}[summiert alle Werte der Spalte `Age']\\
 \CodeLine{data["Age"].max()}[maximaler Wert]\\

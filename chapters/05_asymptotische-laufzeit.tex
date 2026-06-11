@@ -1,8 +1,10 @@
 \section{Asymptotische Laufzeit}
+\label{sec:05-asymptotische-laufzeit}
 
 %=====================================================================================================================
 
 \subsection{Master-Theorem}
+\label{sec:05-master-theorem}
 \begin{contentbox}
 Das Master-Theorem löst Rekurrenzen der Form $\mathbf{T(n) = a \cdot T(n/t) + f(n)}$.\\
 Vergleiche dazu die "`äußere Arbeit"' $f(n)$ mit der Laufzeit der Rekursion $n^{\log_t(a)}$:
@@ -23,6 +25,7 @@ $f(n)$ ist \textbf{polynomiell} größer  & Arbeit außen dominiert & $\Theta(f(
 \end{contentbox}
 
 \subsection{Häufige Sumen}
+\label{sec:05-haeufige-summen}
 \begin{contentbox} 
 \begin{ZSFtable}{L L L}
 \toprule
@@ -46,6 +49,7 @@ $\sum_{i=1}^{n} 2^{n-i}$ & $2^n \cdot \sum_{i=1}^{n} 2^{-i} \approx 2^n$ & $\The
 
 
 \subsection{Laufzeiten klassischer Schleifenmuster}
+\label{sec:05-laufzeiten-klassischer-schleifenmuster}
 
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -147,6 +151,7 @@ Aufrufe: $\sum_{i=0}^{n^2-1} i = \frac{1}{2}n^2(n^2 - 1)$ \quad Laufzeit: $\Thet
 \end{codebox}
 
 \subsection{Logarithmische und gemischte Muster}
+\label{sec:05-logarithmische-und-gemischte-muster}
 
 \begin{statementbox}[Schlüsselprinzip]
 $\Rightarrow$ Exponentielle Änderung von $i$ oder $n$ $\Rightarrow$ logarithmische Laufzeit.
@@ -202,6 +207,7 @@ Aufrufe: $n^2 \log n$ \quad Laufzeit: $\Theta(n^2 \log n)$
 \end{codeboxlast}
 
 \subsection{Besondere Muster}
+\label{sec:05-besondere-muster}
 
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -236,6 +242,7 @@ Aufrufe: $\sum_{i=0}^{n-1} \sum_{j=0}^{n-1} (i + j)$ \quad Laufzeit: $\Theta(n^3
 \end{codebox}
 
 \subsection{Exponentielle Rekursion}
+\label{sec:05-exponentielle-rekursion}
 
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -274,6 +281,7 @@ Aufrufe: $\lfloor \log_2 n \rfloor + 1$ \quad Laufzeit: $\Theta(\log n)$
 
 
 \subsection{Asymptotische Laufzeit von Rekursionen}
+\label{sec:05-asymptotische-laufzeit-von-rekursionen}
 \begin{contentbox}
     \textbf{Gegebene Rekurrenz:}
 \[

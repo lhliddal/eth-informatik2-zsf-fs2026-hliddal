@@ -1,10 +1,12 @@
 \section{Python-Syntax — Übersicht}
+\label{sec:01-python-syntax-uebersicht}
 
 
 
 
 % -----------------------------
 \subsection{Datentypen}
+\label{sec:01-datentypen}
 \begin{contentbox}
 \CodeLine{x = 5}[int]\\
 \CodeLine{y = 3.14}[float]\\
@@ -17,6 +19,7 @@
 
 % -----------------------------
 \subsection{Kontrollstrukturen (if / else / while / for)}
+\label{sec:01-kontrollstrukturen}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 
@@ -39,6 +42,7 @@ for k, v in {"x": 1, "y": 2}.items():
 
 % -----------------------------
 \subsection{Funktionen}
+\label{sec:01-funktionen}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 # Funktionsdefinition
@@ -65,6 +69,7 @@ double = lambda x: x*2   # anonyme Funktion
 
 % -----------------------------
 \subsection{Python-Container}
+\label{sec:01-python-container}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 # list: geordnet, veränderbar
@@ -83,6 +88,7 @@ s = "abc"
 
 % -----------------------------
 \subsection{Operationen auf Containern}
+\label{sec:01-operationen-auf-containern}
 \begin{contentbox}
 \CodeLine{len(lst)}[Anzahl Elemente]\\
 \CodeLine{1 in lst}[Enthaltensein prüfen]\\
@@ -99,6 +105,7 @@ s = "abc"
 
 % -----------------------------
 \subsection{Sequenzen (geordnete Container)}
+\label{sec:01-sequenzen-geordnete-container}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 # veränderbare Sequenz
@@ -114,6 +121,7 @@ lst[1:]                      # Slicing
 
 % -----------------------------
 \subsection{Allgemeine Sequenz-Operationen}
+\label{sec:01-allgemeine-sequenz-operationen}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 [1, 2] + [3, 4]          # Verkettung
@@ -134,6 +142,7 @@ for item in x:
 
 % -----------------------------
 \subsection{Slicing — Details}
+\label{sec:01-slicing-details}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 a = [10,20,30,40,50]        # a[start:stop:step]
@@ -151,6 +160,7 @@ a[1:3] = []                 # slice-assign [] deletes
 
 % -----------------------------
 \subsection{Häufige Listen-Operationen}
+\label{sec:01-haeufige-listen-operationen}
 \begin{contentbox}
 \CodeLine{lst.append(4)}[ans Ende anfügen]\\
 \CodeLine{lst.extend([5, 6])}[mehrere Elemente anfügen]\\
@@ -164,6 +174,7 @@ a[1:3] = []                 # slice-assign [] deletes
 
 % -----------------------------
 \subsection{List Comprehension}
+\label{sec:01-list-comprehension}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 [x**2 for x in range(5)]            # Quadrate
@@ -175,6 +186,7 @@ a[1:3] = []                 # slice-assign [] deletes
 
 % -----------------------------
 \subsection{Häufige String-Operationen}
+\label{sec:01-haeufige-string-operationen}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 s = " Hello World "
@@ -189,6 +201,7 @@ s.lstrip(), s.rstrip()
 
 % -----------------------------
 \subsection{String-Methoden — Referenz}
+\label{sec:01-string-methoden-referenz}
 \begin{codeboxfirst}
 \begin{lstlisting}[style=CodeExpert]
 # --- Gross-/Kleinschreibung ---
@@ -285,6 +298,7 @@ s[::-1]                # String umkehren
 
 % -----------------------------
 \subsection{Collections (ungeordnete Container)}
+\label{sec:01-collections-ungeordnete-container}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 # set: keine Duplikate
@@ -300,6 +314,7 @@ len(s)                    # Anzahl Elemente
 
 % -----------------------------
 \subsection{Set-Operationen}
+\label{sec:01-set-operationen}
 \begin{contentbox}
 \texttt{a = \{1, 2, 3\}},\ \texttt{b = \{3, 4, 5\}}\\
 \CodeLine{a | b}[Vereinigung]\\
@@ -313,6 +328,7 @@ len(s)                    # Anzahl Elemente
 
 % -----------------------------
 \subsection{Dictionary-Operationen}
+\label{sec:01-dictionary-operationen}
 \begin{contentbox}
 \texttt{d = \{"a": 1, "b": 2\}}\\
 \CodeLine{d["c"] = 3}[Schlüssel hinzufügen / aktualisieren]\\
@@ -326,6 +342,7 @@ len(s)                    # Anzahl Elemente
 
 % -----------------------------
 \subsection{Iteration über ein Dictionary}
+\label{sec:01-iteration-ueber-ein-dictionary}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 d = {"x": 1, "y": 2}
@@ -347,6 +364,7 @@ for i, (k, v) in enumerate(d.items()):
 
 % -----------------------------
 \subsection{Dictionary- / Set-Comprehension}
+\label{sec:01-dictionary-set-comprehension}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 # Dict Comprehension
@@ -359,6 +377,7 @@ for i, (k, v) in enumerate(d.items()):
 \end{codebox}
 
 \subsection{zip()}
+\label{sec:01-zip}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 a = [1, 2, 3]
@@ -378,6 +397,7 @@ for x, y in zip(a, b):
 
 % -----------------------------
 \subsection{zip() — Entpacken}
+\label{sec:01-zip-entpacken}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 # gezippte Listen entpacken

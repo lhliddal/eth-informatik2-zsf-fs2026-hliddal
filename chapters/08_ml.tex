@@ -108,26 +108,26 @@ Jeder Fold dient genau einmal als Validierung, sodass eine zuverlässige Schätz
 
 \begin{contentbox}[Linear Regression]
 \begin{factlist}
-\item Vorhersage basiert auf einer linearen Kombination der Eingabefeatures:
+\ZSFFact{Idee}{Vorhersage basiert auf einer linearen Kombination der Eingabefeatures:
   \[
   y = w_1 x_1 + w_2 x_2 + \cdots + w_n x_n + b
-  \]
+  \]}
 \ZSFFact{Import}{\texttt{from sklearn.linear\_model import LinearRegression}}
 \end{factlist}
 \end{contentbox}
 
 \begin{contentbox}[Decision Tree Regressor]
 \begin{factlist}
-\item Modelliert nicht-lineare Beziehungen durch Entscheidungen an Verzweigungsknoten.
-\item Zerlegt die Eingabemenge in Zonen mit möglichst homogener Zielvariable.
+\ZSFFact{Idee}{Modelliert nicht-lineare Beziehungen durch Entscheidungen an Verzweigungsknoten.}
+\ZSFFact{Prinzip}{Zerlegt die Eingabemenge in Zonen mit möglichst homogener Zielvariable.}
 \ZSFFact{Import}{\texttt{from sklearn.tree import DecisionTreeRegressor}}
 \end{factlist}
 \end{contentbox}
 
 \begin{contentbox}[Neural Network Regressor]
 \begin{factlist}
-\item Ein neuronales Netz mit Regressionsziel: nicht-linear, viele Parameter.
-\item Flexible Anpassung durch \texttt{hidden\_layer\_sizes}, \texttt{max\_iter}, \texttt{activation}.
+\ZSFFact{Idee}{Ein neuronales Netz mit Regressionsziel: nicht-linear, viele Parameter.}
+\ZSFFact{Tuning}{Flexible Anpassung durch \texttt{hidden\_layer\_sizes}, \texttt{max\_iter}, \texttt{activation}.}
 \ZSFFact{Import}{\texttt{from sklearn.neural\_network import MLPRegressor}}
 \end{factlist}
 \end{contentbox}
@@ -143,7 +143,7 @@ R^2(D,f) = 1 - \frac{MSE(D,f)}{MSE(D,f_0)}
 
 \begin{contentbox}
 \begin{factlist}
-\item \textbf{MSE hängt von der Skalierung der Daten ab, $R^2$ - Score nicht}
+\ZSFFact{Merke}{MSE hängt von der \ZSFdanger{Skalierung der Daten} ab, $R^2$-Score nicht}
 \ZSFFact{$f_0$}{konstante Durchschnittsvorhersage}
 \ZSFFact{$D$}{Datensatz}
 \ZSFFact{$MSE$}{Mean Squared Error, misst mittlere quadratische Abweichung (Verlustfunktion):
@@ -187,28 +187,28 @@ Die Daten müssen gelabelt sein.
 
 \begin{contentbox}[Logistic Regression]
 \begin{factlist}
-\item Verwendet die \ZSFkeyword{sigmoid}-Funktion zur Klassenvorhersage:
+\ZSFFact{Idee}{Verwendet die \ZSFkeyword{sigmoid}-Funktion zur Klassenvorhersage:
   \[
   y = \sigma(w_0 + w_1 x_1 + \cdots + w_n x_n)
-  \]
-\item Ausgabe ist die Wahrscheinlichkeit, dass ein Punkt zur positiven Klasse gehört.
+  \]}
+\ZSFFact{Ausgabe}{die Wahrscheinlichkeit, dass ein Punkt zur positiven Klasse gehört.}
 \ZSFFact{Import}{\texttt{from sklearn.linear\_model import LogisticRegression}}
 \end{factlist}
 \end{contentbox}
 
 \begin{contentbox}[Decision Tree Classifier]
 \begin{factlist}
-\item Genau wie der Regressor, aber mit Klassenzuordnung am Ende der Blätter.
-\item Tiefe entspricht max. Anzahl der Entscheidungen
-\item Gut interpretierbar, aber anfällig für \ZSFkeyword{Overfitting}.
+\ZSFFact{Idee}{Genau wie der Regressor, aber mit Klassenzuordnung am Ende der Blätter.}
+\ZSFFact{Tiefe}{entspricht max. Anzahl der Entscheidungen}
+\ZSFFact{Eigenschaft}{Gut interpretierbar, aber \ZSFdanger{anfällig für Overfitting}.}
 \ZSFFact{Import}{\texttt{from sklearn.tree import DecisionTreeClassifier}}
 \end{factlist}
 \end{contentbox}
 
 \begin{contentbox}[Neural Network Classifier]
 \begin{factlist}
-\item Tieferes neuronales Netz, spezialisiert auf Klassifikationsaufgaben.
-\item Meist verwendet: \texttt{MLPClassifier} (Multilayer Perceptron)
+\ZSFFact{Idee}{Tieferes neuronales Netz, spezialisiert auf Klassifikationsaufgaben.}
+\ZSFFact{Standard}{Meist verwendet: \texttt{MLPClassifier} (Multilayer Perceptron)}
 \ZSFFact{Import}{\texttt{from sklearn.neural\_network import MLPClassifier}}
 \end{factlist}
 \end{contentbox}
@@ -281,7 +281,7 @@ Im Bspl der Confusion Matrix:
 \begin{equation}
 \text{0-1-Loss (Error Rate)} = \frac{FP + FN}{TP + TN + FP + FN}.
 \end{equation}
-Die Accuracy ist das Komlement zum Loss
+Die Accuracy ist das Komplement zum Loss
 \begin{equation}
     \text{Accuracy} = 1 - \text{Loss} = \frac{TP + TN}{TP + TN + FP + FN}.
 \end{equation}
@@ -443,48 +443,35 @@ search.fit(X_train, y_train)
 
 \subsection{Nicht-numerische Daten: Kategorische Merkmale encodieren}\label{sec:08-kategorische-daten}
 \begin{contentbox}
-Maschinelles Lernen erfordert in der Regel numerische Eingabedaten. Nicht-numerische (kategorische) Daten wie z.\,B. \texttt{“Farbe”} oder \texttt{“Beruf”} müssen zuerst in eine numerische Form gebracht werden. Dazu gibt es verschiedene Kodierungsverfahren – je nach Kontext und Modell mit eigenen Vor- und Nachteilen:
+Maschinelles Lernen erfordert in der Regel numerische Eingabedaten. Nicht-numerische (kategorische) Daten wie z.\,B. „Farbe“ oder „Beruf“ müssen zuerst in eine numerische Form gebracht werden. Dazu gibt es verschiedene Kodierungsverfahren – je nach Kontext und Modell mit eigenen Vor- und Nachteilen:
 \end{contentbox}
 
-\begin{contentbox}[Ordinal Encoding]
-\textbf{Pro:}
-\begin{factlist}
-\item Einfach umsetzbar.
-\item Ermöglicht die Abbildung von geordneter Struktur (z.\,B. 1 = Crew, 2 = First Class).
-\end{factlist}
-\textbf{Con:}
-\begin{factlist}
-\item Kann eine falsche Nähe zwischen Kategorien suggerieren (z.\,B. 2 ist näher an 1 als 3, obwohl inhaltlich 1 und 3 ähnlicher sind).
-\item Führt möglicherweise zu verzerrten Modellinterpretationen.
-\end{factlist}
-\end{contentbox}
-
-\begin{contentbox}[Mean Encoding]
-\textbf{Pro:}
-\begin{factlist}
-\item Nutzt den Mittelwert der Zielvariable pro Kategorie – kann nützliche Informationen übertragen.
-\item Versucht „scheinbare Nähe” zwischen Kategorien auszugleichen.
-\end{factlist}
-\textbf{Con:}
-\begin{factlist}
-\item Gefahr von \ZSFkeyword{Data Leakage}: Die Zielvariable „sickert durch” in die Features.
-\item Erhöhtes Risiko von \ZSFkeyword{Overfitting}.
-\item Verlangt Rechenaufwand.
-\end{factlist}
-\end{contentbox}
-
-\begin{contentbox}[One-hot Encoding]
-\textbf{Pro:}
-\begin{factlist}
-\item Höchste Präzision: Kodiert jede Kategorie in einer separaten Spalte.
-\item Besonders geeignet für nicht-ordinale Kategorien.
-\end{factlist}
-\textbf{Con:}
-\begin{factlist}
-\item Jeder neue Wert erzeugt eine neue Spalte (hoher Speicherplatzverbrauch).
-\item Bei vielen Kategorien kann das Datenmodell sehr breit werden („Fluch der Dimensionalität”).
-\end{factlist}
-\end{contentbox}
+\begin{tablebox}[Encoding-Verfahren im Vergleich]
+\begin{ZSFtable}[\ZSFfontTableDense]{Q{0.55} Y{1.2} Y{1.25}}
+\toprule
+\textbf{Verfahren} & \textbf{Pro} & \textbf{Con} \\
+\midrule
+Ordinal &
+Einfach umsetzbar.\newline
+Ermöglicht die Abbildung von geordneter Struktur (z.\,B. 1 = Crew, 2 = First Class). &
+Kann eine falsche Nähe zwischen Kategorien suggerieren (z.\,B. 2 ist näher an 1 als 3, obwohl inhaltlich 1 und 3 ähnlicher sind).\newline
+Führt möglicherweise zu verzerrten Modellinterpretationen. \\
+\midrule
+Mean &
+Nutzt den Mittelwert der Zielvariable pro Kategorie – kann nützliche Informationen übertragen.\newline
+Versucht „scheinbare Nähe“ zwischen Kategorien auszugleichen. &
+\ZSFdanger{Gefahr von Data Leakage}: Die Zielvariable „sickert durch“ in die Features.\newline
+Erhöhtes Risiko von \ZSFkeyword{Overfitting}.\newline
+Verlangt Rechenaufwand. \\
+\midrule
+One-hot &
+Höchste Präzision: Kodiert jede Kategorie in einer separaten Spalte.\newline
+Besonders geeignet für nicht-ordinale Kategorien. &
+Jeder neue Wert erzeugt eine neue Spalte (hoher Speicherplatzverbrauch).\newline
+Bei vielen Kategorien kann das Datenmodell sehr breit werden („Fluch der Dimensionalität“). \\
+\bottomrule
+\end{ZSFtable}
+\end{tablebox}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 import pandas as pd

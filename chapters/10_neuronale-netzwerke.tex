@@ -16,23 +16,23 @@ y_k = f(x_1 \cdot w_{k1} + x_2 \cdot w_{k2} + \cdots + x_n \cdot w_{kn} + b_k)
 \ZSFFact{$x_i$}{Eingabewerte}
 \ZSFFact{$w_{ki}$}{Gewichtung für Neuron $k$}
 \ZSFFact{$b_k$}{Bias-Term}
-\ZSFFact{$f$}{Aktivierungsfunktion, z.\,B.:}
+\ZSFFact{$f$}{Aktivierungsfunktion, z.\,B.:
     \begin{itemize}
         \item \ZSFkeyword{ReLU}: $f(x) = \max(0, x)$ (oft in versteckten Schichten)
         \item \ZSFkeyword{Sigmoid}: $\sigma(x) = \frac{1}{1 + e^{-x}}$ (Ausgabe bei binärer Klassifikation)
-    \end{itemize}
-\item Gewichtungen $w_{ki}$ und Bias $b_k$ werden im Training angepasst
+    \end{itemize}}
+\ZSFFact{Training}{Gewichtungen $w_{ki}$ und Bias $b_k$ werden im Training angepasst}
 \end{factlist}
 \end{contentbox}
 
 \subsection{Softmax-Schicht (Ausgabe)}\label{sec:10-softmax-schicht-ausgabe}
 \begin{contentbox}
 \begin{factlist}
-\item Wandelt Ausgaben in Wahrscheinlichkeiten um:
+\ZSFFact{Idee}{Wandelt Ausgaben in Wahrscheinlichkeiten um:
     \[
     P_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)} \quad \text{mit} \quad \sum_i P_i = 1
-    \]
-\item Wird bei Mehrklassenklassifikation als Ausgabeschicht genutzt
+    \]}
+\ZSFFact{Einsatz}{Wird bei Mehrklassenklassifikation als Ausgabeschicht genutzt}
 \end{factlist}
 \end{contentbox}
 
@@ -46,12 +46,15 @@ Ergebnis wird durch eine Aktivierungsfunktion verarbeitet (z.\,B. ReLU)}
 \ZSFFact{Pooling Layer}{Kleine Pooling-Matrix (z.\,B. $2 \times 2$) mit Aggregationsfunktion, typischerweise \textbf{MAX}}
 \end{factlist}
 
-\textbf{Prozess:}
-\begin{enumerate}
-    \item Anwenden des Filters auf die Eingabematrix
-    \item Anwenden der ReLU-Funktion auf jedes Element des Ergebnisses (setzt jeden negativen Wert auf 0)
-    \item Abschließend: Anwenden der Pooling-Matrix (z.\,B. MaxPooling)
-\end{enumerate}
+\end{contentbox}
+
+\begin{procedure}[Prozess]
+\ProcStep{Filter anwenden}{Anwenden des Filters auf die Eingabematrix}
+\ProcStep{ReLU anwenden}{Anwenden der ReLU-Funktion auf jedes Element des Ergebnisses (setzt jeden negativen Wert auf 0)}
+\ProcStep{Pooling}{Abschließend: Anwenden der Pooling-Matrix (z.\,B. MaxPooling)}
+\end{procedure}
+
+\begin{contentbox}
 
 \begin{center}
     \includegraphics[scale=0.23]{Bildschirmfoto 2025-07-29 um 18.10.33.png}

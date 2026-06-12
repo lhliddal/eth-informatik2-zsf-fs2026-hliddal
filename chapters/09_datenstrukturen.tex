@@ -337,10 +337,10 @@ Quadtrees sind \ZSFkeyword{volle Quarternärbäume} (jeder Knoten hat entweder $
 \begin{contentbox}
 Ein Knoten speichert:
 \begin{factlist}
-\item untere linke Ecke $l$ und obere rechte Ecke $u$
-\item \textbf{Maximalkapazität} $m$
-\item Liste $p$ von Punkten
-\item $4$ Referenzen auf Kinder-Quadtrees $c_0, c_1, c_2, c_3$
+\ZSFFact{$l$, $u$}{untere linke Ecke $l$ und obere rechte Ecke $u$}
+\ZSFFact{$m$}{Maximalkapazität}
+\ZSFFact{$p$}{Liste von Punkten}
+\ZSFFact{$c_0, c_1, c_2, c_3$}{$4$ Referenzen auf Kinder-Quadtrees}
 \end{factlist}
 \end{contentbox}
 \begin{codebox}
@@ -355,19 +355,17 @@ class QuadTree:
 \end{codebox}
 
 \subsubsection{Einfügen \& Split}
-\begin{contentbox}
-\begin{factlist}
-\item Ein Punkt wird zu $p$ hinzugefügt.
-\item Überschreitet die Anzahl der Punkte die Kapazität $m$, wird der Knoten in \textbf{vier Viertel} partitioniert.
-\item Die Punkte aus $p$ werden auf die Kinder aufgeteilt und das eigene $p$ geleert.
-\end{factlist}
-\end{contentbox}
+\begin{procedure}[Ablauf]
+\ProcStep{Einfügen}{Ein Punkt wird zu $p$ hinzugefügt.}
+\ProcStep{Split}{Überschreitet die Anzahl der Punkte die Kapazität $m$, wird der Knoten in \textbf{vier Viertel} partitioniert.}
+\ProcStep{Aufteilen}{Die Punkte aus $p$ werden auf die Kinder aufgeteilt und das eigene $p$ geleert.}
+\end{procedure}
 
 \subsubsection{Rechtecks-Abfrage (Range Query)}
 \begin{contentbox}
 \begin{factlist}
-\item Die Suche wächst logarithmisch mit der Anzahl der Punkte: $\mathcal{O}(\log n)$.
-\item Schneidet das Such-Rechteck einen Quadranten nicht, wird dieser Zweig \textbf{komplett ignoriert} (\ZSFkeyword{Pruning}).
+\ZSFFact{Laufzeit}{Die Suche wächst logarithmisch mit der Anzahl der Punkte: $\mathcal{O}(\log n)$.}
+\ZSFFact{Pruning}{Schneidet das Such-Rechteck einen Quadranten nicht, wird dieser Zweig \textbf{komplett ignoriert}.}
 \end{factlist}
 \end{contentbox}
 \begin{codebox}

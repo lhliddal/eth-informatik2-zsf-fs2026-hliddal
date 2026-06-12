@@ -21,7 +21,7 @@
 \subsection{Spalten umbenennen}\label{sec:07-spalten-umbenennen}
 \begin{contentbox}
 \CodeLine{data.set_index("Row")}[setzt `Row' als Index]\\
-\texttt{data.rename(columns=\{"City": "Location"\})}\InlineComment{Spalte umbenennen}\\
+\CodeLine{data.rename(columns={"City": "Location"})}[Spalte umbenennen]\\
 \CodeLine{data.columns = ["Monat", "Name", "Stadt", ...]}[jede Spalte umbenennen] % chktex 11 chktex 26
 \end{contentbox}
 
@@ -41,8 +41,7 @@
 \CodeLine{data.dropna(axis=0, how="any")}[wenn mind. 1 NaN in der Zeile]\\
 \CodeLine{data.dropna(axis=0, how="all")}[wenn alle NaN in der Zeile]\\
 \ZSFgapS
-\OverlineComment{löscht Spalten mit NaN}
-\CodeLine{data.dropna(axis=1, how="any")}[wenn mind. 1 NaN in der Spalte]
+\CodeLine{data.dropna(axis=1, how="any")}[löscht Spalten mit mind. 1 NaN]
 \end{contentbox}
 
 

@@ -8,11 +8,13 @@
 
 %=====================================================================================================================
 \subsection{Bubble Sort}\label{sec:04-bubble-sort}
+\begin{procedure}[Ablauf]
+\ProcStep{Vergleichen \& Tauschen}{Vergleicht benachbarte Elemente und vertauscht sie bei falscher Reihenfolge.}
+\ProcStep{Wiederholen}{Wiederholt dies, bis keine Vertauschungen mehr nötig sind.}
+\end{procedure}
 \begin{contentbox}
 \begin{factlist}
-\item Vergleicht benachbarte Elemente und vertauscht sie bei falscher Reihenfolge.
-\item Wiederholt dies, bis keine Vertauschungen mehr nötig sind.
-\item \texttt{a[:-(i + 1)]} enthält die $i + 1$ größten Elemente von \texttt{a} in sort. Reihe.
+\ZSFFact{Invariante}{\texttt{a[:-(i + 1)]} enthält die $i + 1$ größten Elemente von \texttt{a} in sort. Reihe.}
 \ZSFFact{Laufzeit}{$\Theta(n^2)$ im Durchschnitt und schlechtesten Fall.}
 \end{factlist}
 \end{contentbox}
@@ -37,12 +39,13 @@ def bubble_sort(a):
 
 
 \subsection{Selection Sort}\label{sec:04-selection-sort}
+\begin{procedure}[Sucht in jedem Durchlauf das kleinste Element]
+\ProcStep{Tauschen}{Tauscht es mit dem aktuellen Element.}
+\ProcStep{Wiederholen}{Wiederholt das für den restlichen unsortierten Bereich.}
+\end{procedure}
 \begin{contentbox}
-Sucht in jedem Durchlauf das kleinste Element:
 \begin{factlist}
-\item Tauscht es mit dem aktuellen Element.
-\item Wiederholt das für den restlichen unsortierten Bereich.
-\item \texttt{a[:i + 1]} enthält die kleinsten \(i + 1\) Elemente von \texttt{a}, in sort. Reihe.
+\ZSFFact{Invariante}{\texttt{a[:i + 1]} enthält die kleinsten \(i + 1\) Elemente von \texttt{a}, in sort. Reihe.}
 \ZSFFact{Laufzeit}{$\Theta(n^2)$ in allen Fällen.}
 \end{factlist}
 \end{contentbox}
@@ -84,12 +87,13 @@ def selection_sort(a):
 
 
 \subsection{Insertion Sort}\label{sec:04-insertion-sort}
+\begin{procedure}[Sortiert ähnlich wie beim Kartenspiel]
+\ProcStep{Einfügen}{Jedes Element wird an die richtige Position im linken, bereits sortierten Teil eingefügt.}
+\ProcStep{Verschieben}{Größere Elemente werden nach rechts verschoben.}
+\end{procedure}
 \begin{contentbox}
-Sortiert ähnlich wie beim Kartenspiel:
 \begin{factlist}
-\item Jedes Element wird an die richtige Position im linken, bereits sortierten Teil eingefügt.
-\item Größere Elemente werden nach rechts verschoben.
-\item Die Elemente in \texttt{a[:i + 1]} sind sortiert und entsprechen den ersten $i$ Elementen des ursprüngl. Arrays.
+\ZSFFact{Invariante}{Die Elemente in \texttt{a[:i + 1]} sind sortiert und entsprechen den ersten $i$ Elementen des ursprüngl. Arrays.}
 \ZSFFact{Laufzeit}{$\Theta(n)$ im besten Fall (wenn sortiert), $\Theta(n^2)$ im Worst-Case.}
 \end{factlist}
 \end{contentbox}
@@ -120,13 +124,14 @@ def insertion_sort(a):
 
 
 \subsection{Merge Sort}\label{sec:04-merge-sort}
+\begin{procedure}[Rekursiver Divide-and-Conquer-Algorithmus]
+\ProcStep{Teilen}{Das Array wird in zwei Hälften geteilt.}
+\ProcStep{Rekursiv sortieren}{Beide Hälften werden rekursiv sortiert.}
+\ProcStep{Zusammenführen}{Die sortierten Hälften werden zusammengeführt (merge).}
+\end{procedure}
 \begin{contentbox}
-Ein rekursiver \ZSFkeyword{Divide-and-Conquer}-Algorithmus:
 \begin{factlist}
-\item Das Array wird in zwei Hälften geteilt.
-\item Beide Hälften werden rekursiv sortiert.
-\item Die sortierten Hälften werden zusammengeführt (merge).
-\item Das Resultat-Array \texttt{b[:i + 1]} enthält die $i + 1$ kleinsten Elemente von \texttt{a} in sortierter Reihenfolge.
+\ZSFFact{Invariante}{Das Resultat-Array \texttt{b[:i + 1]} enthält die $i + 1$ kleinsten Elemente von \texttt{a} in sortierter Reihenfolge.}
 \ZSFFact{Laufzeit}{$\Theta(n \log n)$ in allen Fällen.}
 \end{factlist}
 \end{contentbox}
@@ -167,13 +172,14 @@ def merge_sort(a):
 
 
 \subsection{Quick Sort}\label{sec:04-quick-sort}
+\begin{procedure}[Effizienter rekursiver Divide-and-Conquer-Algorithmus]
+\ProcStep{Pivot wählen}{Wählt ein \emph{Pivot}-Element.}
+\ProcStep{Partitionieren}{Teilt das Array in Elemente kleiner und größer als das Pivot.}
+\ProcStep{Rekursiv sortieren}{Sortiert beide Teilarrays rekursiv.}
+\end{procedure}
 \begin{contentbox}
-Ein effizienter rekursiver \ZSFkeyword{Divide-and-Conquer}-Algorithmus:
 \begin{factlist}
-\item Wählt ein \emph{Pivot}-Element.
-\item Teilt das Array in Elemente kleiner und größer als das Pivot.
-\item Sortiert beide Teilarrays rekursiv.
-\item Das Pivotelement befindet sich an der richtigen Posit., Elem. links davon sind kleiner und rechts davon gröss als das Pivot..
+\ZSFFact{Invariante}{Das Pivotelement befindet sich an der richtigen Posit., Elem. links davon sind kleiner und rechts davon grösser als das Pivot.}
 \ZSFFact{Laufzeit}{$\Theta(n \log n)$ durchschnittlich, $\Theta(n^2)$ im Worst-Case.}
 \end{factlist}
 \end{contentbox}
@@ -213,11 +219,13 @@ def quick_sort(a, low, high):
 
 
 \subsection{Heap Sort}\label{sec:04-heap-sort}
+\begin{procedure}[Ablauf]
+\ProcStep{Max-Heap aufbauen}{Erst wird ein Max-Heap aufgebaut. \ZSFref{sec:09-heaps}}
+\ProcStep{Wurzel entnehmen}{Grösstes Element (Wurzel) wird entfernt und ans Ende gesetzt.}
+\ProcStep{Heapify}{Der Heap wird danach angepasst (heapify).}
+\end{procedure}
 \begin{contentbox}
 \begin{factlist}
-\item Erst wird ein Max-Heap aufgebaut. \ZSFref{sec:09-heaps}
-\item Grösstes Element (Wurzel) wird entfernt und ans Ende gesetzt.
-\item Der Heap wird danach angepasst (heapify).
 \ZSFFact{Laufzeit}{$\Theta(n \log n)$ in allen Fällen.}
 \end{factlist}
 \end{contentbox}
@@ -259,11 +267,12 @@ def heap_sort(a):
 
 
 \subsection{Binary Sort}\label{sec:04-binary-sort}
+\begin{procedure}[Eine Variante von Insertion Sort]
+\ProcStep{Binär suchen}{Findet die Einfügeposition per binärer Suche.}
+\ProcStep{Verschieben}{Die Verschiebung der Elemente bleibt aber linear.}
+\end{procedure}
 \begin{contentbox}
-Eine Variante von Insertion Sort:
 \begin{factlist}
-\item Findet die Einfügeposition per binärer Suche.
-\item Die Verschiebung der Elemente bleibt aber linear.
 \ZSFFact{Laufzeit}{$\Theta(n^2)$ (Vergleiche: $\Theta(n \log n)$, Verschiebungen: $\Theta(n^2)$).}
 \end{factlist}
 \end{contentbox}

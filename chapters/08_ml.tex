@@ -68,17 +68,17 @@ model.fit(X_train, y_train)
 \begin{contentbox}
 \begin{factlist}
 \ZSFFact{\texttt{max\_iter}}{Maximale Anzahl Iterationen, die ein Modell während des Trainings durchläuft, um die Verlustfunktion zu minimieren (z.\,B. Training endet, wenn Loss $< 0.001$).\\
-  \textit{Verwendet von:} \texttt{LogisticRegression}, \texttt{MLPClassifier}, \texttt{MLPRegressor}}
+  \ZSFkeyword{Verwendet von:} \texttt{LogisticRegression}, \texttt{MLPClassifier}, \texttt{MLPRegressor}}
 \ZSFFact{\texttt{hidden\_layer\_sizes}}{Gibt die Struktur eines neuronalen Netzes an (z.\,B. Anzahl Neuronen pro Schicht).\\
-  \textit{Verwendet von:} \texttt{MLPClassifier}, \texttt{MLPRegressor}}
+  \ZSFkeyword{Verwendet von:} \texttt{MLPClassifier}, \texttt{MLPRegressor}}
 \ZSFFact{\texttt{random\_state}}{Initialisiert den Zufallsprozess (z.\,B. Shuffle bei \texttt{train\_test\_split}, Gewichtung im Netz), um reproduzierbare Ergebnisse zu garantieren.\\
-  \textit{Verwendet von:} allen Modulen mit Zufallskomponenten}
+  \ZSFkeyword{Verwendet von:} allen Modulen mit Zufallskomponenten}
 \ZSFFact{\texttt{test\_size}}{Prozentualer Anteil der Daten, der für die Testmenge reserviert wird. Üblich ist $0.1$ bis $0.3$.\\
-  \textit{Verwendet von:} \texttt{train\_test\_split}}
+  \ZSFkeyword{Verwendet von:} \texttt{train\_test\_split}}
 \ZSFFact{\texttt{cv} (Cross-Validation)}{Gibt bei \texttt{GridSearchCV} oder \texttt{cross\_val\_score} die Anzahl an Folds an, mit denen K-Fold-Cross-Validation durchgeführt wird.\\
-  \textit{Verwendet von:} \texttt{GridSearchCV}, \texttt{cross\_val\_score}, etc.}
+  \ZSFkeyword{Verwendet von:} \texttt{GridSearchCV}, \texttt{cross\_val\_score}, etc.}
 \ZSFFact{\texttt{n\_clusters}}{Gibt an, wie viele Cluster ein Clustering-Algorithmus bilden soll. Wichtig bei unüberwachtem Lernen.\\
-  \textit{Verwendet von:} \texttt{KMeans}, \texttt{DBSCAN (implizit)}, \texttt{AgglomerativeClustering}}
+  \ZSFkeyword{Verwendet von:} \texttt{KMeans}, \texttt{DBSCAN (implizit)}, \texttt{AgglomerativeClustering}}
 \end{factlist}
 \end{contentbox}
 
@@ -219,10 +219,10 @@ Die Daten müssen gelabelt sein.
 \begin{tablebox}[Confusion Matrix]
 \begin{ZSFtablePlain}{C C C}
 \toprule
-\textbf{real / vorhergesagt} & \textbf{Positiv} & \textbf{Negativ} \\
+\ZSFkeyword{real / vorhergesagt} & \ZSFkeyword{Positiv} & \ZSFkeyword{Negativ} \\
 \midrule
-\textbf{Positiv} & True Pos. (TP) & False Neg. (FN) \\
-\textbf{Negativ} & False Pos. (FP) & True Neg. (TN) \\
+\ZSFkeyword{Positiv} & True Pos. (TP) & False Neg. (FN) \\
+\ZSFkeyword{Negativ} & False Pos. (FP) & True Neg. (TN) \\
 \bottomrule
 \end{ZSFtablePlain}
 \end{tablebox}
@@ -262,7 +262,7 @@ Die Balanced Accuracy ist nützlich bei unausgeglichenen Klassenverteilungen, da
 \begin{contentbox}
 
 
-Die \textit{0-1-Loss-Funktion} misst, ob eine Vorhersage korrekt ist:
+Die \ZSFkeyword{0-1-Loss-Funktion} misst, ob eine Vorhersage korrekt ist:
 
 \begin{equation}
 L(y, \hat{y}) =
@@ -289,7 +289,7 @@ Die Accuracy ist das Komplement zum Loss
 
 \subsubsection{Gini-index Loss:}
 \begin{contentbox}
-\textbf{Gini-Index (als Loss im Entscheidungsbaum):}
+\ZSFkeyword{Gini-Index (als Loss im Entscheidungsbaum):}
 
 Die „Impurity“ einer Partition $Part_m$ ist:
 
@@ -301,7 +301,7 @@ wobei $\hat{p}_{m,k}$ der Anteil der Klasse/Labels $k$ in der Partition ist.
 
 
 
-Ein \textbf{Split} teilt den Knoten $Part_m$ in z.B. zwei Partitionen $Part_1$ und $Part_2$.
+Ein \ZSFkeyword{Split} teilt den Knoten $Part_m$ in z.B. zwei Partitionen $Part_1$ und $Part_2$.
 
 Der Gini-Index für den gesamten Split ist:
 
@@ -449,7 +449,7 @@ Maschinelles Lernen erfordert in der Regel numerische Eingabedaten. Nicht-numeri
 \begin{tablebox}[Encoding-Verfahren im Vergleich]
 \begin{ZSFtable}[\ZSFfontTableDense]{Q{0.55} Y{1.2} Y{1.25}}
 \toprule
-\textbf{Verfahren} & \textbf{Pro} & \textbf{Con} \\
+\ZSFkeyword{Verfahren} & \ZSFkeyword{Pro} & \ZSFkeyword{Con} \\
 \midrule
 Ordinal &
 Einfach umsetzbar.\newline

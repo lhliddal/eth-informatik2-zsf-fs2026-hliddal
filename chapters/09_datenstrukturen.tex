@@ -1,7 +1,7 @@
 \section{Datenstrukturen}\label{sec:09-datenstrukturen}
 \subsection{Queue und Stack}\label{sec:09-queue-und-stack}
 \begin{defbox}[Queue]
-Eine Warteschlange, bei der Elemente nach dem \textit{First In – First Out} (FIFO) Prinzip verarbeitet werden.
+Eine Warteschlange, bei der Elemente nach dem \ZSFkeyword{First In – First Out} (FIFO) Prinzip verarbeitet werden.
 \begin{factlist}
 \ZSFFact{\texttt{add/enqueue}}{Element am Ende der Queue einfügen}
 \ZSFFact{\texttt{remove/dequeue}}{Element am Anfang der Queue entfernen}
@@ -9,7 +9,7 @@ Eine Warteschlange, bei der Elemente nach dem \textit{First In – First Out} (F
 \end{defbox}
 
 \begin{defbox}[Stack]
-Ein Stapelspeicher, der nach dem \textit{Last In – First Out} (LIFO) Prinzip arbeitet.
+Ein Stapelspeicher, der nach dem \ZSFkeyword{Last In – First Out} (LIFO) Prinzip arbeitet.
 \begin{factlist}
 \ZSFFact{\texttt{add/push}}{Element oben auf den Stack legen}
 \ZSFFact{\texttt{remove/pop}}{Oberstes Element entfernen}
@@ -393,7 +393,7 @@ Die \textbf{Konstruktion} des Baumes ist relativ aufwendig; der Einsatz lohnt si
 \renewcommand{\arraystretch}{1.25}
 \begin{ZSFtable}[\ZSFfontTableDense]{Q{1.2} Y{0.94} Y{0.93} Y{0.93}}
 \toprule
-\textbf{Datenstruktur} & \textbf{Suche} & \textbf{Einfügen} & \textbf{Entfernen} \\
+\ZSFkeyword{Datenstruktur} & \ZSFkeyword{Suche} & \ZSFkeyword{Einfügen} & \ZSFkeyword{Entfernen} \\
 \midrule
 Liste / Array       & $\mathcal{O}(n)$          & $\mathcal{O}(n)$ \emph{(worst)}   & $\mathcal{O}(n)$ \emph{(worst)}   \\
 Linked List         & $\mathcal{O}(n)$          & $\mathcal{O}(1)$ \emph{(nach Suche)} & $\mathcal{O}(1)$ \emph{(nach Suche)} \\

@@ -1,4 +1,15 @@
-\section{DP-Quiz}\label{sec:13-dp-quiz}
+% ============================================================
+% EIGENSTÄNDIGER TEIL — DP-QUIZ
+% Dieses Kapitel ist bewusst unabhängig vom restlichen Skript:
+%   - kein anderes Kapitel referenziert ein sec:13-Label
+%   - der Quiz selbst referenziert keine externen Labels/Inhalte
+% => komplett entfernbar durch Löschen der Zeile
+%      \input{chapters/13_dp-quiz}
+%    in main.tex (kein weiterer Eingriff nötig).
+% Im Kapitelbalken als "eigenständiger Teil" markiert (ZSFTitleTag).
+% Layout-Markup-Pass: hier nur minimal angefasst (s. _scratch/layout-markup-pass.md).
+% ============================================================
+\section{DP-Quiz\ZSFTitleTag{eigenständiger Teil}}\label{sec:13-dp-quiz}
 
 \subsection{Welche Aussage ist korrekt?}\label{sec:13-welche-aussage-ist-korrekt}
 
@@ -49,7 +60,7 @@ Welche der folgenden Aussagen über dynamische Programmierung und Optimierungspr
 
 
 \begin{contentbox}
-Die $n$-te Fibonacci-Zahl $F(n)$ ist definiert als $F(n) = F(n-1) + F(n-2)$ mit den Basisfällen $F(1) = 1$ und $F(2) = 2$. Betrachte einen \textbf{Top-down}-DP-Algorithmus, der $n$ als Eingabe nimmt und die $n$-te Fibonacci-Zahl berechnet. Was beschreibt die Notwendigkeit von Memoization am besten?
+Die $n$-te Fibonacci-Zahl $F(n)$ ist definiert als $F(n) = F(n-1) + F(n-2)$ mit den Basisfällen $F(1) = 1$ und $F(2) = 2$. Betrachte einen \ZSFkeyword{Top-down}-DP-Algorithmus, der $n$ als Eingabe nimmt und die $n$-te Fibonacci-Zahl berechnet. Was beschreibt die Notwendigkeit von Memoization am besten?
 \begin{factlist}
     \item b. Memoization ist notwendig, weil Werte (also kleinere Fibonacci-Zahlen) sonst mehrfach berechnet werden müssten.
     \item d. Memoization ist notwendig, weil unsere DP von einer festen, endlichen Anzahl von Werten abhängt.

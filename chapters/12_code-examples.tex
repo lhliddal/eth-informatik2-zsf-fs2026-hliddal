@@ -1,4 +1,13 @@
-\section{Code-Beispiele}\label{sec:12-code-beispiele}
+% ============================================================
+% ERGÄNZENDER TEIL — CODE-BEISPIELE
+% Eine Stufe unter dem DP-Quiz (ch13): ergänzendes Referenzmaterial,
+% aber NICHT frei löschbar — andere Kapitel verweisen hierher:
+%   - ch03 -> \ZSFref{sec:12-dp-memoization}
+%   - ch09 -> \ZSFref{sec:12-linked-lists}
+% Vor einer Entfernung diese \ZSFref-Stellen anpassen, sonst dangling refs.
+% Im Kapitelbalken als "ergänzender Teil" markiert (ZSFTitleTag).
+% ============================================================
+\section{Code-Beispiele\ZSFTitleTag{ergänzender Teil}}\label{sec:12-code-beispiele}
 
 \subsection{Sortieralgorithmen}\label{sec:12-sortieralgorithmen}
 
@@ -421,10 +430,7 @@ def lcs(seq1, seq2):
 \end{codebox}
 
 \subsubsection{Springer-Matrix}
-\begin{contentbox}
-\textbf{mit Recursion}
-\end{contentbox}
-\begin{codebox}
+\begin{codebox}[mit Recursion]
 \begin{lstlisting}[style=CodeExpert]
 def rec_best_way(a, i = 0, j = 0):
   n, m = len(a), len(a[0])
@@ -441,10 +447,7 @@ def rec_best_way(a, i = 0, j = 0):
   return a[i][j] + max([reward1, reward2, reward3, reward4])
 \end{lstlisting}
 \end{codebox}
-\begin{contentbox}
-\textbf{mit Dynamic Programming:}
-\end{contentbox}
-\begin{codebox}
+\begin{codebox}[mit Dynamic Programming:]
 \begin{lstlisting}[style=CodeExpert]
 def dp_best_way(a):
   n, m = len(a), len(a[0])

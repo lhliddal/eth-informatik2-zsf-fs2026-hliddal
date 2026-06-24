@@ -220,7 +220,7 @@ def coin_change(coins, amount):
 
 % --- LCS: Übergang diagonal bei Match, sonst Max von links/oben ---
 \begin{contentbox}[{[EHA] Longest Common Subsequence (LCS)}]
-\textbf{Übergang:}
+\ZSFkeyword{Übergang:}
 \begin{factlist}
 \ZSFFact{\texttt{X[i]==Y[j]}}{\texttt{dp[i][j] = dp[i-1][j-1] + 1}}
 \ZSFFact{sonst}{\texttt{dp[i][j] = max(dp[i-1][j], dp[i][j-1])}}

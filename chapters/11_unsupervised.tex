@@ -60,18 +60,3 @@ PCA ist ein lineares Verfahren, das neue orthogonale Achsen (Hauptkomponenten) b
 \begin{contentbox}[t-SNE]
 t-SNE ist ein nichtlineares Verfahren, das vor allem lokale Nachbarschaften im Datensatz erhält. Es betont kleine Distanzen und bildet dadurch ähnliche Punkte nahe beieinander ab, was oft zu klar getrennten Clustern in 2D oder 3D führt. Es eignet sich besonders für die Visualisierung komplexer Strukturen.
 \end{contentbox}
-
-\subsection{Zusammenfassung}\label{sec:11-zusammenfassung}
-\begin{contentbox}
-\begin{factlist}
-\ZSFFact{MLP}{Gut für strukturierte Daten (z.\,B. Tabellen) \ZSFref{sec:10-standard-neural-network-mlp}}
-\ZSFFact{CNN}{Gut für unstrukturierte Bilddaten \ZSFref{sec:10-convolutional-neural-network-cnn}}
-\ZSFFact{Versteckte Schichten}{meist ReLU}
-\ZSFFact{Ausgabeschicht}{%
-    \begin{itemize}
-        \item Sigmoid bei binärer Klassifikation
-        \item Softmax bei Mehrklassenklassifikation \ZSFref{sec:10-softmax-schicht-ausgabe}
-    \end{itemize}}
-\ZSFFact{Training}{Lernen erfolgt über Anpassung der Gewichtungen $w$ und Bias-Terme $b$}
-\end{factlist}
-\end{contentbox}

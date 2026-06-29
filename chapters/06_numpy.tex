@@ -2,7 +2,7 @@
 
 
 % -----------------------------
-\subsection{Array erzeugen}\label{sec:06-array-erzeugen}
+\subsection{Array erzeugen / Konstruktoren}\label{sec:06-array-erzeugen}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 np.array([1, 2, 3])  # Array aus Python-Liste erstellen
@@ -67,7 +67,7 @@ np.compress(a > 2, a)   # Elemente filtern per boolescher Maske
 \end{codebox}
 
 
-\subsection{Broadcasting und Shapes}\label{sec:06-broadcasting-und-shapes}
+\subsection{Broadcasting \& Form ändern}\label{sec:06-broadcasting-und-shapes}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 a + b                       # Shape automatisch erweitern
@@ -82,7 +82,7 @@ np.tile(a, (2, 3))          # Muster 2x vertikal, 3x horiz.
 \end{codebox}
 
 
-\subsection{Stacking und Splitting}\label{sec:06-stacking-und-splitting}
+\subsection{Stacking \& Splitting (Zusammenfügen / Aufteilen)}\label{sec:06-stacking-und-splitting}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 # Kombinieren von Arrays
@@ -100,7 +100,7 @@ np.hsplit(a, 2)  # horizontal in 2 Haelften teilen
 \end{codebox}
 
 
-\subsection{Mathematik}\label{sec:06-mathematik}
+\subsection{Elementweise Mathematik}\label{sec:06-mathematik}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 np.add(a, b), np.subtract(a, b)     # Addition, Subtraktion

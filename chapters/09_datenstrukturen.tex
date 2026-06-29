@@ -1,4 +1,31 @@
 \section{Datenstrukturen}\label{sec:09-datenstrukturen}
+
+\subsection{Übersicht: Laufzeiten im Vergleich}\label{sec:09-uebersicht-laufzeiten-im-vergleich}
+\begin{tablebox}
+\renewcommand{\arraystretch}{1.25}
+\begin{ZSFtable}[\ZSFfontTableDense]{Q{1.2} Y{0.94} Y{0.93} Y{0.93}}
+\toprule
+\ZSFkeyword{Datenstruktur} & \ZSFkeyword{Suche} & \ZSFkeyword{Einfügen} & \ZSFkeyword{Entfernen} \\
+\midrule
+Liste / Array       & $\mathcal{O}(n)$          & $\mathcal{O}(n)$ \emph{(worst)}   & $\mathcal{O}(n)$ \emph{(worst)}   \\
+Linked List         & $\mathcal{O}(n)$          & $\mathcal{O}(1)$ \emph{(nach Suche)} & $\mathcal{O}(1)$ \emph{(nach Suche)} \\
+BST \emph{(balanciert)} & $\mathcal{O}(\log n)$ & $\mathcal{O}(\log n)$             & $\mathcal{O}(\log n)$             \\
+BST \emph{(unbal.)} & $\mathcal{O}(n)$          & $\mathcal{O}(n)$                  & $\mathcal{O}(n)$                  \\
+Heap                & $\mathcal{O}(n)$          & $\mathcal{O}(\log n)$             & $\mathcal{O}(\log n)$ \emph{(Top)} \\
+Hash-Tabelle        & $\mathcal{O}(1)$ \emph{(erw.)} & $\mathcal{O}(1)$ \emph{(erw.)} & $\mathcal{O}(1)$ \emph{(erw.)} \\
+Quadtree            & $\mathcal{O}(\log n)$ \emph{(Range)} & $\mathcal{O}(\log n)$ & --- \\
+\bottomrule
+\end{ZSFtable}
+\end{tablebox}
+
+\begin{statementbox}[Merke]
+\begin{factlist}
+\ZSFFact{Hash-Tabelle}{schnellster Zugriff im Durchschnitt, aber ungeordnet.}
+\ZSFFact{BST / Heap}{geordneter Zugriff, log.\ Laufzeit — nur balanciert effizient.}
+\ZSFFact{Quadtree}{spezialisiert auf 2D-Bereichs-Abfragen.}
+\end{factlist}
+\end{statementbox}
+
 \subsection{Queue und Stack}\label{sec:09-queue-und-stack}
 \begin{defbox}[Queue]
 Eine Warteschlange, bei der Elemente nach dem \ZSFkeyword{First In – First Out} (FIFO) Prinzip verarbeitet werden.
@@ -28,9 +55,24 @@ first = q.popleft()               # dequeue-> O(1)
 # list.pop(0) waere O(n) -> deque benutzen!
 \end{lstlisting}
 \end{codebox}
+\begin{contentbox}[Komplexitäten]
+\begin{factlist}
+\ZSFFact{push / pop (Stack)}{$\mathcal{O}(1)$}
+\ZSFFact{enqueue / dequeue (Queue)}{$\mathcal{O}(1)$ \; (mit \texttt{deque}, nicht \texttt{list.pop(0)})}
+\end{factlist}
+\end{contentbox}
 
 \subsection{Binary (Search) Trees}\label{sec:09-binary-search-trees}
-\subsubsection{Baumdurchläufe (Traversal)}
+\subsubsection{Komplexitäten}
+\begin{contentbox}
+\begin{factlist}
+\ZSFFact{Baum aufbauen (Worst Case)}{$\Theta(n^2)$ \; (balanciert: $\Theta(n \log n)$)}
+\ZSFFact{Minimum/Maximum finden}{$\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)}
+\ZSFFact{Einfügen}{$\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)}
+\ZSFFact{Entfernen (beliebiges Element)}{$\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)}
+\end{factlist}
+\end{contentbox}
+\subsubsection{Traversierung (Pre-/In-/Postorder)}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 def preorder_list(node: Optional[Node]) -> list:
@@ -57,7 +99,7 @@ def inorder_list(node: Optional[Node]) -> list:
     \includegraphics[scale=0.26]{tree_traversing.png}
 \end{center}
 \begin{factlist}
-\ZSFFact{Preorder}{Hauptreihenfolge, mit dem wird Baum gebaut}
+\ZSFFact{Preorder}{Hauptreihenfolge, damit wird der Baum gebaut}
 \ZSFFact{Postorder}{Nebenreihenfolge}
 \end{factlist}
 \end{contentbox}
@@ -152,21 +194,7 @@ def findSuccessor(start_node):
     return node
 \end{lstlisting}
 \end{codebox}
-\subsubsection{Komplexitäten}
-\begin{contentbox}
-\begin{factlist}
-\ZSFFact{Baum aufbauen (Worst Case)}{$\Theta(n^2)$ \; (balanciert: $\Theta(n \log n)$)}
-\ZSFFact{Minimum/Maximum finden}{$\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)}
-\ZSFFact{Einfügen}{$\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)}
-\ZSFFact{Entfernen (beliebiges Element)}{$\mathcal{O}(n)$ \; (balanciert: $\mathcal{O}(\log n)$)}
-\end{factlist}
-\end{contentbox}
-
-
 \subsection{Heaps}\label{sec:09-heaps}
-\begin{center}
-    \includegraphics[scale=0.42]{Bildschirmfoto 2025-08-09 um 11.49.43.png}
-\end{center}
 
 \subsubsection{Grundidee eines Binary Heaps}
 \begin{defbox}[Binary Heap]
@@ -181,6 +209,9 @@ Heaps werden in einer Liste gespeichert, sodass die Knotenebenen hintereinander 
 \texttt{[1, 2, 3, 4, 5, 6]} \Rightarrow \text{Index: } 0,1,2,\dots
 \]
 \end{defbox}
+\begin{center}
+    \includegraphics[scale=0.42]{Bildschirmfoto 2025-08-09 um 11.49.43.png}
+\end{center}
 
 \begin{contentbox}[Zugriffsformeln]
 \begin{factlist}
@@ -190,8 +221,17 @@ Heaps werden in einer Liste gespeichert, sodass die Knotenebenen hintereinander 
 \ZSFFact{Höhe}{$\log_2(N+1)$ mit $N = \texttt{len(list)}$}
 \end{factlist}
 \end{contentbox}
+\subsubsection{Komplexitäten}
+\begin{contentbox}
+\begin{factlist}
+\ZSFFact{Heap aufbauen (Worst Case)}{$\Theta(n \log n)$}
+\ZSFFact{Maximum/Minimum holen}{$\mathcal{O}(1)$}
+\ZSFFact{Einfügen in Heap}{$\mathcal{O}(\log n)$}
+\ZSFFact{Entfernen (Top-Element)}{$\mathcal{O}(\log n)$}
+\end{factlist}
+\end{contentbox}
 
-\subsubsection{Heapify (Heap aufbauen)}
+\subsubsection{Heapify (Liste in Heap umwandeln)}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 def heapify(list):
@@ -202,10 +242,7 @@ def heapify(list):
     return
 \end{lstlisting}
 \end{codebox}
-\begin{contentbox}
-oder:
-\end{contentbox}
-\begin{codebox}
+\begin{codebox}[Variante 2]
 \begin{lstlisting}[style=CodeExpert]
 def heapify(list):
     n = len(list)
@@ -215,7 +252,7 @@ def heapify(list):
 \end{lstlisting}
 \end{codebox}
 
-\subsubsection{SiftDown (oberstes Element löschen)}
+\subsubsection{SiftDown (Element nach unten schieben)}
 \begin{contentbox}
 Beim Entfernen der Wurzel (z.\,B. Max-Element bei Max-Heap) wird das letzte Element nach oben geschoben und mit seinen Kindern verglichen. Dabei wird immer mit dem größeren (bzw. kleineren bei Min-Heap) Kind getauscht.
 \end{contentbox}
@@ -266,22 +303,11 @@ def removeMax(heap):
 \end{codebox}
 
 
-\subsubsection{Komplexitäten}
-\begin{contentbox}
-\begin{factlist}
-\ZSFFact{Heap aufbauen (Worst Case)}{$\Theta(n \log n)$}
-\ZSFFact{Maximum/Minimum holen}{$\mathcal{O}(1)$}
-\ZSFFact{Einfügen in Heap}{$\mathcal{O}(\log n)$}
-\ZSFFact{Entfernen (Top-Element)}{$\mathcal{O}(\log n)$}
-\end{factlist}
-\end{contentbox}
-
-
 
 
 \subsection{Hash-Tabellen}\label{sec:09-hash-tabellen}
 
-\subsubsection{Grundidee}
+\subsubsection{Hash: Grundidee}
 \begin{defbox}[Hash-Tabelle]
 Eine Hash-Tabelle speichert ungeordnete Sammlungen \textbf{einzigartiger Elemente} (z.\,B. \texttt{set} oder \texttt{dict} in Python).
 
@@ -328,7 +354,7 @@ def create_hash_table(l, M):
 
 \subsection{Quadtrees}\label{sec:09-quadtrees}
 
-\subsubsection{Grundidee}
+\subsubsection{Quadtree: Grundidee}
 \begin{defbox}[Quadtree]
 Quadtrees sind \ZSFkeyword{volle Quarternärbäume} (jeder Knoten hat entweder $0$ oder exakt $4$ Kinder) zur effizienten Verarbeitung \textbf{räumlicher Daten in 2D} (z.\,B. Rechteck-Abfragen).
 \end{defbox}
@@ -382,37 +408,12 @@ def query(node, q_l, q_u):
 \end{lstlisting}
 \end{codebox}
 
-\subsubsection{Bemerkung}
+\subsubsection{Wann lohnt sich ein Quadtree?}
 \begin{statementbox}
 Die \textbf{Konstruktion} des Baumes ist relativ aufwendig; der Einsatz lohnt sich daher erst bei \textbf{höherfrequentierten Abfragen}.
 \end{statementbox}
 
 
-\subsection{Übersicht: Laufzeiten im Vergleich}\label{sec:09-uebersicht-laufzeiten-im-vergleich}
-\begin{tablebox}
-\renewcommand{\arraystretch}{1.25}
-\begin{ZSFtable}[\ZSFfontTableDense]{Q{1.2} Y{0.94} Y{0.93} Y{0.93}}
-\toprule
-\ZSFkeyword{Datenstruktur} & \ZSFkeyword{Suche} & \ZSFkeyword{Einfügen} & \ZSFkeyword{Entfernen} \\
-\midrule
-Liste / Array       & $\mathcal{O}(n)$          & $\mathcal{O}(n)$ \emph{(worst)}   & $\mathcal{O}(n)$ \emph{(worst)}   \\
-Linked List         & $\mathcal{O}(n)$          & $\mathcal{O}(1)$ \emph{(nach Suche)} & $\mathcal{O}(1)$ \emph{(nach Suche)} \\
-BST \emph{(balanciert)} & $\mathcal{O}(\log n)$ & $\mathcal{O}(\log n)$             & $\mathcal{O}(\log n)$             \\
-BST \emph{(unbal.)} & $\mathcal{O}(n)$          & $\mathcal{O}(n)$                  & $\mathcal{O}(n)$                  \\
-Heap                & $\mathcal{O}(n)$          & $\mathcal{O}(\log n)$             & $\mathcal{O}(\log n)$ \emph{(Top)} \\
-Hash-Tabelle        & $\mathcal{O}(1)$ \emph{(erw.)} & $\mathcal{O}(1)$ \emph{(erw.)} & $\mathcal{O}(1)$ \emph{(erw.)} \\
-Quadtree            & $\mathcal{O}(\log n)$ \emph{(Range)} & $\mathcal{O}(\log n)$ & --- \\
-\bottomrule
-\end{ZSFtable}
-\end{tablebox}
-
-\begin{statementbox}[Merke]
-\begin{factlist}
-\ZSFFact{Hash-Tabelle}{schnellster Zugriff im Durchschnitt, aber ungeordnet.}
-\ZSFFact{BST / Heap}{geordneter Zugriff, log.\ Laufzeit — nur balanciert effizient.}
-\ZSFFact{Quadtree}{spezialisiert auf 2D-Bereichs-Abfragen.}
-\end{factlist}
-\end{statementbox}
 
 
 

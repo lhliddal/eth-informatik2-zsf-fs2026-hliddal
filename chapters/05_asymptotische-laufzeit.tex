@@ -22,6 +22,37 @@ $f(n)$ ist \textbf{polynomiell} größer  & Arbeit außen dominiert & $\Theta(f(
 \ZSFkeyword{Hinweis:} "`Polynomiell"' bedeutet, dass der Unterschied mindestens ein Faktor $n^{\epsilon}$ (mit $\epsilon > 0$) sein muss, ein bloßer $\log n$-Faktor reicht nicht aus. Im 3. Fall (größer) muss formal zudem die Regularitätsbedingung erfüllt sein.
 \end{contentbox}
 
+\subsection{Master-Theorem: Herleitung (Ausrollen)}\label{sec:05-asymptotische-laufzeit-von-rekursionen}
+\begin{procedure}
+\ProcStep{Gegebene Rekurrenz}{%
+\[
+T(n) = a \, T\!\left(\frac{n}{b}\right) + f(n), \quad T(1) = c
+\]
+(Annahme: $n$ ist eine Potenz von $b$, für sauberere Algebra.)}
+\ProcStep{Rekurrenz auflösen (ausrollen)}{%
+\[
+\begin{aligned}
+T(n) &= a \, T\!\left(\frac{n}{b}\right) + f(n) \\
+     &= a \left[ a \, T\!\left(\frac{n}{b^2}\right) + f\!\left(\frac{n}{b}\right) \right] + f(n) \\
+     &= a^2 T\!\left(\frac{n}{b^2}\right) + a f\!\left(\frac{n}{b}\right) + f(n) \\
+     &= a^k T\!\left(\frac{n}{b^k}\right) + \sum_{i=0}^{k-1} a^i f\!\left(\frac{n}{b^i}\right).
+\end{aligned}
+\]}
+\ProcStep{Abbruchbedingung}{Stoppe, wenn $\frac{n}{b^k} = 1 \; \Rightarrow \; k = \log_b n$.}
+\ProcStep{Einsetzen}{%
+\[
+T(n) = a^{\log_b n} \, T(1) + \sum_{i=0}^{\log_b n - 1} a^i \, f\!\left(\frac{n}{b^i}\right).
+\]}
+\end{procedure}
+
+\begin{contentbox}
+Beachte, dass $a^{\log_b n} = n^{\log_b a}$, womit die Summe wird zu
+\[
+\sum_{i=0}^{\log_b n - 1} \Theta\!\left(n^d \left(\frac{a}{b^d}\right)^i\right),
+\]
+einer geometrischen Reihe mit Quotient $r = \frac{a}{b^d}$.
+\end{contentbox}
+
 \subsection{Häufige Summen}\label{sec:05-haeufige-summen}
 \begin{contentbox} 
 \begin{ZSFtable}{L L L}
@@ -45,7 +76,7 @@ $\sum_{i=1}^{n} 2^{n-i}$ & $2^n \cdot \sum_{i=1}^{n} 2^{-i} \approx 2^n$ & $\The
 \end{contentbox}
 
 
-\subsection{Laufzeiten klassischer Schleifenmuster}\label{sec:05-laufzeiten-klassischer-schleifenmuster}
+\subsection{Schleifenmuster $\to$ Laufzeit}\label{sec:05-laufzeiten-klassischer-schleifenmuster}
 
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -148,7 +179,7 @@ Aufrufe: $\sum_{i=0}^{n^2-1} i = \frac{1}{2}n^2(n^2 - 1)$ \quad Laufzeit: $\Thet
 
 \subsection{Logarithmische und gemischte Muster}\label{sec:05-logarithmische-und-gemischte-muster}
 
-\begin{statementbox}[Schlüsselprinzip]
+\begin{statementbox}[Logarithmus-Regel]
 $\Rightarrow$ Exponentielle Änderung von $i$ oder $n$ $\Rightarrow$ logarithmische Laufzeit.
 \end{statementbox}
 
@@ -163,7 +194,7 @@ while i > 1:
 Aufrufe: $\log n$ \quad Laufzeit: $\Theta(\log n)$
 \end{codebox}
 
-\begin{statementbox}[Vorwärts-Logarithmus]
+\begin{statementbox}[Multiplikation = Division (beide log)]
 $\Rightarrow$ Multiplikation mit konstantem Faktor $>1$ ist äquivalent zur Division (\texttt{i //= 2}) — ebenfalls logarithmisch.
 \end{statementbox}
 \begin{codebox}
@@ -201,7 +232,7 @@ for i in range(n):
 Aufrufe: $n^2 \log n$ \quad Laufzeit: $\Theta(n^2 \log n)$
 \end{codeboxlast}
 
-\subsection{Besondere Muster}\label{sec:05-besondere-muster}
+\subsection{Zusammengesetzte Grenzen ($i\cdot i$, Teiler, $i{+}j$)}\label{sec:05-besondere-muster}
 
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
@@ -271,43 +302,6 @@ def h(n):
 \ZSFgapXS
 Aufrufe: $\lfloor \log_2 n \rfloor + 1$ \quad Laufzeit: $\Theta(\log n)$
 \end{codeboxlast}
-
-
-\subsection{Asymptotische Laufzeit von Rekursionen}\label{sec:05-asymptotische-laufzeit-von-rekursionen}
-\begin{procedure}
-\ProcStep{Gegebene Rekurrenz}{%
-\[
-T(n) = a \, T\!\left(\frac{n}{b}\right) + f(n), \quad T(1) = c
-\]
-(Annahme: $n$ ist eine Potenz von $b$, für sauberere Algebra.)}
-\ProcStep{Rekurrenz auflösen (ausrollen)}{%
-\[
-\begin{aligned}
-T(n) &= a \, T\!\left(\frac{n}{b}\right) + f(n) \\
-     &= a \left[ a \, T\!\left(\frac{n}{b^2}\right) + f\!\left(\frac{n}{b}\right) \right] + f(n) \\
-     &= a^2 T\!\left(\frac{n}{b^2}\right) + a f\!\left(\frac{n}{b}\right) + f(n) \\
-     &= a^k T\!\left(\frac{n}{b^k}\right) + \sum_{i=0}^{k-1} a^i f\!\left(\frac{n}{b^i}\right).
-\end{aligned}
-\]}
-\ProcStep{Abbruchbedingung}{Stoppe, wenn $\frac{n}{b^k} = 1 \; \Rightarrow \; k = \log_b n$.}
-\ProcStep{Einsetzen}{%
-\[
-T(n) = a^{\log_b n} \, T(1) + \sum_{i=0}^{\log_b n - 1} a^i \, f\!\left(\frac{n}{b^i}\right).
-\]}
-\end{procedure}
-
-\begin{contentbox}
-
-
-Beachte, dass $a^{\log_b n} = n^{\log_b a}$, womit die Summe wird zu
-\[
-\sum_{i=0}^{\log_b n - 1} \Theta\!\left(n^d \left(\frac{a}{b^d}\right)^i\right),
-\]
-einer geometrischen Reihe mit Quotient $r = \frac{a}{b^d}$.
-
-
-    
-\end{contentbox}
 
 
 

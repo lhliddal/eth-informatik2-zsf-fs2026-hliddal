@@ -1,4 +1,23 @@
-\section{Algorithmen}\label{sec:04-algorithmen}
+\section{Algorithmen: Sortieren}\label{sec:04-algorithmen}
+
+\subsection{Übersicht: Sortier-Laufzeiten}\label{sec:04-uebersicht-sortier-laufzeiten}
+\begin{tablebox}
+\renewcommand{\arraystretch}{1.25}
+\begin{ZSFtable}[\ZSFfontTableDense]{Q{1.25} Y{1} Y{1}}
+\toprule
+\ZSFkeyword{Algorithmus} & \ZSFkeyword{Durchschnitt} & \ZSFkeyword{Worst-Case} \\
+\midrule
+Bubble Sort           & $\Theta(n^2)$      & $\Theta(n^2)$ \\
+Selection Sort        & $\Theta(n^2)$      & $\Theta(n^2)$ \\
+Insertion Sort        & $\Theta(n^2)$ \emph{(best: $\Theta(n)$)} & $\Theta(n^2)$ \\
+Merge Sort            & $\Theta(n \log n)$ & $\Theta(n \log n)$ \\
+Quick Sort            & $\Theta(n \log n)$ & $\Theta(n^2)$ \\
+Heap Sort             & $\Theta(n \log n)$ & $\Theta(n \log n)$ \\
+Binary Insertion Sort & $\Theta(n^2)$      & $\Theta(n^2)$ \\
+\bottomrule
+\end{ZSFtable}
+\end{tablebox}
+
 \begin{contentbox}
 \begin{center}
     \includegraphics[scale=0.5]{Bildschirmfoto 2025-07-29 um 12.56.34.png}
@@ -39,7 +58,8 @@ def bubble_sort(a):
 
 
 \subsection{Selection Sort}\label{sec:04-selection-sort}
-\begin{procedure}[Sucht in jedem Durchlauf das kleinste Element]
+\begin{procedure}[Ablauf]
+\ProcStep{Minimum suchen}{Sucht in jedem Durchlauf das kleinste Element.}
 \ProcStep{Tauschen}{Tauscht es mit dem aktuellen Element.}
 \ProcStep{Wiederholen}{Wiederholt das für den restlichen unsortierten Bereich.}
 \end{procedure}
@@ -87,7 +107,8 @@ def selection_sort(a):
 
 
 \subsection{Insertion Sort}\label{sec:04-insertion-sort}
-\begin{procedure}[Sortiert ähnlich wie beim Kartenspiel]
+\begin{procedure}[Ablauf]
+\ProcStep{Idee}{Sortiert ähnlich wie beim Kartenspiel.}
 \ProcStep{Einfügen}{Jedes Element wird an die richtige Position im linken, bereits sortierten Teil eingefügt.}
 \ProcStep{Verschieben}{Größere Elemente werden nach rechts verschoben.}
 \end{procedure}
@@ -124,7 +145,8 @@ def insertion_sort(a):
 
 
 \subsection{Merge Sort}\label{sec:04-merge-sort}
-\begin{procedure}[Rekursiver Divide-and-Conquer-Algorithmus]
+\begin{procedure}[Ablauf]
+\ProcStep{Idee}{Rekursiver Divide-and-Conquer-Algorithmus.}
 \ProcStep{Teilen}{Das Array wird in zwei Hälften geteilt.}
 \ProcStep{Rekursiv sortieren}{Beide Hälften werden rekursiv sortiert.}
 \ProcStep{Zusammenführen}{Die sortierten Hälften werden zusammengeführt (merge).}
@@ -172,7 +194,8 @@ def merge_sort(a):
 
 
 \subsection{Quick Sort}\label{sec:04-quick-sort}
-\begin{procedure}[Effizienter rekursiver Divide-and-Conquer-Algorithmus]
+\begin{procedure}[Ablauf]
+\ProcStep{Idee}{Effizienter rekursiver Divide-and-Conquer-Algorithmus.}
 \ProcStep{Pivot wählen}{Wählt ein \ZSFkeyword{Pivot}-Element.}
 \ProcStep{Partitionieren}{Teilt das Array in Elemente kleiner und größer als das Pivot.}
 \ProcStep{Rekursiv sortieren}{Sortiert beide Teilarrays rekursiv.}
@@ -266,8 +289,9 @@ def heap_sort(a):
 \end{center}
 
 
-\subsection{Binary Sort}\label{sec:04-binary-sort}
-\begin{procedure}[Eine Variante von Insertion Sort]
+\subsection{Binary Insertion Sort}\label{sec:04-binary-sort}
+\begin{procedure}[Ablauf]
+\ProcStep{Idee}{Eine Variante von Insertion Sort.}
 \ProcStep{Binär suchen}{Findet die Einfügeposition per binärer Suche.}
 \ProcStep{Verschieben}{Die Verschiebung der Elemente bleibt aber linear.}
 \end{procedure}

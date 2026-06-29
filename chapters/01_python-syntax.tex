@@ -1,4 +1,4 @@
-\section{Python-Syntax — Übersicht}\label{sec:01-python-syntax-uebersicht}
+\section{Python-Syntax \& Container}\label{sec:01-python-syntax-uebersicht}
 
 
 
@@ -82,7 +82,7 @@ s = "abc"
 \end{codebox}
 
 % -----------------------------
-\subsection{Operationen auf Containern}\label{sec:01-operationen-auf-containern}
+\subsection{Container-Operationen (allgemein)}\label{sec:01-operationen-auf-containern}
 \begin{contentbox}
 \CodeLine{len(lst)}[Anzahl Elemente]\\
 \CodeLine{1 in lst}[Enthaltensein prüfen]\\
@@ -98,7 +98,24 @@ s = "abc"
 \end{contentbox}
 
 % -----------------------------
-\subsection{Sequenzen (geordnete Container)}\label{sec:01-sequenzen-geordnete-container}
+\subsection{Slicing — Details}\label{sec:01-slicing-details}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+a = [10,20,30,40,50]        # a[start:stop:step]
+# start inklusive, stop exklusiv, Standardschritt=1
+a[1:4]    # [20,30,40]      a[:3] / a[2:] / a[:]=copy
+a[-1]     # 50              a[-2:]=last 2, a[:-2]=drop 2
+a[::2]    # [10,30,50]      a[::-1]=reversed copy
+a[4:1:-1] # [50,40,30]      step<0 -> right to left
+b = a[:]; b[0]=99           # slice = new list (no alias)
+a[1:3] = [0,0,0]            # slice-assign replaces range
+a[1:3] = []                 # slice-assign [] deletes
+"python"[::-1]              # works on str/tuple (immut.)
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{Geordnete Container: list / tuple / str}\label{sec:01-sequenzen-geordnete-container}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 # veränderbare Sequenz
@@ -109,6 +126,22 @@ tup = (10, 20, 30)
 s = "abc"
 lst[0], tup[1], s[2]         # Indexzugriff
 lst[1:]                      # Slicing
+\end{lstlisting}
+\end{codebox}
+
+% -----------------------------
+\subsection{Ungeordnete Container: set / dict}\label{sec:01-collections-ungeordnete-container}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+# set: keine Duplikate
+s = {1, 2, 3}
+
+d = {"x": 1, "y": 2}       # dict: Schlüssel-Wert
+
+# sets sind schnell für Enthaltensein-Prüfung,
+# kein Indexzugriff
+2 in s                    # Enthaltensein prüfen
+len(s)                    # Anzahl Elemente
 \end{lstlisting}
 \end{codebox}
 
@@ -129,23 +162,6 @@ x.count(1)              # Anzahl der 1en zählen
 # über Sequenz iterieren
 for item in x:
     print(item)
-\end{lstlisting}
-\end{codebox}
-
-% -----------------------------
-\subsection{Slicing — Details}\label{sec:01-slicing-details}
-\begin{codebox}
-\begin{lstlisting}[style=CodeExpert]
-a = [10,20,30,40,50]        # a[start:stop:step]
-# start inklusive, stop exklusiv, Standardschritt=1
-a[1:4]    # [20,30,40]      a[:3] / a[2:] / a[:]=copy
-a[-1]     # 50              a[-2:]=last 2, a[:-2]=drop 2
-a[::2]    # [10,30,50]      a[::-1]=reversed copy
-a[4:1:-1] # [50,40,30]      step<0 -> right to left
-b = a[:]; b[0]=99           # slice = new list (no alias)
-a[1:3] = [0,0,0]            # slice-assign replaces range
-a[1:3] = []                 # slice-assign [] deletes
-"python"[::-1]              # works on str/tuple (immut.)
 \end{lstlisting}
 \end{codebox}
 
@@ -174,8 +190,8 @@ a[1:3] = []                 # slice-assign [] deletes
 \end{codebox}
 
 % -----------------------------
-\subsection{Häufige String-Operationen}\label{sec:01-haeufige-string-operationen}
-\begin{codebox}
+\subsection{String-Methoden — Referenz}\label{sec:01-string-methoden-referenz}
+\begin{codeboxfirst}
 \begin{lstlisting}[style=CodeExpert]
 s = " Hello World "
 
@@ -185,11 +201,8 @@ s.strip()
 # nur links/rechts Leerzeichen entfernen
 s.lstrip(), s.rstrip()
 \end{lstlisting}
-\end{codebox}
-
-% -----------------------------
-\subsection{String-Methoden — Referenz}\label{sec:01-string-methoden-referenz}
-\begin{codeboxfirst}
+\end{codeboxfirst}
+\begin{codeboxmid}
 \begin{lstlisting}[style=CodeExpert]
 # --- Gross-/Kleinschreibung ---
 s.lower()              # alles klein
@@ -201,7 +214,7 @@ s.title()
 # Gross-/Kleinschreibung tauschen: "aA" -> "Aa"
 s.swapcase()
 \end{lstlisting}
-\end{codeboxfirst}
+\end{codeboxmid}
 \begin{codeboxmid}
 \begin{lstlisting}[style=CodeExpert]
 # --- Präfix/Suffix und Suche ---
@@ -282,22 +295,6 @@ list("abc")
 s[::-1]                # String umkehren
 \end{lstlisting}
 \end{codeboxlast}
-
-% -----------------------------
-\subsection{Collections (ungeordnete Container)}\label{sec:01-collections-ungeordnete-container}
-\begin{codebox}
-\begin{lstlisting}[style=CodeExpert]
-# set: keine Duplikate
-s = {1, 2, 3}
-
-d = {"x": 1, "y": 2}       # dict: Schlüssel-Wert
-
-# sets sind schnell für Enthaltensein-Prüfung,
-# kein Indexzugriff
-2 in s                    # Enthaltensein prüfen
-len(s)                    # Anzahl Elemente
-\end{lstlisting}
-\end{codebox}
 
 % -----------------------------
 \subsection{Set-Operationen}\label{sec:01-set-operationen}

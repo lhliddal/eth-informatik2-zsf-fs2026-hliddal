@@ -1,10 +1,7 @@
-\section{Klassen}\label{sec:02-klassen}
+\section{Klassen \& OOP}\label{sec:02-klassen}
 
-\subsection{Vererbung}\label{sec:02-vererbung}
-\begin{defbox}[Oberklasse / Unterklasse]
-Eine \ZSFkeyword{Oberklasse} (Superclass) ist eine Klasse, die als Basis für eine andere Klasse dient – die sogenannte \ZSFkeyword{Unterklasse} (Subclass). Mittels \verb|super().__init__()| kann die Unterklasse auf den Konstruktor der Oberklasse zugreifen.
-\end{defbox}
-\begin{codebox}
+\subsection{Klasse definieren}\label{sec:02-klasse-definieren}
+\begin{codebox}[Klassengerüst][Python]
 \begin{lstlisting}[style=CodeExpert]
 class Car:
     def __init__(self, brand, model):
@@ -15,7 +12,12 @@ class Car:
         return f"{self.model} is honking!"
 \end{lstlisting}
 \end{codebox}
-\begin{codebox}[Oberklasse innerhalb der Unterklasse][Python]
+
+\subsection{Vererbung}\label{sec:02-vererbung}
+\begin{defbox}[Oberklasse / Unterklasse]
+Eine \ZSFkeyword{Oberklasse} (Superclass) ist eine Klasse, die als Basis für eine andere Klasse dient – die sogenannte \ZSFkeyword{Unterklasse} (Subclass). Mittels \verb|super().__init__()| kann die Unterklasse auf den Konstruktor der Oberklasse zugreifen.
+\end{defbox}
+\begin{codebox}[super() in der Unterklasse][Python]
 \begin{lstlisting}[style=CodeExpert]
 class ElectricCar(Car):
     def __init__(self, brand, model):
@@ -27,7 +29,7 @@ class ElectricCar(Car):
 \end{lstlisting}
 \end{codebox}
 
-\subsection{Klasseninterne Funktionen implementieren}\label{sec:02-klasseninterne-funktionen-implementieren}
+\subsection{Dunder-Methoden \& Operator-Überladung}\label{sec:02-klasseninterne-funktionen-implementieren}
 \begin{statementbox}[Achtung]
 Wenn Operatoren wie \verb|+| für Klassen überschrieben werden, sollte das Ergebnis wieder eine Instanz dieser Klasse sein. Sonst handelt es sich um einen undefinierten Datentyp, auf den keine Methoden wie \verb|__str__| angewendet werden können.
 \end{statementbox}

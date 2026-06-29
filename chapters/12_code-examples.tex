@@ -162,12 +162,12 @@ def heap_sort(list):
 
 
 
-\subsection{Dynamische Programmierung und Memo}\label{sec:12-dp-memoization}
+\subsection{DP \& Memoization}\label{sec:12-dp-memoization}
 
 
 
 %=====================================================================================================================
-\subsubsection{Karotten in $n\times n$ Matrix: Bester Weg}
+\subsubsection{Grid-DP: Bester Pfad (Max-Summe)}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 def longest_path_dp(grid):
@@ -221,7 +221,7 @@ def climb_stairs(n: int) -> int:
 \end{lstlisting}
 \end{codebox}
 
-\subsubsection{Golomb-Zahlen (nur Rekursion)}
+\subsubsection{Golomb-Zahlen (rekursiv, ohne Memo)}
 \begin{codebox}
 \begin{lstlisting}[style=CodeExpert]
 def golomb(n):
@@ -271,64 +271,6 @@ def cuts(n, w):
     return (s[n], cut)
 \end{lstlisting}
 \end{codebox}
-
-\subsection{ML / Cross-Validation mit \texttt{GridSearchCV}}\label{sec:12-ml-cross-validation}
-
-\subsubsection{Imports}
-\begin{codebox}
-\begin{lstlisting}[style=CodeExpert]
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import warnings
-from sklearn.datasets import make_circles
-from sklearn.model_selection import (train_test_split,
-    GridSearchCV)
-from sklearn.neural_network import MLPClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier, plot_tree
-from sklearn.metrics import accuracy_score
-from utils import plot_decision_boundary, plot_data
-
-\end{lstlisting}
-\end{codebox}
-
-\subsubsection{GridSearchCV — Anwendung}
-\begin{codebox}
-\begin{lstlisting}[style=CodeExpert]
-# read in the data
-df = pd.read_csv("data.csv")
-X = df[["size", "bright"]].to_numpy()
-y = df["label"].to_numpy()
-
-# split the data into training and testing
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.5, random_state=42)
-
-# Crossvalidate the different tree lengths
-# using the train data
-dt = DecisionTreeClassifier()
-# tree depth from 1 to 9
-grid = {"max_depth": range(1, 10)}
-
-grid = GridSearchCV(dt, param_grid=grid, cv=5)
-grid.fit(X_train, y_train)
-
-best_dt = grid.best_estimator_
-
-y_pred_train = best_dt.predict(X_train)
-y_pred_test = best_dt.predict(X_test)
-
-acc_train = accuracy_score(y_train, y_pred_train)
-acc_test = accuracy_score(y_test, y_pred_test)
-
-print("Accuracy on train data: {:.2f}".format(acc_train))
-print("Accuracy on test data: {:.2f}".format(acc_test))
-\end{lstlisting}
-\end{codebox}
-
-
-
 
 \subsubsection{Knapsack DP}
 \begin{codebox}
@@ -429,7 +371,7 @@ def lcs(seq1, seq2):
 \end{lstlisting}
 \end{codebox}
 
-\subsubsection{Springer-Matrix}
+\subsubsection{Springer-Matrix: Rekursion + DP}
 \begin{codebox}[mit Recursion]
 \begin{lstlisting}[style=CodeExpert]
 def rec_best_way(a, i = 0, j = 0):
@@ -447,7 +389,7 @@ def rec_best_way(a, i = 0, j = 0):
   return a[i][j] + max([reward1, reward2, reward3, reward4])
 \end{lstlisting}
 \end{codebox}
-\begin{codebox}[mit Dynamic Programming:]
+\begin{codebox}[mit Dynamic Programming]
 \begin{lstlisting}[style=CodeExpert]
 def dp_best_way(a):
   n, m = len(a), len(a[0])
@@ -472,6 +414,83 @@ def dp_best_way(a):
 \end{lstlisting}
 \end{codebox}
 
+
+\subsubsection{DP für Linearkombinationen}
+
+\begin{codebox}
+    \begin{lstlisting}[style=CodeExpert]
+def possible_amounts(max_amount, denominations):
+  """example : possible_amounts(20, [5, 2]) returns [0, 2, 4,
+  5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  all linear combinations up to 20 of 5 and 2.
+  """
+  n = max_amount
+  s = [False] * (n + 1)
+  s[0] = True
+
+  for i in range(1, n+1):
+    s[i] = False
+    for d in denominations:
+      if i - d >= 0 and s[i - d]:
+        s[i] = True
+  return s
+\end{lstlisting}
+\end{codebox}
+
+\subsection{ML: GridSearchCV \& Cross-Validation}\label{sec:12-ml-cross-validation}
+
+\subsubsection{Imports}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import warnings
+from sklearn.datasets import make_circles
+from sklearn.model_selection import (train_test_split,
+    GridSearchCV)
+from sklearn.neural_network import MLPClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.metrics import accuracy_score
+from utils import plot_decision_boundary, plot_data
+
+\end{lstlisting}
+\end{codebox}
+
+\subsubsection{GridSearchCV — Anwendung}
+\begin{codebox}
+\begin{lstlisting}[style=CodeExpert]
+# read in the data
+df = pd.read_csv("data.csv")
+X = df[["size", "bright"]].to_numpy()
+y = df["label"].to_numpy()
+
+# split the data into training and testing
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.5, random_state=42)
+
+# Crossvalidate the different tree lengths
+# using the train data
+dt = DecisionTreeClassifier()
+# tree depth from 1 to 9
+grid = {"max_depth": range(1, 10)}
+
+grid = GridSearchCV(dt, param_grid=grid, cv=5)
+grid.fit(X_train, y_train)
+
+best_dt = grid.best_estimator_
+
+y_pred_train = best_dt.predict(X_train)
+y_pred_test = best_dt.predict(X_test)
+
+acc_train = accuracy_score(y_train, y_pred_train)
+acc_test = accuracy_score(y_test, y_pred_test)
+
+print("Accuracy on train data: {:.2f}".format(acc_train))
+print("Accuracy on test data: {:.2f}".format(acc_test))
+\end{lstlisting}
+\end{codebox}
 
 \subsubsection{Beispiel Gini Index Berechnung}
 \begin{contentbox}
@@ -500,28 +519,6 @@ def dp_best_way(a):
 &\boxed{G_{\text{gesamt}} \approx 0.31}
 \end{align*}
 \end{contentbox}
-
-\subsubsection{DP für Linearkombinationen}
-
-\begin{codebox}
-    \begin{lstlisting}[style=CodeExpert]
-def possible_amounts(max_amount, denominations):
-  """example : possible_amounts(20, [5, 2]) returns [0, 2, 4,
-  5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-  all linear combinations up to 20 of 5 and 2.
-  """
-  n = max_amount
-  s = [False] * (n + 1)
-  s[0] = True
-
-  for i in range(1, n+1):
-    s[i] = False
-    for d in denominations:
-      if i - d >= 0 and s[i - d]:
-        s[i] = True
-  return s
-\end{lstlisting}
-\end{codebox}
 
 \subsection{Linked Lists}\label{sec:12-linked-lists}
 

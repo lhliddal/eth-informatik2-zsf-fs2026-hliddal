@@ -6,9 +6,9 @@ Neuronale Netzwerke (Neural Networks, NNs) bestehen aus vielen kleinen Funktions
     \includegraphics[scale=0.26]{Bildschirmfoto 2025-07-29 um 14.36.34.png}
 \end{center}
 \end{contentbox}
-\subsection{Standard Neural Network (MLP)}\label{sec:10-standard-neural-network-mlp}
+\subsection{MLP (Standard Neural Network)}\label{sec:10-standard-neural-network-mlp}
 \begin{contentbox}
-\textbf{Ein Neuron} berechnet:
+Ein \ZSFkeyword{Neuron} berechnet:
 \[
 y_k = f(x_1 \cdot w_{k1} + x_2 \cdot w_{k2} + \cdots + x_n \cdot w_{kn} + b_k)
 \]
@@ -16,16 +16,19 @@ y_k = f(x_1 \cdot w_{k1} + x_2 \cdot w_{k2} + \cdots + x_n \cdot w_{kn} + b_k)
 \ZSFFact{$x_i$}{Eingabewerte}
 \ZSFFact{$w_{ki}$}{Gewichtung für Neuron $k$}
 \ZSFFact{$b_k$}{Bias-Term}
-\ZSFFact{$f$}{Aktivierungsfunktion, z.\,B.:
-    \begin{itemize}
-        \item \ZSFkeyword{ReLU}: $f(x) = \max(0, x)$ (oft in versteckten Schichten)
-        \item \ZSFkeyword{Sigmoid}: $\sigma(x) = \frac{1}{1 + e^{-x}}$ (Ausgabe bei binärer Klassifikation)
-    \end{itemize}}
+\ZSFFact{$f$}{Aktivierungsfunktion (siehe unten)}
 \ZSFFact{Training}{Gewichtungen $w_{ki}$ und Bias $b_k$ werden im Training angepasst}
 \end{factlist}
 \end{contentbox}
 
-\subsection{Softmax-Schicht (Ausgabe)}\label{sec:10-softmax-schicht-ausgabe}
+\begin{contentbox}[Aktivierungsfunktionen]
+\begin{factlist}
+\ZSFFact{ReLU}{$f(x) = \max(0, x)$ — oft in versteckten Schichten}
+\ZSFFact{Sigmoid}{$\sigma(x) = \frac{1}{1 + e^{-x}}$ — Ausgabe bei binärer Klassifikation}
+\end{factlist}
+\end{contentbox}
+
+\subsection{Softmax (Ausgabeschicht)}\label{sec:10-softmax-schicht-ausgabe}
 \begin{contentbox}
 \begin{factlist}
 \ZSFFact{Idee}{Wandelt Ausgaben in Wahrscheinlichkeiten um:
@@ -36,7 +39,7 @@ y_k = f(x_1 \cdot w_{k1} + x_2 \cdot w_{k2} + \cdots + x_n \cdot w_{kn} + b_k)
 \end{factlist}
 \end{contentbox}
 
-\subsection{Convolutional Neural Network (CNN)}\label{sec:10-convolutional-neural-network-cnn}
+\subsection{CNN (Convolutional Neural Network)}\label{sec:10-convolutional-neural-network-cnn}
 \begin{contentbox}
 Ein Neuron in einem Convolutional Neural Network (CNN) entsteht durch folgende Schritte:
 
@@ -48,24 +51,35 @@ Ergebnis wird durch eine Aktivierungsfunktion verarbeitet (z.\,B. ReLU)}
 
 \end{contentbox}
 
-\begin{procedure}[Prozess]
+\begin{procedure}[CNN: Schritt für Schritt]
 \ProcStep{Filter anwenden}{Anwenden des Filters auf die Eingabematrix}
 \ProcStep{ReLU anwenden}{Anwenden der ReLU-Funktion auf jedes Element des Ergebnisses (setzt jeden negativen Wert auf 0)}
 \ProcStep{Pooling}{Abschließend: Anwenden der Pooling-Matrix (z.\,B. MaxPooling)}
 \end{procedure}
 
-\begin{contentbox}
-
+\begin{contentbox}[CNN: Convolution + Pooling]
 \begin{center}
     \includegraphics[scale=0.23]{Bildschirmfoto 2025-07-29 um 18.10.33.png}
 \end{center}
 \begin{center}
     \includegraphics[scale=0.22]{Bildschirmfoto 2025-07-29 um 18.10.40.png}
 \end{center}
-\end{contentbox}
-\begin{contentbox}
 \begin{center}
     \includegraphics[scale=0.22]{Bildschirmfoto 2025-07-31 um 16.04.05.png}
 \end{center}
+\end{contentbox}
 
+\subsection{Zusammenfassung}\label{sec:10-zusammenfassung}
+\begin{contentbox}
+\begin{factlist}
+\ZSFFact{MLP}{Gut für strukturierte Daten (z.\,B. Tabellen) \ZSFref{sec:10-standard-neural-network-mlp}}
+\ZSFFact{CNN}{Gut für unstrukturierte Bilddaten \ZSFref{sec:10-convolutional-neural-network-cnn}}
+\ZSFFact{Versteckte Schichten}{meist ReLU}
+\ZSFFact{Ausgabeschicht}{%
+    \begin{itemize}
+        \item Sigmoid bei binärer Klassifikation
+        \item Softmax bei Mehrklassenklassifikation \ZSFref{sec:10-softmax-schicht-ausgabe}
+    \end{itemize}}
+\ZSFFact{Training}{Lernen erfolgt über Anpassung der Gewichtungen $w$ und Bias-Terme $b$}
+\end{factlist}
 \end{contentbox}

@@ -1,12 +1,14 @@
 \section{Pandas}\label{sec:07-pandas}
 
-\subsection{DataFrame erzeugen und darauf zugreifen}\label{sec:07-dataframe-erzeugen}
+\subsection{DataFrame erzeugen}\label{sec:07-dataframe-erzeugen}
 \begin{contentbox}
 \CodeLine{import pandas as pd}\\
 \CodeLine{df = pd.DataFrame()}[leerer DataFrame]\\
-\CodeLine{df = pd.read_csv("Name.csv")}[DataFrame aus CSV laden]\\
-\ZSFgapS
-\OverlineComment{Zugriff auf Daten}
+\CodeLine{df = pd.read_csv("Name.csv")}[DataFrame aus CSV laden]
+\end{contentbox}
+
+\subsection{Zeilen/Spalten auswählen (loc / iloc)}\label{sec:07-auswaehlen}
+\begin{contentbox}
 \CodeLine{data["Month"]}[einzelne Spalte]\\
 \CodeLine{data[["Name", "City"]]}[mehrere Spalten]\\
 \CodeLine{data["Name"][2]}[gibt `Carlos' zurück]\\
@@ -17,22 +19,20 @@
 \CodeLine{data.iloc[1:3, 0:2]}[wie loc, aber indexbasiert]
 \end{contentbox}
 
+\subsection{Zeilen filtern (Bedingung / boolean mask)}\label{sec:07-filtern-von-zeilen}
+\begin{contentbox}
+\CodeLine{data[data["Age"] > 30]}[alle Personen über 30]\\
+\CodeLine{data["Name"][data["Age"] > 30]}[nur Namen dieser Personen]
+\end{contentbox}
 
-\subsection{Spalten umbenennen}\label{sec:07-spalten-umbenennen}
+\subsection{Index \& Spalten umbenennen}\label{sec:07-spalten-umbenennen}
 \begin{contentbox}
 \CodeLine{data.set_index("Row")}[setzt `Row' als Index]\\
 \CodeLine{data.rename(columns={"City": "Location"})}[Spalte umbenennen]\\
 \CodeLine{data.columns = ["Monat", "Name", "Stadt", ...]}[jede Spalte umbenennen] % chktex 11 chktex 26
 \end{contentbox}
 
-\subsection{Filtern von Zeilen}\label{sec:07-filtern-von-zeilen}
-\begin{contentbox}
-\CodeLine{data[data["Age"] > 30]}[alle Personen über 30]\\
-\CodeLine{data["Name"][data["Age"] > 30]}[nur Namen dieser Personen]
-\end{contentbox}
-
-
-\subsection{Zeilen und Spalten löschen}\label{sec:07-zeilen-und-spalten-loeschen}
+\subsection{Löschen \& fehlende Werte (NaN)}\label{sec:07-zeilen-und-spalten-loeschen}
 \begin{contentbox}
 \CodeLine{data.drop(columns=["Age"])}[löscht Spalte `Age']\\
 \CodeLine{data.drop(data.index[0])}[löscht erste Zeile]\\
@@ -41,15 +41,14 @@
 \CodeLine{data.dropna(axis=0, how="any")}[wenn mind. 1 NaN in der Zeile]\\
 \CodeLine{data.dropna(axis=0, how="all")}[wenn alle NaN in der Zeile]\\
 \ZSFgapS
-\CodeLine{data.dropna(axis=1, how="any")}[löscht Spalten mit mind. 1 NaN]
+\CodeLine{data.dropna(axis=1, how="any")}[löscht Spalten mit mind. 1 NaN]\\
+\CodeLine{data.fillna(...)}[ersetzt NaN durch gewünschten Wert] % chktex 11
 \end{contentbox}
-
 
 \subsection{Hilfsfunktionen für DataFrames}\label{sec:07-hilfsfunktionen-fuer-dataframes}
 \begin{contentbox}
 \CodeLine{data["Age"].sum()}[summiert alle Werte der Spalte `Age']\\
-\CodeLine{data["Age"].max()}[maximaler Wert]\\
-\CodeLine{data.fillna(...)}[ersetzt NaN durch gewünschten Wert] % chktex 11
+\CodeLine{data["Age"].max()}[maximaler Wert]
 \end{contentbox}
 
 

@@ -64,7 +64,7 @@ Beide Ansätze nutzen Speicher zur Optimierung, aber:
 \subsection{1D-DP: \texttt{dp[i]} — Lineare Sequenzen}\label{sec:03-1d-dp}
 
 % --- Muster-Steckbrief: Zustands- und Übergangsdefinition ---
-\begin{contentbox}
+\begin{contentbox}[Muster-Steckbrief]
 \begin{factlist}
 \ZSFFact{Zustand}{\texttt{dp[i]} = optimale Lösung für die ersten $i$ Elemente}
 \ZSFFact{Übergang}{\texttt{dp[i] = f(dp[i-1], dp[i-2], \ldots)}}
@@ -136,7 +136,7 @@ Rekursive Berechnung mit Memoization. Berechnet nur benötigte Elemente, meisten
 \subsection{[EHA] Kapazitäts-DP: \texttt{dp[i][w]} — Knapsack-Familie}\label{sec:03-kapazitaets-dp}
 
 % --- Muster-Steckbrief ---
-\begin{contentbox}
+\begin{contentbox}[Muster-Steckbrief]
 \begin{factlist}
 \ZSFFact{Zustand}{\texttt{dp[i][w]} = opt. Wert mit ersten $i$ Objekten bei Kapazität $w$}
 \ZSFFact{Übergang}{Objekt nehmen oder weglassen}
@@ -208,7 +208,7 @@ def coin_change(coins, amount):
 \subsection{[EHA] Zwei-Index-DP: \texttt{dp[i][j]} — Gitter \& Strings}\label{sec:03-zwei-index-dp}
 
 % --- Muster-Steckbrief ---
-\begin{contentbox}
+\begin{contentbox}[Muster-Steckbrief]
 \begin{factlist}
 \ZSFFact{Zustand}{\texttt{dp[i][j]} = opt.\ Lösung für Präfix $i$ von $A$ und Präfix $j$ von $B$}
 \ZSFFact{Übergang}{aus \texttt{dp[i-1][j-1]}, \texttt{dp[i-1][j]}, \texttt{dp[i][j-1]}}
@@ -282,16 +282,19 @@ def min_path(grid):
 \subsection{[EHA] Intervall-DP: \texttt{dp[i][j]} — Split-Index $k$}\label{sec:03-intervall-dp}
 
 % --- Muster-Steckbrief ---
-\begin{contentbox}
+\begin{contentbox}[Muster-Steckbrief]
 \begin{factlist}
 \ZSFFact{Zustand}{\texttt{dp[i][j]} = optimale Lösung für Teilproblem über $[i..j]$}
 \ZSFFact{Übergang}{probe alle Split-Punkte $k \in [i,\, j{-}1]$: \texttt{dp[i][j] = min\textsubscript{k}\{dp[i][k] + dp[k+1][j] + cost(i,j)\}}}
 \ZSFFact{Basisfall}{\texttt{dp[i][i] = 0} (Intervall der Länge 1)}
 \ZSFFact{Antwort}{\texttt{dp[0][n-1]}}
 \ZSFFact{Komplexität}{$O(n^3)$ Zeit, $O(n^2)$ Raum}
-\ZSFFact{Füllreihenfolge}{äussere Schleife über Länge $\ell$, nicht über Zeilen!}
 \end{factlist}
 \end{contentbox}
+
+\begin{statementbox}
+\ZSFdanger{Füllreihenfolge}: äussere Schleife über Länge $\ell$, nicht über Zeilen!
+\end{statementbox}
 
 % --- Matrix Chain: klassisches Intervall-DP mit Kostenfunktion ---
 \begin{contentbox}[{[EHA] Matrix Chain Multiplication}]

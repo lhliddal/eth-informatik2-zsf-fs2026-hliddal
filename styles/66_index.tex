@@ -1,0 +1,146 @@
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+
+\usepackage{makeidx}
+\makeindex
+\renewcommand{\seename}{siehe}
+\newif\ifZSFIndexShowPageNumber
+\ZSFIndexShowPageNumberfalse
+
+\makeatletter
+\newcommand{\ZSF@idxnumnow}{%
+  \ifnum\value{subsubsection}>0 \thesubsubsection\else
+    \ifnum\value{subsection}>0 \thesubsection\else\thesection\fi
+  \fi}
+\newcommand{\ZSF@writeidx}[2]{%
+  \@ifundefined{@indexfile}{}{%
+    \begingroup
+      \toks0={#1}%
+      \toks1={#2}%
+      \edef\ZSF@num{\ZSF@idxnumnow}%
+      \toks2={\protected@write\@indexfile{}}%
+      \ifZSFIndexShowPageNumber
+        \edef\temp{\the\toks2{\string\indexentry{\the\toks0|\the\toks1}{\ZSF@num.\noexpand\thepage}}}%
+      \else
+        \edef\temp{\the\toks2{\string\indexentry{\the\toks0|\the\toks1}{\ZSF@num}}}%
+      \fi
+      \temp
+    \endgroup}}
+\newcommand{\ZSF@writeidxsee}[2]{%
+  \@ifundefined{@indexfile}{}{%
+    \begingroup
+      \toks0={#1}%
+      \toks1={#2}%
+      \edef\ZSF@num{\ZSF@idxnumnow}%
+      \toks2={\protected@write\@indexfile{}}%
+      \edef\temp{\the\toks2{\string\indexentry{\the\toks0|see{\the\toks1}}{\ZSF@num}}}%
+      \temp
+    \endgroup}}
+
+% \ZSFindex[sortkey]{Begriff}: unsichtbarer Eintrag.
+% \ZSFindexsee{Synonym}{Ziel}: Verweis am kanonischen Ort des Ziels.
+\RenewDocumentCommand{\ZSFindex}{o m}{%
+  \IfNoValueTF{#1}%
+    {\ZSF@writeidx{#2}{ZSFidxnum}}%
+    {\ZSF@writeidx{#1@#2}{ZSFidxnum}}}
+\RenewDocumentCommand{\ZSFindexsee}{o m m}{%
+  \IfNoValueTF{#1}%
+    {\ZSF@writeidxsee{#2}{#3}}%
+    {\ZSF@writeidxsee{#1@#2}{#3}}}
+
+% Automatische Einträge für bewusst gesetzte Fachbegriffe. Stern = nur fett.
+\RenewDocumentCommand{\ZSFkeyword}{s o m}{%
+  \textbf{#3}%
+  \IfBooleanF{#1}{%
+    \IfNoValueTF{#2}{\ZSFindex{#3}}{\ZSFindex{#2}}}}
+\makeatother
+
+% Farbige Abschnittsnummern, optional ergänzt durch die physische Seite.
+\makeatletter
+\newcommand{\ZSF@idxrendersection}[1]{%
+  \edef\ZSF@idxTargetChap{\expandafter\ZSF@refExtractChap#1.\@nil}%
+  \ZSFSetPaletteColorNameFromNumber{\ZSF@idxTargetChap}{\ZSF@idxTargetColor}%
+  {\upshape\bfseries\color{\ZSF@idxTargetColor}#1}}
+\ExplSyntaxOn
+\seq_new:N \l__zsf_index_locator_seq
+\tl_new:N \l__zsf_index_section_tl
+\tl_new:N \l__zsf_index_page_tl
+\tl_new:N \l__zsf_index_pending_section_tl
+\tl_new:N \l__zsf_index_pending_page_tl
+\bool_new:N \l__zsf_index_locator_multiple_bool
+
+\cs_new_protected:Npn \__zsf_index_format_page:n #1
+  {
+    \int_if_odd:nTF { #1 }
+      { \int_eval:n { (#1+1)/2 } a }
+      { \int_eval:n { #1/2 } b }
+  }
+
+\cs_new_protected:Npn \ZSFIndexLocatorListStart
+  {\tl_clear:N \l__zsf_index_pending_section_tl \tl_clear:N \l__zsf_index_pending_page_tl \bool_set_false:N \l__zsf_index_locator_multiple_bool}
+\cs_new_protected:Npn \ZSFIndexLocatorListMultiple
+  {
+    \bool_set_true:N \l__zsf_index_locator_multiple_bool
+    \tl_if_empty:NF \l__zsf_index_pending_section_tl
+      {\exp_args:NV \ZSF@idxrendersection \l__zsf_index_pending_section_tl}
+    \tl_clear:N \l__zsf_index_pending_section_tl
+    \tl_clear:N \l__zsf_index_pending_page_tl
+  }
+\cs_new_protected:Npn \ZSFIndexLocatorListFinish
+  {
+    \bool_if:NF \l__zsf_index_locator_multiple_bool
+      {\tl_if_empty:NF \l__zsf_index_pending_section_tl
+        {\mbox{\exp_args:NV \ZSF@idxrendersection \l__zsf_index_pending_section_tl\hspace{.2em}\textperiodcentered\hspace{.2em}(S.~\__zsf_index_format_page:n { \l__zsf_index_pending_page_tl })}}}
+    \tl_clear:N \l__zsf_index_pending_section_tl
+    \tl_clear:N \l__zsf_index_pending_page_tl
+  }
+\cs_new_protected:Npn \ZSFIndexRenderLocator #1
+  {
+    \seq_set_split:Nnn \l__zsf_index_locator_seq {.} {#1}
+    \seq_pop_right:NN \l__zsf_index_locator_seq \l__zsf_index_page_tl
+    \tl_set:Nx \l__zsf_index_section_tl
+      {\seq_use:Nn \l__zsf_index_locator_seq {.}}
+    \bool_if:NTF \l__zsf_index_locator_multiple_bool
+      {\exp_args:NV \ZSF@idxrendersection \l__zsf_index_section_tl}
+      {\tl_set:Nx \l__zsf_index_pending_section_tl {\tl_use:N \l__zsf_index_section_tl}\tl_set:Nx \l__zsf_index_pending_page_tl {\tl_use:N \l__zsf_index_page_tl}}
+  }
+\ExplSyntaxOff
+\newcommand{\ZSFidxnum}[1]{%
+  \ifZSFIndexShowPageNumber
+    \ZSFIndexRenderLocator{#1}%
+  \else
+    \ZSF@idxrendersection{#1}%
+  \fi}
+\newcommand{\ZSFidxsee}[1]{\ZSF@idxrendersection{#1}}
+\makeatother
+\renewcommand*{\see}[2]{\emph{\seename} #1\enspace\ZSFidxsee{#2}}
+
+% article-Standard schaltet auf zwei Spalten um; das ist in multicols* nicht
+% zulässig. Deshalb eine kompakte Liste im bestehenden Spaltenfluss.
+\makeatletter
+\newcommand{\ZSF@idxitem}{\par\hangindent 1.2em\relax}
+\newcommand{\ZSF@idxsubitem}{\par\hangindent 2em\hspace*{1em}}
+\newcommand{\ZSF@idxsubsubitem}{\par\hangindent 2.6em\hspace*{1.8em}}
+\newcommand{\ZSF@idxspace}{\par\addvspace{\ZSFspaceM}}
+\renewenvironment{theindex}{%
+  \begingroup
+  \RaggedRight
+  \setlength{\parindent}{0pt}%
+  \setlength{\parskip}{0pt plus 0.3pt}%
+  \let\item\ZSF@idxitem
+  \let\subitem\ZSF@idxsubitem
+  \let\subsubitem\ZSF@idxsubsubitem
+  \let\indexspace\ZSF@idxspace
+}{\par\endgroup}
+\makeatother
+\newcommand{\ZSFIndexLetter}[1]{%
+  \par\addvspace{\ZSFspaceM}%
+  {\ZSFfontBoxTitle #1}\par\nobreak\addvspace{\ZSFspaceXS}}

@@ -1,0 +1,98 @@
+% ============================================================
+% 50_typography_semantics.tex -- Schriftmakros und semantische Helfer
+% ============================================================
+
+\newcommand{\ZSFfontChapter}{\sffamily\bfseries\fontsize{8.1bp}{9.0bp}\selectfont}
+\newcommand{\ZSFfontSection}{\sffamily\bfseries\normalsize}
+% Dritte Ebene = kompakter, aber klar sichtbarer Lookup-Locator.
+\newcommand{\ZSFfontSubsubsection}{\sffamily\bfseries\fontsize{7.8bp}{8.6bp}\selectfont}
+\newcommand{\ZSFfontBoxTitle}{\sffamily\bfseries\normalsize}
+\newcommand{\ZSFfontNote}{\sffamily\normalsize\itshape}
+\newcommand{\ZSFfontCodeComment}{\ttfamily\color{ce_green}}
+\newcommand{\ZSFfontTitleHeader}{\sffamily\bfseries\fontsize{10.5bp}{11.8bp}\selectfont}
+\newcommand{\ZSFfontTitleSubheader}{\sffamily\itshape\normalsize}
+\newcommand{\ZSFfontTitleTag}{\sffamily\itshape\normalsize}
+\newcommand{\ZSFfontDangerUpper}{\sffamily\bfseries}
+
+\newcommand{\TableCellNote}[1]{{\ZSFfontNote #1}}
+\newcommand{\TableTitleBreak}{\newline}
+\newcommand{\TableTitle}[2][]{%
+  \textbf{#2}%
+  \if\relax\detokenize{#1}\relax\else\TableTitleBreak\TableCellNote{#1}\fi
+}
+\renewcommand{\ZSFfontTable}{\normalsize}
+\renewcommand{\ZSFfontTableDense}{\normalsize}
+
+% Index-sichere Basis-API: ohne Modul bleiben alle Varianten reine
+% Hervorhebung bzw. unsichtbare No-ops. styles/66_index.tex ersetzt diese
+% Definitionen nur bei aktivem Stichwortverzeichnis.
+\NewDocumentCommand{\ZSFkeyword}{s o m}{\textbf{#3}}
+\NewDocumentCommand{\ZSFindex}{o m}{}
+\NewDocumentCommand{\ZSFindexsee}{o m m}{}
+\newcommand{\ZSFScriptRef}[1]{\hfill\textcolor{\ChapterBarTextColor!80}{\normalsize (S.#1)}}
+\newcommand{\ZSFhl}[1]{\underline{\textbf{#1}}}
+
+\makeatletter
+\def\ZSF@refExtractFirst#1#2\@nil{#1}
+\def\ZSF@refExtractChap#1.#2\@nil{#1}
+\newcommand{\ZSF@refComputeTargetColor}[1]{%
+  \@ifundefined{r@#1}{%
+    \edef\ZSF@refTargetColor{\chaptercolor}%
+  }{%
+    \edef\ZSF@refTargetNum{\expandafter\expandafter\expandafter
+      \ZSF@refExtractFirst\csname r@#1\endcsname\@nil}%
+    \edef\ZSF@refTargetChap{\expandafter\ZSF@refExtractChap\ZSF@refTargetNum.\@nil}%
+    \ZSFSetPaletteColorNameFromNumber{\ZSF@refTargetChap}{\ZSF@refTargetColor}%
+  }%
+}
+\newcommand{\ZSFref}[1]{%
+  \begingroup
+  \ZSF@refComputeTargetColor{#1}%
+  \hyperref[#1]{{\ZSFfontNote\upshape\bfseries\color{\ZSF@refTargetColor}($\rightarrow$\,\ref*{#1})}}%
+  \endgroup
+}
+\newcommand{\ZSFsectionref}[1]{%
+  \begingroup
+  \ZSF@refComputeTargetColor{#1}%
+  \hyperref[#1]{{\upshape\bfseries\color{\ZSF@refTargetColor}\ref*{#1}}}%
+  \endgroup
+}
+\newcommand{\ZSFarrowref}[1]{%
+  \begingroup
+  \ZSF@refComputeTargetColor{#1}%
+  \hyperref[#1]{{\upshape\bfseries\color{\ZSF@refTargetColor}(\ensuremath{\rightarrow}~\ref*{#1})}}%
+  \endgroup
+}
+\makeatother
+
+\newcommand{\ZSFconclusion}[1]{%
+  \par\vspace{-\parskip}\vspace{\ZSFspaceXS}%
+  \noindent$\Rightarrow$ #1%
+  \par\vspace{-\parskip}\vspace{\ZSFspaceXS}%
+}
+
+\newcommand{\ZSFrowColor}{\rowcolor{\FormulaboxBackColor}}
+\newcommand{\ZSFtableRuleColor}{black!70}
+\newcommand{\SetZSFtableRuleColor}[1]{\renewcommand{\ZSFtableRuleColor}{#1}}
+\newcommand{\ZSFtableRuleWidth}{0.5pt}
+\newcommand{\SetZSFtableRuleWidth}[1]{\renewcommand{\ZSFtableRuleWidth}{#1}}
+\newcommand{\ZSFbeginTableRuleStyle}{%
+  \begingroup
+  \arrayrulecolor{\ZSFtableRuleColor}%
+  \setlength{\arrayrulewidth}{\ZSFtableRuleWidth}%
+}
+\newcommand{\ZSFendTableRuleStyle}{\endgroup}
+
+\makeatletter
+\renewcommand{\section}{\@ifstar{\zsf@section@star}{\zsf@section@plain}}
+\newcommand{\zsf@section@plain}[1]{\StartChapter{#1}}
+\newcommand{\zsf@section@star}[1]{\StartFrontChapter{#1}}
+
+\renewcommand{\subsection}{\@ifstar{\zsf@subsection@star}{\zsf@subsection@plain}}
+\newcommand{\zsf@subsection@plain}[1]{\SubsectionBar{#1}}
+\newcommand{\zsf@subsection@star}[1]{\SubsectionBar*{#1}}
+
+\renewcommand{\subsubsection}{\@ifstar{\zsf@subsubsection@star}{\zsf@subsubsection@plain}}
+\newcommand{\zsf@subsubsection@plain}[1]{\SubsubsectionBar{#1}}
+\newcommand{\zsf@subsubsection@star}[1]{\SubsubsectionBar*{#1}}
+\makeatother

@@ -1,0 +1,178 @@
+% ============================================================
+% 40_colors_structure.tex -- Farbpalette und Kapitel-Orchestrierung
+% ============================================================
+
+% Index-Palette (18 Slots, kuratiert fuer 3-Fenster-Kontrast)
+% Reihenfolge: ETH-Signaturfarben zuerst, danach global distanzierte
+% Zusatzfarben. Benachbarte Kapitel (Abstand 1 UND 2) bleiben deutlich
+% unterscheidbar; globale Fast-Dopplungen werden vermieden, soweit es mit
+% 18 kontraststarken Slots und fixierten ETH-Seeds sinnvoll moeglich ist.
+% Slot 0 ist reserviert fuer den Frontchapter (\StartFrontChapter) -- ETH-Blau.
+% Niemals ChapterColor* in Kapiteldateien hart-coden; ueber \chaptercolor /
+% \chaptercolorlight / \chaptercolortext referenzieren.
+\definecolor{ChapterColor0}{HTML}{215CAF}       % ETH Blue
+\definecolor{ChapterColor0Light}{HTML}{CEDBED}
+\definecolor{ChapterColor0Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor1}{HTML}{6E3B6E}       % ETH Purple
+\definecolor{ChapterColor1Light}{HTML}{DFD4DF}
+\definecolor{ChapterColor1Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor2}{HTML}{5A7F2B}       % ETH Green
+\definecolor{ChapterColor2Light}{HTML}{DBE3D0}
+\definecolor{ChapterColor2Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor3}{HTML}{8C6239}       % ETH Bronze
+\definecolor{ChapterColor3Light}{HTML}{E6DCD3}
+\definecolor{ChapterColor3Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor4}{HTML}{007894}       % ETH Petrol
+\definecolor{ChapterColor4Light}{HTML}{C7E1E7}
+\definecolor{ChapterColor4Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor5}{HTML}{B7352D}       % ETH Red
+\definecolor{ChapterColor5Light}{HTML}{EFD3D1}
+\definecolor{ChapterColor5Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor6}{HTML}{23523B}       % Dark Spruce
+\definecolor{ChapterColor6Light}{HTML}{CFD9D4}
+\definecolor{ChapterColor6Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor7}{HTML}{8F2459}       % Raspberry
+\definecolor{ChapterColor7Light}{HTML}{E6CFDA}
+\definecolor{ChapterColor7Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor8}{HTML}{17205E}       % Midnight Blue
+\definecolor{ChapterColor8Light}{HTML}{CCCEDC}
+\definecolor{ChapterColor8Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor9}{HTML}{2D8659}       % Emerald
+\definecolor{ChapterColor9Light}{HTML}{D1E4DA}
+\definecolor{ChapterColor9Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor10}{HTML}{523523}      % Walnut
+\definecolor{ChapterColor10Light}{HTML}{D9D3CF}
+\definecolor{ChapterColor10Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor11}{HTML}{8F2481}      % Orchid
+\definecolor{ChapterColor11Light}{HTML}{E6CFE3}
+\definecolor{ChapterColor11Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor12}{HTML}{1D581D}      % Deep Green
+\definecolor{ChapterColor12Light}{HTML}{CDDACD}
+\definecolor{ChapterColor12Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor13}{HTML}{5E1720}      % Oxblood
+\definecolor{ChapterColor13Light}{HTML}{DCCCCE}
+\definecolor{ChapterColor13Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor14}{HTML}{4C248F}      % Violet
+\definecolor{ChapterColor14Light}{HTML}{D8CFE6}
+\definecolor{ChapterColor14Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor15}{HTML}{233552}      % Slate Navy
+\definecolor{ChapterColor15Light}{HTML}{CFD3D9}
+\definecolor{ChapterColor15Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor16}{HTML}{207E73}      % Sea Teal
+\definecolor{ChapterColor16Light}{HTML}{CEE3E0}
+\definecolor{ChapterColor16Text}{HTML}{FFFFFF}
+\definecolor{ChapterColor17}{HTML}{58581D}      % Olive Brown
+\definecolor{ChapterColor17Light}{HTML}{DADACD}
+\definecolor{ChapterColor17Text}{HTML}{FFFFFF}
+
+\definecolor{ETHRot}{HTML}{CC0000}
+\definecolor{TextVorBoxColor}{HTML}{0A0A1E}
+\definecolor{TextNachBoxColor}{HTML}{0A1A0A}
+
+% CodeExpert / Inline-Code
+\definecolor{ce_yellow}{rgb}{0.8,0.6,0.1}
+\definecolor{ce_gray}{rgb}{0.4,0.4,0.4}
+\definecolor{ce_lime}{rgb}{0.2,0.6,0.2}
+\definecolor{ce_pink}{rgb}{0.8,0.1,0.3}
+\definecolor{ce_cyan}{rgb}{0.1,0.4,0.6}
+\definecolor{ce_violet}{rgb}{0.5,0.1,0.5}
+\definecolor{ce_white}{rgb}{0,0,0}
+\definecolor{ce_blue}{rgb}{0.2,0.2,0.9}
+\definecolor{ce_green}{rgb}{0.0,0.4,0.1}
+\definecolor{code_bg}{HTML}{F5F5F7}
+\definecolor{code_rule}{HTML}{D7D7DE}
+\definecolor{code_title_bg}{HTML}{ECECF1}
+\definecolor{code_title_text}{HTML}{30303A}
+
+\colorlet{ZSFDangerColor}{ETHRot}
+\colorlet{ZSFScriptRefColor}{white!80}
+\colorlet{ZSFTitleSubheaderColor}{white!88}
+\colorlet{ZSFPageNumberColor}{black!70}
+
+% Dokumenttitel-Masthead: bewusst unabhängig von der Kapitelrotation.
+\colorlet{ZSFDocumentTitleBarColor}{ChapterColor0}
+\colorlet{ZSFDocumentTitleTextColor}{ChapterColor0Text}
+\colorlet{ZSFDocumentTitleBylineColor}{ChapterColor0Text!88}
+
+% Schlusswörter in eingebetteten Kapiteln: ETH-Palette für den Inhalt,
+% aber dieselbe klare Leistenfarbe wie der Dokumenttitel.
+\newcommand{\ZSFStartClosingSubsection}{%
+  \ZSFSetChapterPaletteByIndex{0}%
+  \renewcommand{\SubsectionBarColor}{ZSFDocumentTitleBarColor}%
+  \renewcommand{\SubsectionBarTextColor}{ZSFDocumentTitleTextColor}%
+}
+
+% Aktive Kapitel-Farben
+\newcommand{\chaptercolor}{ChapterColor1}
+\newcommand{\chaptercolorlight}{ChapterColor1Light}
+\newcommand{\chaptercolortext}{ChapterColor1Text}
+\newcommand{\ChapterBarColor}{\chaptercolor}
+\newcommand{\ChapterBarTextColor}{\chaptercolortext}
+\newcommand{\SubsectionBarColor}{\chaptercolor!75}
+\newcommand{\SubsectionBarTextColor}{\chaptercolortext}
+\newcommand{\SubsubsectionBarColor}{\chaptercolor!82!black}
+\newcommand{\SubsubsectionTitleColor}{\chaptercolortext}
+\newcommand{\FormulaboxBackColor}{\chaptercolorlight!40}
+
+% Helle ZSF-Boxsprache: nur Kapitel-/Subsection-Anker sind voll gesaettigt.
+\newcommand{\BoxTitleColor}{\chaptercolorlight!85!white}
+\newcommand{\BoxTitleTextColor}{TextVorBoxColor}
+\newcommand{\BoxBackColor}{\chaptercolorlight!7!white}
+\newcommand{\BoxFrameColor}{\chaptercolorlight!65!black!18}
+\newcommand{\ContentBoxBackColor}{white}
+\newcommand{\ContentBoxFrameColor}{\chaptercolorlight!55!black!12}
+\newcommand{\TitledBoxFrameColor}{\chaptercolorlight!70!black!16}
+\newcommand{\StatementBarColor}{\chaptercolor}
+\newcommand{\StatementTitleColor}{\chaptercolor}
+
+\newcount\ZSFchapterPaletteIndex
+\newcount\ZSFchapterPaletteLookupIndex
+\newcommand{\ZSFchapterPaletteSize}{18}
+\newcommand{\ZSFSetChapterPaletteByIndex}[1]{%
+  \renewcommand{\chaptercolor}{ChapterColor#1}%
+  \renewcommand{\chaptercolorlight}{ChapterColor#1Light}%
+  \renewcommand{\chaptercolortext}{ChapterColor#1Text}%
+}
+\newcommand{\ZSFSetPaletteColorNameFromNumber}[2]{%
+  \ZSFchapterPaletteLookupIndex=#1\relax
+  \loop
+    \ifnum\ZSFchapterPaletteLookupIndex>\numexpr\ZSFchapterPaletteSize-1\relax
+    \advance\ZSFchapterPaletteLookupIndex by -\ZSFchapterPaletteSize
+  \repeat
+  \edef#2{ChapterColor\the\ZSFchapterPaletteLookupIndex}%
+}
+\newcommand{\SetChapterPaletteByNumber}{%
+  \ZSFchapterPaletteIndex=\value{section}%
+  \loop
+    \ifnum\ZSFchapterPaletteIndex>\numexpr\ZSFchapterPaletteSize-1\relax
+    \advance\ZSFchapterPaletteIndex by -\ZSFchapterPaletteSize
+  \repeat
+  \ifnum\value{section}>\numexpr\ZSFchapterPaletteSize-1\relax
+    \PackageWarning{ZSF}{Chapter palette wrapped at section \thesection. Increase palette if unique colors are required}%
+  \fi
+  \ZSFSetChapterPaletteByIndex{\the\ZSFchapterPaletteIndex}%
+}
+
+\makeatletter
+\newcommand{\ZSFMaybeColumnBreakBeforeChapter}{}
+
+\newcommand{\StartChapter}[2][]{%
+  \ZSFMaybeColumnBreakBeforeChapter
+  \refstepcounter{section}%
+  \SetChapterPaletteByNumber
+  \setcounter{subsection}{0}%
+  \setcounter{subsubsection}{0}%
+  \if\relax\detokenize{#1}\relax\else\label{#1}\fi
+  \ChapterBar{\thesection. #2}%
+}
+
+\newcommand{\StartFrontChapter}[1]{%
+  \ZSFMaybeColumnBreakBeforeChapter
+  \renewcommand{\chaptercolor}{ChapterColor0}%
+  \renewcommand{\chaptercolorlight}{ChapterColor0Light}%
+  \renewcommand{\chaptercolortext}{ChapterColor0Text}%
+  \setcounter{subsection}{0}%
+  \setcounter{subsubsection}{0}%
+  \ChapterBar{#1}%
+}
+\makeatother

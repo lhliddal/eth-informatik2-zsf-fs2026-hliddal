@@ -1,0 +1,130 @@
+% ============================================================
+% 65_code_style.tex -- Informatik-Code-Layout
+% ============================================================
+
+\usepackage{listings}
+\usepackage{inconsolata}
+\tcbuselibrary{listings}
+
+\lstset{
+  basicstyle=\ttfamily,
+  columns=flexible,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2,
+  showstringspaces=false,
+}
+
+\lstdefinestyle{CodeExpert}{
+  language=Python,
+  basicstyle=\ttfamily\linespread{0.82}\selectfont\color{ce_white},
+  numbers=none,
+  frame=none,
+  aboveskip=\ZSFcodeMiniSkip,
+  belowskip=\ZSFcodeMiniSkip,
+  xleftmargin=0pt,
+  xrightmargin=0pt,
+  keywordstyle=\bfseries\color{ce_pink},
+  commentstyle=\color{ce_green},
+  stringstyle=\color{ce_yellow},
+  identifierstyle=\color{ce_white},
+  breaklines=true,
+  breakatwhitespace=true,
+  literate={->}{{$\rightarrow$}}2 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 {Ü}{{\"U}}1 {Ä}{{\"A}}1 {Ö}{{\"O}}1 {—}{{---}}1 {−}{{-}}1 {„}{{\glqq}}1 {“}{{\grqq}}1 {”}{{''}}1 {’}{{'}}1 {–}{{--}}1 {→}{{$\rightarrow$}}1
+}
+
+\tcbset{zsfcodeboxbase/.style={
+  enhanced jigsaw,
+  colback=code_bg,
+  colframe=code_rule,
+  boxrule=\ZSFcodeFrameRule,
+  boxsep=0pt,
+  arc=\ZSFcornerBox, outer arc=\ZSFcornerBox,
+  left=\ZSFcodeInnerXPad, right=\ZSFcodeInnerXPad,
+  top=\ZSFcodeInnerYPad, bottom=\ZSFcodeInnerYPad,
+  before skip=\ZSFboxBeforeSkip,
+  after skip=\ZSFboxAfterSkip,
+  before upper={\parskip=0pt\relax},
+}}
+\tcbset{zsfcodeboxtitled/.style={
+  zsfcodeboxbase,
+  colbacktitle=code_title_bg,
+  coltitle=code_title_text,
+  titlerule=0pt,
+  zsftitlebar,
+}}
+
+\NewTColorBox{codebox}{o O{}}{
+  zsfcodeboxbase,
+  IfValueT={#1}{%
+    zsfcodeboxtitled,
+    title={\strut #1\if\relax\detokenize{#2}\relax\else\ZSFTitleTag{#2}\fi}},
+}
+
+\tcbset{zsf@codebox@split@base/.style={
+  enhanced jigsaw,
+  colback=code_bg,
+  colframe=code_rule,
+  leftrule=\ZSFcodeFrameRule,
+  rightrule=\ZSFcodeFrameRule,
+  toprule=0pt,
+  bottomrule=0pt,
+  arc=\ZSFcornerBox, outer arc=\ZSFcornerBox,
+  boxsep=0pt,
+  left=\ZSFcodeInnerXPad, right=\ZSFcodeInnerXPad,
+  top=\ZSFcodeInnerYPad, bottom=\ZSFcodeInnerYPad,
+  before skip=0pt,
+  after skip=\ZSFspaceXXS,
+  before upper={\parskip=0pt\relax},
+}}
+\tcbset{zsf@codebox@split@titled/.style={
+  zsf@codebox@split@base,
+  colbacktitle=code_title_bg,
+  coltitle=code_title_text,
+  titlerule=0pt,
+  zsftitlebar,
+}}
+\NewTColorBox{codeboxfirst}{o}{
+  zsf@codebox@split@base,
+  IfValueT={#1}{zsf@codebox@split@titled,title={\strut #1}},
+  toprule=\ZSFcodeFrameRule,
+  sharp corners=south,
+  before skip=\ZSFboxBeforeSkip,
+}
+
+\NewTColorBox{codeboxmid}{o}{
+  zsf@codebox@split@base,
+  IfValueT={#1}{zsf@codebox@split@titled,title={\strut #1}},
+}
+
+\NewTColorBox{codeboxlast}{o}{
+  zsf@codebox@split@base,
+  IfValueT={#1}{zsf@codebox@split@titled,title={\strut #1}},
+  bottomrule=\ZSFcodeFrameRule,
+  sharp corners=north,
+  after skip=\ZSFboxAfterSkip,
+}
+
+% Kompakter Katalog für parametrisierbare Schleifenmuster.
+% Eine Box bündelt mehrere Muster derselben Kategorie; jedes endet mit Theta.
+\newif\ifzsfloopcatalogfirst
+\NewTColorBox{loopcatalog}{}{
+  zsfcodeboxbase,
+  left=\ZSFspaceS,
+  right=\ZSFspaceS,
+  top=0pt,
+  bottom=\ZSFspaceXS,
+  before upper={\parskip=0pt\relax\zsfloopcatalogfirsttrue},
+}
+
+\newcommand{\LoopPatternTitle}[1]{%
+  \par
+  \ifzsfloopcatalogfirst
+    \zsfloopcatalogfirstfalse
+  \else
+    {\color{code_rule}\hrule height\ZSFborderThin}\addvspace{\ZSFspaceXS}%
+  \fi
+  \noindent{\ZSFfontBoxTitle #1}\par\nobreak}
+\newcommand{\LoopPatternResult}[1]{%
+  \nointerlineskip
+  \hbox to \linewidth{\hfil\smash{\raisebox{\dimexpr\baselineskip-\ZSFcodeMiniSkip\relax}{\eqbox{\Theta\!\left(#1\right)}}}}\par}

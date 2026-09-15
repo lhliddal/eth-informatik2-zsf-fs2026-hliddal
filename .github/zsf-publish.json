@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "informatik2-fs2026",
+  "kind": "zsf",
+  "title": "Informatik 2",
+  "semesterCode": "fs2026",
+  "semesterLabel": "FS 2026",
+  "status": "archive",
+  "githubRepository": "lhliddal/eth-informatik2-zsf-fs2026-hliddal",
+  "pdfFilename": "info2_fs2026_hliddal.pdf",
+  "presentation": {
+    "drawingNumber": "IN · FS26",
+    "description": "Informatik 2 in mein System übertragen für Theoriefragen und Programmieraufgaben: Code-Skelette, klare Begriffe und schnelle Entscheidungskriterien.",
+    "stage": "layout-final",
+    "diagram": "informatics"
+  },
+  "releaseBaseline": "v3.5.1"
+}

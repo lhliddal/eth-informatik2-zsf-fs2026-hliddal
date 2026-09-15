@@ -1,0 +1,314 @@
+% ============================================================
+% 60_boxes.tex -- Balken, generische Boxen und Listen
+% ============================================================
+
+% ------------------------------------------------------------
+% Kapitel- und Abschnittsbalken
+% ------------------------------------------------------------
+\newtcolorbox{chapterbar}[1][]{
+  enhanced jigsaw,
+  colback=\ChapterBarColor,
+  colframe=\ChapterBarColor,
+  boxrule=0pt,
+  boxsep=0pt,
+  arc=\ZSFcornerBox, outer arc=\ZSFcornerBox,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceS, bottom=\ZSFspaceS,
+  before skip=0pt,
+  after skip=0pt,
+  fontupper=\ZSFfontChapter,
+  #1
+}
+\newcommand{\ChapterBar}[1]{%
+  \ZSFHeadingBefore{\ZSFchapterBeforeSkip}%
+  \begin{chapterbar}\textcolor{\ChapterBarTextColor}{#1}\end{chapterbar}%
+  \ZSFHeadingAfter{\ZSFchapterAfterSkip}%
+}
+
+\newtcolorbox{subsectionbar}[1][]{
+  enhanced jigsaw,
+  colback=\SubsectionBarColor,
+  colframe=\SubsectionBarColor,
+  boxrule=0pt,
+  boxsep=0pt,
+  arc=\ZSFcornerBox, outer arc=\ZSFcornerBox,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=.75\ZSFspaceXS, bottom=.75\ZSFspaceXS,
+  before skip=0pt,
+  after skip=0pt,
+  fontupper=\ZSFfontSection,
+  #1
+}
+\newtcolorbox{subsubsectionbar}[1][]{
+  enhanced jigsaw,
+  colback=\SubsubsectionBarColor,
+  colframe=\SubsubsectionBarColor,
+  boxrule=0pt,
+  boxsep=0pt,
+  arc=\ZSFcornerBox, outer arc=\ZSFcornerBox,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
+  before skip=0pt,
+  after skip=0pt,
+  fontupper=\ZSFfontSubsubsection,
+  #1
+}
+
+\makeatletter
+\newcommand{\SubsectionBar}{\@ifstar{\SubsectionBarStar}{\SubsectionBarNumbered}}
+\newcommand{\SubsectionBarNumbered}[2][]{%
+  \refstepcounter{subsection}%
+  \setcounter{subsubsection}{0}%
+  \if\relax\detokenize{#1}\relax\else\label{#1}\fi
+  \ZSFHeadingBefore{\ZSFsubsectionBeforeSkip}%
+  \begin{subsectionbar}\textcolor{\SubsectionBarTextColor}{\thesubsection. #2}\end{subsectionbar}%
+  \ZSFHeadingAfter{\ZSFsubsectionAfterSkip}%
+}
+\newcommand{\SubsectionBarStar}[2][]{%
+  \if\relax\detokenize{#1}\relax\else\label{#1}\fi
+  \ZSFHeadingBefore{\ZSFsubsectionBeforeSkip}%
+  \begin{subsectionbar}\textcolor{\SubsectionBarTextColor}{#2}\end{subsectionbar}%
+  \ZSFHeadingAfter{\ZSFsubsectionAfterSkip}%
+}
+\newcommand{\SubsubsectionBar}{\@ifstar{\SubsubsectionBarStar}{\SubsubsectionBarNumbered}}
+\newcommand{\SubsubsectionBarNumbered}[2][]{%
+  \refstepcounter{subsubsection}%
+  \if\relax\detokenize{#1}\relax\else\label{#1}\fi
+  \ZSFHeadingBefore{\ZSFsubsubsectionBeforeSkip}%
+  \begin{subsubsectionbar}\textcolor{\SubsubsectionTitleColor}{\thesubsubsection. #2}\end{subsubsectionbar}%
+  \ZSFHeadingAfter{\ZSFsubsubsectionAfterSkip}%
+}
+\newcommand{\SubsubsectionBarStar}[2][]{%
+  \if\relax\detokenize{#1}\relax\else\label{#1}\fi
+  \ZSFHeadingBefore{\ZSFsubsubsectionBeforeSkip}%
+  \begin{subsubsectionbar}\textcolor{\SubsubsectionTitleColor}{#2}\end{subsubsectionbar}%
+  \ZSFHeadingAfter{\ZSFsubsubsectionAfterSkip}%
+}
+\makeatother
+
+% ------------------------------------------------------------
+% Gemeinsame Box-Stile
+% ------------------------------------------------------------
+\tcbset{zsftitlebar/.style={
+  fonttitle=\ZSFfontBoxTitle\strut,
+  halign title=flush left,
+  title style={minimum height=\ZSFtitleBarHeight},
+  lefttitle=\ZSFspaceS,
+  righttitle=\ZSFspaceS,
+  toptitle=0pt,
+  bottomtitle=0pt,
+  before title={},
+  after title={},
+}}
+
+\newcommand{\ZSFTitleTag}[1]{\hfill{\ZSFfontTitleTag #1}}
+
+% In multicols* verwaltet ausschliesslich multicol die Spaltenumbrueche.
+% Inhaltsboxen bleiben unteilbar; lange Inhalte werden semantisch aufgeteilt.
+\tcbset{zsfcontentbase/.style={
+  enhanced jigsaw,
+  colback=\ContentBoxBackColor,
+  colframe=\ContentBoxFrameColor,
+  boxrule=\ZSFborderThin,
+  boxsep=0pt,
+  arc=\ZSFcornerBox, outer arc=\ZSFcornerBox,
+  before skip=\ZSFboxBeforeSkip,
+  after skip=\ZSFboxAfterSkip,
+  before upper={\parskip=\ZSFspaceXS\relax\ZSFReadableAuto},
+}}
+
+\tcbset{zsfcontenttitled/.style={
+  zsfcontentbase,
+  colbacktitle=\BoxTitleColor,
+  coltitle=\BoxTitleTextColor,
+  colframe=\TitledBoxFrameColor,
+  titlerule=0pt,
+  zsftitlebar,
+}}
+
+\tcbset{zsftitlebox/.style={
+  zsfcontenttitled,
+  colback=\BoxBackColor,
+  colframe=\BoxFrameColor,
+  boxrule=\ZSFborderBox,
+}}
+
+% ------------------------------------------------------------
+% Semantische Inhaltsboxen
+% ------------------------------------------------------------
+\newtcolorbox{zsf@contentbox@plain}[1][]{
+  zsfcontentbase,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
+  #1
+}
+\newtcolorbox{zsf@contentbox@titled}[3][]{
+  zsfcontenttitled,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
+  title={\strut #2\if\relax\detokenize{#3}\relax\else\ZSFTitleTag{#3}\fi},
+  #1
+}
+\NewDocumentEnvironment{contentbox}{o O{}}
+  {\IfNoValueTF{#1}{\begin{zsf@contentbox@plain}}{\begin{zsf@contentbox@titled}{#1}{#2}}}
+  {\IfNoValueTF{#1}{\end{zsf@contentbox@plain}}{\end{zsf@contentbox@titled}}}
+
+\newtcolorbox{zsf@tablebox@plain}[1][]{
+  zsfcontentbase,
+  left=\ZSFspaceXS, right=\ZSFspaceXS,
+  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
+  halign=center,
+  before upper={},
+  #1
+}
+\newtcolorbox{zsf@tablebox@titled}[3][]{
+  zsfcontenttitled,
+  left=\ZSFspaceXS, right=\ZSFspaceXS,
+  top=\ZSFspaceXS, bottom=\ZSFspaceXS,
+  halign=center,
+  before upper={},
+  title={\strut #2\if\relax\detokenize{#3}\relax\else\ZSFTitleTag{#3}\fi},
+  #1
+}
+\NewDocumentEnvironment{tablebox}{o O{}}
+  {\IfNoValueTF{#1}{\begin{zsf@tablebox@plain}}{\begin{zsf@tablebox@titled}{#1}{#2}}}
+  {\IfNoValueTF{#1}{\end{zsf@tablebox@plain}}{\end{zsf@tablebox@titled}}}
+
+\newtcolorbox{defbox}[1][]{zsftitlebox,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceS, bottom=\ZSFspaceS,
+  title={#1}}
+
+\newenvironment{longformula}{\[\begin{aligned}}{\end{aligned}\]}
+\newtcolorbox{formulabox}[1][]{
+  enhanced jigsaw,
+  colback=\FormulaboxBackColor,
+  colframe=\BoxFrameColor,
+  boxrule=\ZSFborderBox,
+  arc=\ZSFcornerBox, outer arc=\ZSFcornerBox,
+  left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceS, bottom=\ZSFspaceS,
+  before skip=\ZSFboxBeforeSkip,
+  after skip=\ZSFboxAfterSkip,
+  before upper={\centering},
+  after upper={\par},
+  #1
+}
+
+% ------------------------------------------------------------
+% Aussagen, Verfahren, Listen
+% ------------------------------------------------------------
+\tcbset{zsfstatementstyle/.style={
+  enhanced jigsaw,
+  colback=white,
+  colframe=white,
+  frame hidden,
+  borderline west={\ZSFstatementBarWidth}{0pt}{\StatementBarColor},
+  boxrule=0pt,
+  arc=0pt, outer arc=0pt,
+  left=\ZSFstatementLeftPad,
+  right=\ZSFspaceS,
+  top=\ZSFspaceXS,
+  bottom=\ZSFspaceXS,
+  before skip=\ZSFboxBeforeSkip,
+  after skip=\ZSFboxAfterSkip,
+  before upper={\parskip=\ZSFspaceXS\relax\ZSFReadableAuto},
+}}
+
+\NewDocumentEnvironment{statementbox}{O{}}
+  {\begin{tcolorbox}[zsfstatementstyle]%
+   \if\relax\detokenize{#1}\relax\else
+     {\ZSFfontBoxTitle\color{\StatementTitleColor}#1}\par\vspace{\ZSFspaceXS}%
+   \fi\ignorespaces}
+  {\end{tcolorbox}}
+
+\NewDocumentEnvironment{procedure}{O{}}
+  {\begin{statementbox}[#1]%
+   \begin{enumerate}[leftmargin=\ZSFprocLeftMargin,labelsep=\ZSFprocLabSep,itemsep=\ZSFprocItemSep,topsep=0pt,parsep=0pt,partopsep=0pt]}
+  {\end{enumerate}\end{statementbox}}
+\newcommand{\ProcStep}[2]{\item {\ZSFfontBoxTitle #1}\\[\ZSFprocStepGap]#2}
+
+\NewDocumentEnvironment{factlist}{}
+  {\begin{itemize}[
+     leftmargin=\ZSFlistLeftMargin,
+     labelsep=\ZSFprocLabSep,
+     label={\textcolor{\StatementBarColor}{\textbullet}},
+     itemsep=\ZSFprocItemSep,
+     topsep=\ZSFspaceXS,
+     parsep=0pt,
+     partopsep=0pt
+   ]}
+  {\end{itemize}}
+\newcommand{\ZSFFact}[2]{\item \textbf{#1}\,---\,#2}
+
+\newif\ifzsfIndexFirst
+\NewDocumentEnvironment{chapterindex}{}
+  {\par\begingroup
+   {\ZSFfontSection\color{\chaptercolor} Inhaltsübersicht\par}%
+   \vspace{\ZSFspaceXS}%
+   \RaggedRight
+   \ZSFfontTable
+   \setlength{\parskip}{0pt}% Keep entries vertically compact
+   \zsfIndexFirsttrue
+  }
+  {\par\vspace{\ZSFspaceXS}\endgroup}
+\newcommand{\ZSFChapterIndexGroup}[2]{%
+  \ifzsfIndexFirst
+    \zsfIndexFirstfalse
+  \else
+    \par\vspace{\ZSFspaceS}%
+  \fi
+  \par\noindent
+  \hangindent=1.5em\hangafter=1%
+  \makebox[1.5em][l]{\ZSFsectionref{#1}}\ZSFkeyword*{#2}%
+}
+\newcommand{\ZSFChapterIndexEntry}[2]{%
+  \par\noindent
+  \hspace*{0.8em}%
+  \hangindent=3.2em\hangafter=1%
+  \makebox[2.4em][l]{\ZSFsectionref{#1}}#2%
+}
+
+\NewDocumentEnvironment{propertylist}{O{}}
+  {\begin{statementbox}[#1]\begin{itemize}[
+     leftmargin=\ZSFlistLeftMargin,
+     labelsep=\ZSFprocLabSep,
+     itemsep=\ZSFprocItemSep,
+     topsep=0pt,
+     parsep=0pt,
+     partopsep=0pt
+   ]}
+  {\end{itemize}\end{statementbox}}
+
+% ------------------------------------------------------------
+% Inline-Helfer und Titelkopf
+% ------------------------------------------------------------
+\newtcbox{\ZSFdanger}{colback=ZSFDangerColor, colframe=ZSFDangerColor, coltext=white,
+  on line, boxsep=\ZSFspaceXS, left=\ZSFspaceS, right=\ZSFspaceS,
+  top=\ZSFspaceXXS, bottom=\ZSFspaceXXS, boxrule=0pt,
+  arc=\ZSFcornerInline, fontupper=\ZSFfontDangerUpper}
+\newcommand{\eqbox}[1]{\fcolorbox{\BoxFrameColor}{\chaptercolorlight}{\(\displaystyle #1\)}}
+\newcommand{\hl}[1]{\underline{\textbf{#1}}}
+\renewcommand{\ZSFhl}[1]{\hl{#1}}
+
+\newtcolorbox{zsftitleheader}[1][]{
+  enhanced jigsaw,
+  colback=ZSFDocumentTitleBarColor,
+  colframe=ZSFDocumentTitleBarColor,
+  boxrule=0pt,
+  boxsep=0pt,
+  arc=\ZSFcornerBox, outer arc=\ZSFcornerBox,
+  left=\ZSFspaceM, right=\ZSFspaceM,
+  top=\ZSFspaceS, bottom=\ZSFspaceS,
+  before skip=0pt,
+  after skip=\ZSFspaceXS,
+  halign=center,
+  #1
+}
+\newcommand{\ZSFTitleHeader}[2]{%
+  \begin{zsftitleheader}
+    {\color{ZSFDocumentTitleTextColor}\ZSFfontTitleHeader #1\par}%
+    \vspace{\ZSFspaceXXS}%
+    {\color{ZSFDocumentTitleBylineColor}\ZSFfontTitleSubheader von~#2\par}%
+  \end{zsftitleheader}
+}

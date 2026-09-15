@@ -1,0 +1,57 @@
+% ============================================================
+% 00_packages.tex -- Pakete und Paket-Level-Setup
+% ============================================================
+% Informatik nutzt dieselbe Basis wie Template/Analysis/LinAlg.
+% Code-spezifische Pakete werden in styles/65_code_style.tex geladen.
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[nswissgerman]{babel}
+\usepackage[sfdefault,lf]{carlito}
+\usepackage{sansmath}
+\sansmath
+\linespread{0.95}
+
+\usepackage[landscape, a4paper, margin=1.5mm]{geometry}
+\usepackage{microtype}
+\usepackage{multicol}
+
+\usepackage{mathtools}
+\let\Bbbk\relax
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{esint}
+\usepackage{siunitx}
+\sisetup{
+  mode=match,
+  propagate-math-font=true,
+  reset-text-family=false,
+  exponent-product = \cdot,
+  output-decimal-marker = {,},
+  per-mode = symbol
+}
+
+\usepackage[table]{xcolor}
+\usepackage{transparent}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tabularray}
+\usepackage[column=O]{cellspace}
+\usepackage{xstring}
+\usepackage{varwidth}
+\usepackage{ragged2e}
+\usepackage{enumitem}
+\usepackage{needspace}
+
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, raster}
+
+\usepackage{hyperref}

@@ -1,0 +1,96 @@
+\section{Klassen \& OOP}\label{sec:02-klassen}
+
+\subsection{Klasse definieren}\label{sec:02-klasse-definieren}
+\ZSFindex[oop]{OOP / Objektorientierte Programmierung}
+\begin{codebox}[Klasse definieren und verwenden]
+\begin{lstlisting}[style=CodeExpert]
+class Car:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+
+    def honk(self):
+        return f"{self.model} is honking!"
+
+    def announce(self):
+        return self.honk()  # eigene Methode aufrufen
+
+car = Car("Volvo", "EX30")  # car wird in __init__ zu self
+message = car.honk()  # car wird automatisch als self übergeben
+model = car.model  # Attribut des Objekts lesen
+\end{lstlisting}
+\end{codebox}
+
+\begin{defbox}[\texttt{self} und Methodenaufruf]
+\begin{factlist}
+\ZSFFact{Methode definieren}{\texttt{def method(self, argument)} — \texttt{self} bezeichnet das aktuelle Objekt.}
+\ZSFFact{Von aussen aufrufen}{\texttt{object.method(argument)} — das Objekt wird automatisch als \texttt{self} übergeben.}
+\ZSFFact{Innerhalb aufrufen}{\texttt{self.method(argument)} — Methode desselben Objekts verwenden.}
+\ZSFFact{Zustand speichern}{\texttt{self.attribute} bleibt im Objekt gespeichert; eine lokale Variable nur während des Aufrufs.}
+\end{factlist}
+\end{defbox}
+
+\subsection{Vererbung}\label{sec:02-vererbung}
+\ZSFindex{Vererbung}
+\begin{defbox}[Oberklasse / Unterklasse]
+Eine \ZSFkeyword*{Oberklasse} (Superclass) ist eine Klasse, die als Basis für eine andere Klasse dient – die sogenannte \ZSFkeyword*{Unterklasse} (Subclass). Mittels \verb|super().__init__()| kann die Unterklasse auf den Konstruktor der Oberklasse zugreifen.
+\end{defbox}
+\begin{codebox}[super() in der Unterklasse]
+\begin{lstlisting}[style=CodeExpert]
+class ElectricCar(Car):  # Erbt alle Attribute & Methoden von Car
+    def __init__(self, brand, model):
+        super().__init__(brand, model)  # Car.__init__ erzeugt self.brand & self.model
+
+    def charge(self):
+        return f"{self.model} battery is charging."  # Greift auf self.model aus Car zu
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Dunder-Methoden \& Operator-Überladung}\label{sec:02-klasseninterne-funktionen-implementieren}
+\ZSFindex{Dunder-Methode}
+\ZSFindex[operatoruberladung]{Operatorüberladung}
+\begin{statementbox}[Rückgabewert]
+\texttt{\_\_add\_\_} bestimmt das Ergebnis von \texttt{objekt\_a + objekt\_b}. Der Rückgabewert muss zur Bedeutung des Operators passen: Häufig ist er eine neue Instanz derselben Klasse, andere Ergebnistypen sind aber ebenfalls möglich.
+\end{statementbox}
+\begin{codebox}[\texttt{\_\_add\_\_} (Beispiel: Reissverschluss-Logik)]
+\begin{lstlisting}[style=CodeExpert]
+class CustomString:
+    def __init__(self, string):
+        self.string = string
+
+    def __str__(self):  # Bestimmt Textausgabe bei print(objekt)
+        return self.string
+
+    def __add__(self, other):  # self = links (s1), other = rechts (s2)
+        result_string = ""
+        for i in range(len(self.string)):
+            if i < len(other.string):
+                result_string += (self.string[i]
+                                  + other.string[i])
+            else:
+                result_string += self.string[i]
+        return CustomString(result_string)  # Gibt neues Objekt zurück
+
+s1 = CustomString("abcd")
+s2 = CustomString("123")  # s1 + s2 ruft s1.__add__(s2) auf
+print(s1 + s2) # -> a1b2c3d
+\end{lstlisting}
+\end{codebox}
+
+
+
+%=====================================================================================================================
+
+%=====================================================================================================================
+
+%=====================================================================================================================
+
+%=====================================================================================================================
+
+    
+
+
+%=====================================================================================================================
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

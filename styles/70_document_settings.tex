@@ -1,0 +1,82 @@
+% ============================================================
+% DOCUMENT SETTINGS, MATH MACROS, GRAPHICS PATH
+% ============================================================
+\hypersetup{colorlinks=true, linkcolor=ChapterColor0, urlcolor=ChapterColor4}
+
+% --- Global Unicode Fixes ---
+% Verhindert Fehler, wenn spezielle Unicode-Zeichen (z.B. Minus-Zeichen aus Mac) im restlichen Text stehen
+\DeclareUnicodeCharacter{2212}{-}
+\DeclareUnicodeCharacter{2192}{\ensuremath{\rightarrow}}
+\DeclareUnicodeCharacter{2013}{--}
+\DeclareUnicodeCharacter{2014}{---}
+
+\setcounter{secnumdepth}{3}
+
+\newcommand{\Arg}[1]{\mathrm{Arg}(#1)} 
+\newcommand{\Log}[1]{\mathrm{Log}(#1)} 
+\newcommand{\Res}[1]{\mathrm{Res}(#1)} 
+\newcommand{\wind}[1]{\mathrm{W}(#1)}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\laplace}[1]{\mathcal{L}\left[#1\right]}
+\newcommand{\unint}[0]{\int_{-\infty}^\infty}
+
+\newcommand{\C}[0]{\mathbb{C}}
+\newcommand{\R}[0]{\mathbb{R}}  
+
+\newcommand{\infin}[0]{\mathrm{d}}
+\newcommand{\imag}[0]{\mathrm{i}}
+
+% Fix für unschönen, zerschnittenen Implikationspfeil bei sansmath/carlito
+\renewcommand{\implies}{\mathrel{\Rightarrow}}
+
+% Term-Annotation mit geschweifter Klammer (Stilmittel, vgl. Template):
+% beschriftet einen Formelteil unter/über einer Klammer. Label via \text.
+\newcommand{\ZSFbraceunder}[2]{\underbrace{#1}_{\text{#2}}}
+\newcommand{\ZSFbraceover}[2]{\overbrace{#1}^{\text{#2}}}
+
+\pagestyle{empty}
+
+% Sichtbare Druckseiten-Kennzeichnung für den 2-auf-1-Druck:
+% PDF-Seiten 1/2 -> 1a/1b, 3/4 -> 2a/2b, ...
+% \thepage bleibt unverändert für PDF-Viewer, Hyperlinks und Druckdialog.
+\newcommand{\ZSFPrintPageLabel}{%
+  \ifodd\value{page}%
+    \number\numexpr(\value{page}+1)/2\relax a%
+  \else
+    \number\numexpr\value{page}/2\relax b%
+  \fi
+}
+
+% Build-Kennung unten mittig, Druckseiten-Kennzeichnung unten rechts (overlay,
+% layout-neutral). Lokal automatisch DEV + Datum; im Release der SemVer-Tag.
+\AddToShipoutPictureFG{%
+  \AtPageLowerLeft{%
+    \put(\dimexpr\paperwidth/2\relax,1mm){%
+      \makebox(0,0)[b]{{\transparent{0.5}\sffamily\bfseries\fontsize{9.5pt}{9.5pt}\selectfont\color{black}\ZSFReleaseLabel}}%
+    }%
+    \put(\dimexpr\paperwidth-2mm\relax,1mm){%
+      \makebox(0,0)[rb]{\sffamily\bfseries\fontsize{9.5pt}{9.5pt}\selectfont\color{black}\ZSFPrintPageLabel}%
+    }%
+  }%
+}
+
+% Dünner ETH-Blau-Streifen am oberen Rand jeder b-Seite (gerade PDF-Seitennummern):
+% Dient zur visuellen Trennung beim 2-auf-1-Druck.
+\AddToShipoutPictureBG{%
+  \ifodd\value{page}\else
+    \AtPageUpperLeft{%
+      \put(0,-0.375mm){%
+        \color{ChapterColor0}%
+        \rule{\paperwidth}{0.375mm}%
+      }%
+    }%
+  \fi
+}
+
+\setlength{\unitlength}{1cm}
+\setlist{leftmargin = *}
+
+\graphicspath{%
+  {./}%
+  {Images/}%
+}

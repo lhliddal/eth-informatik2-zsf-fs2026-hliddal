@@ -1,0 +1,108 @@
+% ============================================================
+% 30_layout_spacing.tex -- Layout-Grundlagen und Spacing-Skala
+% ============================================================
+
+\setlength{\parskip}{1.2pt plus 0.8pt minus 0.2pt}
+\setlength{\parindent}{0pt}
+
+\widowpenalty=10000
+\clubpenalty=10000
+\brokenpenalty=4000
+\predisplaypenalty=10000
+
+\raggedcolumns
+\newcounter{zsfFirstChap}\setcounter{zsfFirstChap}{1}
+
+% Kompakter als Template, ruhiger als die MaschKo-Maximalverdichtung.
+\newlength{\ZSFspaceXXS}\setlength{\ZSFspaceXXS}{0.5pt}
+\newlength{\ZSFspaceXS} \setlength{\ZSFspaceXS}{1pt}
+\newlength{\ZSFspaceS}  \setlength{\ZSFspaceS}{2.5pt}
+\newlength{\ZSFspaceM}  \setlength{\ZSFspaceM}{5pt}
+\newlength{\ZSFspaceL}  \setlength{\ZSFspaceL}{7pt}
+
+\newlength{\ZSFcornerBox}   \setlength{\ZSFcornerBox}{0.7mm}
+\newlength{\ZSFcornerInline}\setlength{\ZSFcornerInline}{1mm}
+
+\setlength{\columnsep}{\ZSFspaceL}
+\setlength{\multicolsep}{\ZSFspaceS}
+\setlength{\emergencystretch}{2.5em}
+
+% Vertikaler Rhythmus: ein einziges einfaches System.
+% Bars und Boxen bringen ihre eigenen Skips mit. Titelbalken reservieren
+% nur genug Folgeraum, damit sie nicht allein am Spaltenende stehen.
+\newlength{\ZSFtitleBarHeight}\setlength{\ZSFtitleBarHeight}{7.2pt}
+\newlength{\ZSFchapterBeforeSkip}\setlength{\ZSFchapterBeforeSkip}{\ZSFspaceM}
+\newlength{\ZSFchapterAfterSkip}\setlength{\ZSFchapterAfterSkip}{\ZSFspaceXS}
+\newlength{\ZSFsubsectionBeforeSkip}\setlength{\ZSFsubsectionBeforeSkip}{\ZSFspaceS}
+\newlength{\ZSFsubsectionAfterSkip}\setlength{\ZSFsubsectionAfterSkip}{\ZSFspaceXS}
+\newlength{\ZSFsubsubsectionBeforeSkip}\setlength{\ZSFsubsubsectionBeforeSkip}{\ZSFspaceXS}
+\newlength{\ZSFsubsubsectionAfterSkip}\setlength{\ZSFsubsubsectionAfterSkip}{0pt}
+\newlength{\ZSFboxBeforeSkip}\setlength{\ZSFboxBeforeSkip}{\ZSFspaceXS}
+\newlength{\ZSFboxAfterSkip}\setlength{\ZSFboxAfterSkip}{\ZSFspaceS}
+\newlength{\ZSFbreakThreshold}\setlength{\ZSFbreakThreshold}{3\baselineskip}
+
+% Display-Mathematik folgt derselben kompakten Rhythmik wie Boxen und Balken.
+% Die Zuweisung im Begin-Document-Hook gewinnt gegen die Klassen-Defaults.
+\newlength{\ZSFdisplayBeforeSkip}     \setlength{\ZSFdisplayBeforeSkip}{\ZSFspaceS}
+\newlength{\ZSFdisplayAfterSkip}      \setlength{\ZSFdisplayAfterSkip}{\ZSFspaceS}
+\newlength{\ZSFdisplayShortBeforeSkip}\setlength{\ZSFdisplayShortBeforeSkip}{\ZSFspaceXS}
+\newlength{\ZSFdisplayShortAfterSkip} \setlength{\ZSFdisplayShortAfterSkip}{\ZSFspaceXS}
+\newlength{\ZSFmathLineGap}           \setlength{\ZSFmathLineGap}{\ZSFspaceXS}
+
+\newcommand{\ZSFApplyDisplaySpacing}{%
+  \setlength{\abovedisplayskip}{\ZSFdisplayBeforeSkip}%
+  \setlength{\belowdisplayskip}{\ZSFdisplayAfterSkip}%
+  \setlength{\abovedisplayshortskip}{\ZSFdisplayShortBeforeSkip}%
+  \setlength{\belowdisplayshortskip}{\ZSFdisplayShortAfterSkip}%
+  \setlength{\jot}{\ZSFmathLineGap}%
+}
+\AtBeginDocument{\ZSFApplyDisplaySpacing}
+
+\newcommand{\ZSFHeadingBefore}[1]{\par\needspace{\ZSFbreakThreshold}\addvspace{#1}}
+\newcommand{\ZSFHeadingAfter}[1]{\par\nobreak\vspace{#1}\nobreak}
+
+\newlength{\ZSFborderThin}  \setlength{\ZSFborderThin}{0.35pt}
+\newlength{\ZSFborderBox}   \setlength{\ZSFborderBox}{0.45pt}
+\newlength{\ZSFborderStrong}\setlength{\ZSFborderStrong}{0.8pt}
+
+\newlength{\ZSFstatementBarWidth}\setlength{\ZSFstatementBarWidth}{2pt}
+\newlength{\ZSFstatementLeftPad} \setlength{\ZSFstatementLeftPad}{\ZSFspaceM}
+\newlength{\ZSFprocStepGap}      \setlength{\ZSFprocStepGap}{\ZSFspaceXS}
+\newlength{\ZSFprocItemSep}      \setlength{\ZSFprocItemSep}{\ZSFspaceXS}
+\newlength{\ZSFprocLeftMargin}   \setlength{\ZSFprocLeftMargin}{1.6em}
+\newlength{\ZSFlistLeftMargin}   \setlength{\ZSFlistLeftMargin}{1.2em}
+\newlength{\ZSFprocLabSep}       \setlength{\ZSFprocLabSep}{0.4em}
+
+\newlength{\ZSFcodeMiniSkip} \setlength{\ZSFcodeMiniSkip}{0.4mm}
+\newlength{\ZSFcodeFrameRule}\setlength{\ZSFcodeFrameRule}{\ZSFborderThin}
+\newlength{\ZSFcodeInnerXPad}\setlength{\ZSFcodeInnerXPad}{\ZSFspaceS}
+\newlength{\ZSFcodeInnerYPad}\setlength{\ZSFcodeInnerYPad}{\ZSFspaceXXS}
+
+% Dimensionslose Tabellen-Rhythmik; ausgewählt über die ZSFtable*-API.
+\newcommand{\ZSFtableRowStretchDefault}{1}
+\newcommand{\ZSFtableRowStretchRoomy}{1.25}
+
+% Standard-Breite für Grafiken (z.B. 2/3 der Spaltenbreite)
+\newlength{\ZSFgraphicswidth}
+\setlength{\ZSFgraphicswidth}{0.667\columnwidth}
+
+
+\newlength{\ZSFcodeCommentMaxWidthDefault}
+  \setlength{\ZSFcodeCommentMaxWidthDefault}{.25\columnwidth}
+\newlength{\ZSFcodeCommentThresholdDefault}
+  \setlength{\ZSFcodeCommentThresholdDefault}{\maxdimen}
+\newlength{\ZSFcodeCommentMaxWidth} \setlength{\ZSFcodeCommentMaxWidth}{\ZSFcodeCommentMaxWidthDefault}
+\newlength{\ZSFcodeCommentThreshold}\setlength{\ZSFcodeCommentThreshold}{\ZSFcodeCommentThresholdDefault}
+\newlength{\ZSFcodeCommentGap}      \setlength{\ZSFcodeCommentGap}{\ZSFspaceM}
+
+\setlist{nosep, itemsep=0pt, parsep=0pt, topsep=\ZSFspaceXS, partopsep=0pt}
+\setlist[itemize]{leftmargin=3mm}
+\setlist[enumerate]{leftmargin=4mm}
+
+\newcommand{\ZSFgapXS}{\vspace{\ZSFspaceXS}}
+\newcommand{\ZSFgapS}{\vspace{\ZSFspaceS}}
+\newcommand{\ZSFgapM}{\vspace{\ZSFspaceM}}
+\newcommand{\ZSFgapL}{\vspace{\ZSFspaceL}}
+\newcommand{\ZSFSectionGap}{\vspace{\ZSFspaceL}}
+\newcommand{\ZSFtabColGap}{\hspace{1.5em}}
+\newcommand{\ZSFmanualColumnBreak}{\columnbreak}
